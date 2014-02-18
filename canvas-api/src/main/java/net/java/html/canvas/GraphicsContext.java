@@ -27,8 +27,19 @@ import org.apidesign.html.canvas.impl.CnvsAccssr;
 
 /**
  * A 2D Graphics Context similar to HTML5 or JavaFX GraphicsContext. Use this to
- * paint on your Canvas
- *
+ * paint on your Canvas. To get a GraphicsContext call {@link net.java.html.canvas.spi.GraphicsUtils#create(GraphicsEnvironment) GraphicsUtils.create}
+ * For HTML 5 :
+ * <pre>
+* {@code
+ * GraphicsContext gc = GraphicsUtil.create(new Html5FXGraphicsEnvironment(200,200,"canvas"));
+ * }
+ * </pre>
+ * For JavaFX:
+ * <pre>
+* {@code
+ * GraphicsContext gc = GraphicsUtil.create(new JavaFXGraphicsEnvironment());
+ *  }
+ * </pre>
  * @author antonepple
  */
 public final class GraphicsContext {
