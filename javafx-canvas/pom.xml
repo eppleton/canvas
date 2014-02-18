@@ -2,16 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>javaquery</artifactId>
-        <groupId>org.apidesign.bck2brwsr</groupId>
+        <artifactId>canvas</artifactId>
+        <groupId>org.apidesign.html</groupId>
         <version>0.9-SNAPSHOT</version>
     </parent>
   
-    <groupId>net.java.html</groupId>
-    <artifactId>canvas</artifactId>
+    <groupId>org.apidesign.html</groupId>
+    <artifactId>javafx-canvas</artifactId>
     <version>0.9-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>canvas</name>
+    <name>javafx-canvas</name>
     <url>http://maven.apache.org</url>
     <build>
         <plugins>
@@ -28,7 +28,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
-                    <subpackages>net.java.html.canvas</subpackages>
+                    <subpackages>net.java.html.canvas.javafx</subpackages>
                     <skip>false</skip>
                 </configuration>
             </plugin>
@@ -38,7 +38,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
-        <dependency>
+<!--        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <scope>test</scope>
@@ -49,6 +49,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-  
+  -->
     </dependencies>
 </project>

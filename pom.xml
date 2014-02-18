@@ -7,6 +7,8 @@
   <packaging>pom</packaging>
   <name>canvas</name>
     <modules>
-        <module>canvas</module>
+        <module>canvas-api</module>
+        <module>javafx-canvas</module>
+        <module>html5-canvas</module>
     </modules>
 </project>
