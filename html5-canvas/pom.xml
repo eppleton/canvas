@@ -28,7 +28,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
-                    <subpackages>de.eppleton.html.canvas</subpackages>
+                    <subpackages>de.eppleton.canvas.html</subpackages>
                     <skip>false</skip>
                 </configuration>
             </plugin>
@@ -50,5 +50,23 @@
             </exclusions>
         </dependency>
   -->
+        <dependency>
+            <groupId>net.java.html</groupId>
+            <artifactId>canvas</artifactId>
+            <version>0.9-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.openide</groupId>
+            <artifactId>org.openide.util.lookup</artifactId>
+            <version>7.4-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.html</groupId>
+            <artifactId>net.java.html.boot</artifactId>
+            <version>0.8-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 </project>

@@ -1,6 +1,6 @@
 /**
- * Back 2 Browser Bytecode Translator
- * Copyright (C) 2012 Jaroslav Tulach <jaroslav.tulach@apidesign.org>
+ * Canvas API
+ * Copyright (C) 2013 AntonEpple <toni.epple@eppleton.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

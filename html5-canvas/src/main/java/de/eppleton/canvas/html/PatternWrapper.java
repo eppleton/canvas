@@ -1,6 +1,6 @@
 /**
- * Canvas API
- * Copyright (C) 2013 AntonEpple <toni.epple@eppleton.de>
+ * Back 2 Browser Bytecode Translator
+ * Copyright (C) 2012 Jaroslav Tulach <jaroslav.tulach@apidesign.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,28 +15,21 @@
  * along with this program. Look for COPYING file in the top folder.
  * If not, see http://opensource.org/licenses/GPL-2.0.
  */
-package org.apidesign.html.canvas.impl;
-
-import net.java.html.canvas.GraphicsContext;
-import net.java.html.canvas.spi.GraphicsEnvironment;
+package de.eppleton.canvas.html;
 
 /**
- * 
- * @author antonepple
+ *
+ * @author Anton Epple <toni.epple@eppleton.de>
  */
-public abstract class CnvsAccssr {
+public class PatternWrapper {
 
-    static CnvsAccssr DEFAULT;
+    private Object pattern;
 
-    public CnvsAccssr() {
-        if (DEFAULT!=null) throw new IllegalStateException("Already initialized");
-        DEFAULT = this;
+    public PatternWrapper(Object pattern) {
+        this.pattern = pattern;
     }
 
-    public static CnvsAccssr getDefault() {
-        if (DEFAULT== null) GraphicsContext.init();
-        return DEFAULT;
+    Object object() {
+        return pattern;
     }
-
-    public abstract GraphicsContext create(GraphicsEnvironment environment);
 }
