@@ -1,11 +1,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.apidesign.html</groupId>
-  <artifactId>canvas</artifactId>
-  <version>0.9-SNAPSHOT</version>
-  <packaging>pom</packaging>
-  <name>canvas</name>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.apidesign.html</groupId>
+    <artifactId>canvas</artifactId>
+    <version>0.9-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <licenses>
+        <license>
+            <name>GPL-2.0</name>
+            <url>http://opensource.org/licenses/GPL-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <organization>
+        <name>Eppleton IT Consulting</name>
+        <url>http://eppleton.de</url>
+    </organization>
+    <scm>
+        <connection>scm:git:git@github.com:eppleton/canvas.git</connection>
+        <url>scm:git:git@github.com:eppleton/canvas.git</url>
+        <developerConnection>scm:git:git@github.com:eppleton/canvas.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+    <name>canvas</name>
     <modules>
         <module>canvas-api</module>
         <module>javafx-canvas</module>
@@ -14,15 +31,15 @@
     <build>
         <plugins>
             <plugin>
-            <artifactId>maven-release-plugin</artifactId>
-            <version>2.4</version>
-            <configuration>
-              <mavenExecutorId>forked-path</mavenExecutorId>
-              <useReleaseProfile>false</useReleaseProfile>
-              <arguments>-Pjvnet-release -Pgpg</arguments>
-              <tag>release-${releaseVersion}</tag>
-            </configuration>
-          </plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <mavenExecutorId>forked-path</mavenExecutorId>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <arguments>-Pjvnet-release -Pgpg</arguments>
+                    <tag>release-${releaseVersion}</tag>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
