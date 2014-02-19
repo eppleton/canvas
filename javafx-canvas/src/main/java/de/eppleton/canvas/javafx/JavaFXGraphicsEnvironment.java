@@ -43,11 +43,13 @@ import net.java.html.canvas.ImageData;
 import net.java.html.canvas.Style;
 import net.java.html.canvas.spi.GraphicsEnvironment;
 import net.java.html.canvas.spi.GraphicsUtils;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author antonepple
  */
+@ServiceProvider(service = GraphicsEnvironment.class)
 public class JavaFXGraphicsEnvironment implements GraphicsEnvironment {
 
     GraphicsContext gc;

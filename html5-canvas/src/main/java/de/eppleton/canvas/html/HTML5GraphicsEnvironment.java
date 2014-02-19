@@ -18,7 +18,6 @@ package de.eppleton.canvas.html;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 import net.java.html.canvas.Dimension;
 import net.java.html.canvas.Image;
 import net.java.html.canvas.ImageData;
@@ -34,6 +33,7 @@ import net.java.html.js.JavaScriptBody;
  *
  * @author Anton Epple <toni.epple@eppleton.de>
  */
+@ServiceProvider(service = GraphicsEnvironment.class)
 public class HTML5GraphicsEnvironment implements GraphicsEnvironment {
 
     Object context;
