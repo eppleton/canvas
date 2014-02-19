@@ -541,6 +541,7 @@ public final class GraphicsContext {
     public void setFillStyle(Style style) {
         Object nativeFillStyle = graphicsEnvironmentImpl.setFillStyle(style, style.getCached());
         style.cache(nativeFillStyle);
+        graphicsEnvironmentImpl.setFillStyle(style, nativeFillStyle);
     }
 
     /**
