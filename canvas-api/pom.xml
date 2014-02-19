@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>canvas</artifactId>
-        <groupId>org.apidesign.html</groupId>
+        <groupId>org.apidesign.canvas</groupId>
         <version>0.8-SNAPSHOT</version>
     </parent>
   
-    <groupId>org.apidesign.html</groupId>
+    <groupId>org.apidesign.canvas</groupId>
     <artifactId>canvas-api</artifactId>
     <version>0.9-SNAPSHOT</version>
     <packaging>jar</packaging>
