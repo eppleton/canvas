@@ -18,6 +18,7 @@ package de.eppleton.canvas.html;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 import net.java.html.canvas.Dimension;
 import net.java.html.canvas.Image;
 import net.java.html.canvas.ImageData;
@@ -51,17 +52,18 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment {
 
     public static Object getOrCreate(String id) {
         Object canvas = getImpl(id);
+        Logger.getLogger(HTML5GraphicsEnvironment.class.getName()).severe("canvas "+canvas);
         if (canvas == null) {
             canvas = createImpl(id);
         }
         return canvas;
     }
 
-    @JavaScriptBody(args = {"id"}, body = "var canvas = document.getElementById('id');return canvas;")
+    @JavaScriptBody(args = {"id"}, body = "var canvas = document.getElementById(id);return canvas;")
     private static native Object getImpl(String id);
 
     @JavaScriptBody(args = {"id"}, body = "var canvas = document.createElement('canvas');"
-            + "var body = document.getElementsByTagName(\"body\")[0];body.appendChild(canvas); return canvas;")
+            + "var body = document.getElementsByTagName('body')[0];body.appendChild(canvas); return canvas;")
     private static native Object createImpl(String id);
 
     @JavaScriptBody(args = {"centerx", "centery", "radius", "startangle", "endangle", "ccw"},
