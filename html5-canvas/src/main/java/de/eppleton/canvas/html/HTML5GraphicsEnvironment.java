@@ -27,6 +27,7 @@ import net.java.html.canvas.Style.LinearGradient;
 import net.java.html.canvas.Style.Pattern;
 import net.java.html.canvas.Style.RadialGradient;
 import net.java.html.canvas.spi.GraphicsEnvironment;
+
 import net.java.html.js.JavaScriptBody;
 import org.openide.util.lookup.ServiceProvider;
 

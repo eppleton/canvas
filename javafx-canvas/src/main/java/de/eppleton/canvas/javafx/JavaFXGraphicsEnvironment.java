@@ -42,6 +42,7 @@ import net.java.html.canvas.Image;
 import net.java.html.canvas.ImageData;
 import net.java.html.canvas.Style;
 import net.java.html.canvas.spi.GraphicsEnvironment;
+
 import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 

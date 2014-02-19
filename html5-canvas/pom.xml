@@ -4,7 +4,7 @@
     <parent>
         <artifactId>canvas</artifactId>
         <groupId>org.apidesign.canvas</groupId>
-        <version>0.9-SNAPSHOT</version>
+        <version>0.8-SNAPSHOT</version>
     </parent>
   
     <groupId>org.apidesign.canvas</groupId>
@@ -24,14 +24,7 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <subpackages>de.eppleton.canvas.html</subpackages>
-                    <skip>false</skip>
-                </configuration>
-            </plugin>
+            
         </plugins>
     </build>
     <properties>
@@ -51,9 +44,9 @@
         </dependency>
   -->
         <dependency>
-            <groupId>net.java.html</groupId>
-            <artifactId>canvas</artifactId>
-            <version>0.9-SNAPSHOT</version>
+            <groupId>org.apidesign.canvas</groupId>
+            <artifactId>canvas-api</artifactId>
+            <version>0.8-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <dependency>
