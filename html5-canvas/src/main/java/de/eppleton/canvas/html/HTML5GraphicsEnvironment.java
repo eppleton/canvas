@@ -1,19 +1,18 @@
 /**
- * Canvas API
- * Copyright (C) 2013 AntonEpple <toni.epple@eppleton.de>
+ * Canvas API Copyright (C) 2013 AntonEpple <toni.epple@eppleton.de>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, version 2 of the License.
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, version 2 of the License.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program. Look for COPYING file in the top folder.
- * If not, see http://opensource.org/licenses/GPL-2.0.
+ * You should have received a copy of the GNU General Public License along with
+ * this program. Look for COPYING file in the top folder. If not, see
+ * http://opensource.org/licenses/GPL-2.0.
  */
 package de.eppleton.canvas.html;
 
@@ -40,17 +39,30 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment {
     Object canvas;
 
     public HTML5GraphicsEnvironment() {
-       this(100, 100, "canvas");
+        this(100, 100, "canvas");
     }
 
     public HTML5GraphicsEnvironment(int width, int height, String id) {
-        this.canvas = create(width, height, id);
+        this.canvas = getOrCreate(id);
+        setWidthImpl(canvas, width);
+        setHeightImpl(canvas,height);
         this.context = getContext(canvas);
     }
 
-    @JavaScriptBody(args = {"width", "height", "id"}, body = "var canvas = document.createElement('canvas'); canvas.height = 1224;\n" +
-"canvas.height = height; canvas.id = id; var body = document.getElementsByTagName(\"body\")[0];body.appendChild(canvas); return canvas;")
-    private static native Object create(int width, int height, String id);
+    public static Object getOrCreate(String id) {
+        Object canvas = getImpl(id);
+        if (canvas == null) {
+            canvas = createImpl(id);
+        }
+        return canvas;
+    }
+
+    @JavaScriptBody(args = {"id"}, body = "var canvas = document.getElementById('id');return canvas;")
+    private static native Object getImpl(String id);
+
+    @JavaScriptBody(args = {"id"}, body = "var canvas = document.createElement('canvas');"
+            + "var body = document.getElementsByTagName(\"body\")[0];body.appendChild(canvas); return canvas;")
+    private static native Object createImpl(String id);
 
     @JavaScriptBody(args = {"centerx", "centery", "radius", "startangle", "endangle", "ccw"},
             body = "this._context().arc(centerx,centery, radius, startangle, endangle,ccw);")
@@ -525,12 +537,18 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment {
             + "return resultImage;")
     public static native Object mergeImages(Object img1, Object img2);
 
-    @JavaScriptBody(args ={"canvas"}, body = "return canvas.getContext('2d');")
+    @JavaScriptBody(args = {"canvas"}, body = "return canvas.getContext('2d');")
     private static native Object getContext(Object canvas);
 
-    @JavaScriptBody(args={"canvas"}, body = "return canvas.width;")
-    private native int getHeightImpl(Object canvas) ;
+    @JavaScriptBody(args = {"canvas"}, body = "return canvas.width;")
+    private native int getHeightImpl(Object canvas);
+
+    @JavaScriptBody(args = {"canvas"}, body = "return canvas.height;")
+    private native int getWidthImpl(Object canvas);
     
-    @JavaScriptBody(args={"canvas"}, body = "return canvas.height;")
-    private native int getWidthImpl(Object canvas) ;
+   @JavaScriptBody(args = {"canvas", "width"}, body = "canvas.width = width;")
+    private native void setHeightImpl(Object canvas, int width);
+
+    @JavaScriptBody(args = {"canvas", "height"}, body = "canvas.height = height;")
+    private native void setWidthImpl(Object canvas, int width);
 }
