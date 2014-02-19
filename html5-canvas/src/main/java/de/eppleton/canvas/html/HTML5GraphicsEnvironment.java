@@ -52,7 +52,6 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment {
 
     public static Object getOrCreate(String id) {
         Object canvas = getImpl(id);
-        Logger.getLogger(HTML5GraphicsEnvironment.class.getName()).severe("canvas "+canvas);
         if (canvas == null) {
             canvas = createImpl(id);
         }
