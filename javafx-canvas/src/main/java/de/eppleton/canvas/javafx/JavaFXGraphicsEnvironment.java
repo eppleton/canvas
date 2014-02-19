@@ -42,7 +42,6 @@ import net.java.html.canvas.Image;
 import net.java.html.canvas.ImageData;
 import net.java.html.canvas.Style;
 import net.java.html.canvas.spi.GraphicsEnvironment;
-import net.java.html.canvas.spi.GraphicsUtils;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -59,8 +58,7 @@ public class JavaFXGraphicsEnvironment implements GraphicsEnvironment {
         this(new Canvas());
     }
 
-    public JavaFXGraphicsEnvironment(Canvas canvas) {
-        
+    public JavaFXGraphicsEnvironment(Canvas canvas) {   
         gc = canvas.getGraphicsContext2D();
         cnvs = canvas;
     }
@@ -436,8 +434,5 @@ public class JavaFXGraphicsEnvironment implements GraphicsEnvironment {
         return ImageUtilities.merge((javafx.scene.image.Image) cachedA, (javafx.scene.image.Image) cachedB);
     }
 
-    // TODO move somewhere else
-    public static net.java.html.canvas.GraphicsContext createGraphicsContext(Canvas canvas) {
-        return GraphicsUtils.create(new JavaFXGraphicsEnvironment(canvas));
-    }
+ 
 }

@@ -553,4 +553,6 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment {
 
     @JavaScriptBody(args = {"canvas", "height"}, body = "canvas.height = height;")
     private native void setWidthImpl(Object canvas, int width);
+
+   
 }
