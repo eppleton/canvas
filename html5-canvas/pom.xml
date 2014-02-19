@@ -9,7 +9,7 @@
   
     <groupId>org.apidesign.html</groupId>
     <artifactId>html5-canvas</artifactId>
-    <version>0.9-SNAPSHOT</version>
+    <version>0.8-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>html5-canvas</name>
     <url>http://maven.apache.org</url>
