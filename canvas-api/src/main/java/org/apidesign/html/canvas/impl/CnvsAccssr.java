@@ -17,6 +17,8 @@
  */
 package org.apidesign.html.canvas.impl;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.java.html.canvas.GraphicsContext;
 import net.java.html.canvas.spi.GraphicsEnvironment;
 
@@ -34,9 +36,15 @@ public abstract class CnvsAccssr {
     }
 
     public static CnvsAccssr getDefault() {
-        if (DEFAULT== null) GraphicsContext.init();
+        if (DEFAULT== null) {
+            try {
+                Class.forName(GraphicsContext.class.getName(), true, GraphicsContext.class.getClassLoader());
+            } catch (ClassNotFoundException ex) {
+                throw new IllegalStateException(ex);
+            }
+        }
         return DEFAULT;
     }
 
-    public abstract GraphicsContext create(GraphicsEnvironment environment);
+    public abstract <Canvas> GraphicsContext create(GraphicsEnvironment<Canvas> environment, Canvas c);
 }

@@ -32,11 +32,13 @@ public class GraphicsUtils {
     /**
      * Use this to get A GraphicsContext to draw on. Pass in an implementation of 
      * GraphicsEnvironment, e.g. for JavaFX or HTML5. 
+     * @param <Canvas>
      * @param environment
+     * @param canvas
      * @return 
      */
-    public static GraphicsContext create(GraphicsEnvironment environment){
-        return CnvsAccssr.getDefault().create(environment);
+    public static <Canvas> GraphicsContext create(GraphicsEnvironment<Canvas> environment, Canvas canvas){
+        return CnvsAccssr.getDefault().create(environment, canvas);
     }
     
     
