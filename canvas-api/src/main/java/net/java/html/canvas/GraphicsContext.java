@@ -77,7 +77,7 @@ public final class GraphicsContext {
             boolean ccw) {
         graphicsEnvironmentImpl.arc(centerX, centerY, startAngle, radius, endAngle, ccw);
     }
-
+    
     /**
      * Adds segments to the current path to make an arc.
      *
@@ -113,6 +113,17 @@ public final class GraphicsContext {
         graphicsEnvironmentImpl.fill();
     }
 
+    /**
+     * Get the Dimension of an Image
+     * @param img
+     * @return the Dimension of this Image
+     */
+    public Dimension getDimension(Image img){
+        int width = graphicsEnvironmentImpl.getWidth(img, img.getCached());
+        int height = graphicsEnvironmentImpl.getHeight(img, img.getCached());
+        return new Dimension(width, height);
+    }
+    
     /**
      * Strokes the path with the current stroke paint.
      */
