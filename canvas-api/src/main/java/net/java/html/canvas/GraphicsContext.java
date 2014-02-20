@@ -44,11 +44,6 @@ import org.apidesign.html.canvas.impl.CnvsAccssr;
  */
 public final class GraphicsContext {
 
-    public static void init() {
-        // do nothing we need this in order to have the class loaded and static 
-        // block executed for CnvsAccssr.
-    }
-
     GraphicsEnvironment graphicsEnvironmentImpl;
 
     static {
