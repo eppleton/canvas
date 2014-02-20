@@ -1,0 +1,2114 @@
+diff --git a/canvas-api/src/main/java/net/java/html/canvas/GraphicsContext.java b/canvas-api/src/main/java/net/java/html/canvas/GraphicsContext.java
+index 5d63dde..3078a7a 100644
+--- a/canvas-api/src/main/java/net/java/html/canvas/GraphicsContext.java
++++ b/canvas-api/src/main/java/net/java/html/canvas/GraphicsContext.java
+@@ -42,26 +42,19 @@ import org.apidesign.html.canvas.impl.CnvsAccssr;
+  * </pre>
+  * @author antonepple
+  */
+-public final class GraphicsContext {
+-
+-    public static void init() {
+-        // do nothing we need this in order to have the class loaded and static 
+-        // block executed for CnvsAccssr.
+-    }
+-
+-    GraphicsEnvironment graphicsEnvironmentImpl;
++public abstract class GraphicsContext {
+ 
+     static {
+         CnvsAccssr cnvsAccssr = new CnvsAccssr() {
+             @Override
+-            public GraphicsContext create(GraphicsEnvironment environment) {
+-                return new GraphicsContext(environment);
++            public <C> GraphicsContext create(GraphicsEnvironment<C> environment, C c) {
++                return new GraphicsContextImpl<C>(environment, c);
+             }
+         };
+     }
+ 
+-    GraphicsContext(GraphicsEnvironment graphicsEnvironment) {
+-        this.graphicsEnvironmentImpl = graphicsEnvironment;
++    /** only one subclass GraphicsContextImpl */
++    GraphicsContext() {
+     }
+ 
+     /**
+@@ -74,14 +67,12 @@ public final class GraphicsContext {
+      * @param endAngle the endAngle of the arc
+      * @param ccw the direction of the arc (counterclockwise)
+      */
+-    public void arc(double centerX,
++    public abstract void arc(double centerX,
+             double centerY,
+             double startAngle,
+             double radius,
+             double endAngle,
+-            boolean ccw) {
+-        graphicsEnvironmentImpl.arc(centerX, centerY, startAngle, radius, endAngle, ccw);
+-    }
++            boolean ccw);
+ 
+     /**
+      * Adds segments to the current path to make an arc.
+@@ -92,13 +83,11 @@ public final class GraphicsContext {
+      * @param y2 the Y coordinate of the second point of the arc.
+      * @param radius the radius of the arc in the range {0.0-positive infinity}.
+      */
+-    public void arcTo(double x1,
++    public abstract void arcTo(double x1,
+             double y1,
+             double x2,
+             double y2,
+-            double radius) {
+-        graphicsEnvironmentImpl.arcTo(x1, y1, x2, y2, radius);
+-    }
++            double radius);
+ 
+     /**
+      * Returns true if the the given x,y point is inside the path.
+@@ -107,65 +96,49 @@ public final class GraphicsContext {
+      * @param y the Y coordinate to use for the check.
+      * @return true if the point given is inside the path, false otherwise.
+      */
+-    public boolean isPointInPath(double x, double y) {
+-        return graphicsEnvironmentImpl.isPointInPath(x, y);
+-    }
++    public abstract boolean isPointInPath(double x, double y);
+ 
+     /**
+      * Fills the path with the current fill paint.
+      */
+-    public void fill() {
+-        graphicsEnvironmentImpl.fill();
+-    }
++    public abstract void fill();
+ 
+     /**
+      * Strokes the path with the current stroke paint.
+      */
+-    public void stroke() {
+-        graphicsEnvironmentImpl.stroke();
+-    }
++    public abstract void stroke();
+ 
+     /**
+      * Starts a Path
+      */
+-    public void beginPath() {
+-        graphicsEnvironmentImpl.beginPath();
+-    }
++    public abstract void beginPath();
+ 
+     /**
+      * Closes the path.
+      */
+-    public void closePath() {
+-        graphicsEnvironmentImpl.closePath();
+-    }
++    public abstract void closePath();
+ 
+     /**
+      * Clips using the current path
+      */
+-    public void clip() {
+-        graphicsEnvironmentImpl.clip();
+-    }
++    public abstract void clip();
+ 
+     /**
+      * Issues a move command for the current path to the given x,y coordinate.
+      *
+-     * @param x0 the X position for the move to command.
+-     * @param y0 the Y position for the move to command.
++     * @param x the X position for the move to command.
++     * @param y the Y position for the move to command.
+      */
+-    public void moveTo(double x, double y) {
+-        graphicsEnvironmentImpl.moveTo(x, y);
+-    }
++    public abstract void moveTo(double x, double y);
+ 
+     /**
+      * Adds segments to the current path to make a line at the given x,y
+      * coordinate.
+      *
+-     * @param x1 the X coordinate of the ending point of the line.
+-     * @param y1 the Y coordinate of the ending point of the line.
++     * @param x the X coordinate of the ending point of the line.
++     * @param y the Y coordinate of the ending point of the line.
+      */
+-    public void lineTo(double x, double y) {
+-        graphicsEnvironmentImpl.lineTo(x, y);
+-    }
++    public abstract void lineTo(double x, double y);
+ 
+     /**
+      * Adds segments to the current path to make a quadratic curve.
+@@ -175,9 +148,7 @@ public final class GraphicsContext {
+      * @param x the X coordinate of the end point
+      * @param y the Y coordinate of the end point
+      */
+-    public void quadraticCurveTo(double cpx, double cpy, double x, double y) {
+-        graphicsEnvironmentImpl.quadraticCurveTo(cpx, cpy, x, y);
+-    }
++    public abstract void quadraticCurveTo(double cpx, double cpy, double x, double y);
+ 
+     /**
+      * Adds segments to the current path to make a cubic bezier curve.
+@@ -189,9 +160,7 @@ public final class GraphicsContext {
+      * @param x the X coordinate of the end point.
+      * @param y the Y coordinate of the end point.
+      */
+-    public void bezierCurveTo(double cp1x, double cp1y, double cp2x, double cp2y, double x, double y) {
+-        graphicsEnvironmentImpl.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y);
+-    }
++    public abstract void bezierCurveTo(double cp1x, double cp1y, double cp2x, double cp2y, double x, double y);
+ 
+     /**
+      * Fills a rectangle using the current fill paint.
+@@ -201,9 +170,7 @@ public final class GraphicsContext {
+      * @param width the width of the rectangle.
+      * @param height the height of the rectangle.
+      */
+-    public void fillRect(double x, double y, double width, double height) {
+-        graphicsEnvironmentImpl.fillRect(x, y, width, height);
+-    }
++    public abstract void fillRect(double x, double y, double width, double height);
+ 
+     /**
+      * Strokes a rectangle using the current stroke paint.
+@@ -213,9 +180,7 @@ public final class GraphicsContext {
+      * @param width the width of the rectangle.
+      * @param height the height of the rectangle.
+      */
+-    public void strokeRect(double x, double y, double width, double height) {
+-        graphicsEnvironmentImpl.strokeRect(x, y, width, height);
+-    }
++    public abstract void strokeRect(double x, double y, double width, double height);
+ 
+     /**
+      * Clears a portion of the canvas with a transparent color value.
+@@ -225,9 +190,7   public final class GraphicsContext {
+      * @param width width of the rectangle.
+      * @param height height of the rectangle.
+      */
+-    public void clearRect(double x, double y, double width, double height) {
+-        graphicsEnvironmentImpl.clearRect(x, y, width, height);
+-    }
++    public abstract void clearRect(double x, double y, double width, double height);
+ 
+     /**
+      * Clears a portion of the canvas with a transparent color value.
+@@ -237,9 +200,7 @@ public final class GraphicsContext {
+      * @param width width of the rectangle.
+      * @param height height of the rectangle.
+      */
+-    public void rect(double x, double y, double width, double height) {
+-        graphicsEnvironmentImpl.rect(x, y, width, height);
+-    }
++    public abstract void rect(double x, double y, double width, double height);
+ 
+     /**
+      * Saves the following attributes onto a stack.
+@@ -263,9 +224,7 @@ public final class GraphicsContext {
+      * This method does NOT alter the current state in any way. Also, not that
+      * the current path is not saved.
+      */
+-    public void save() {
+-        graphicsEnvironmentImpl.save();
+-    }
++    public abstract void save();
+ 
+     /**
+      * Pops the state off of the stack, setting the following attributes to
+@@ -290,18 +249,14 @@ public final class GraphicsContext {
+      * <li>Fill Rule</li>
+      * </ul>
+      */
+-    public void restore() {
+-        graphicsEnvironmentImpl.restore();
+-    }
++    public abstract void restore();
+ 
+     /**
+      * Rotates the current transform in degrees.
+      *
+      * @param angle value in degrees to rotate the current transform.
+      */
+-    public void rotate(double angle) {
+-        graphicsEnvironmentImpl.rotate(angle);
+-    }
++    public abstract void rotate(double angle);
+ 
+     /**
+      * Concatenates the input with the current transform.
+@@ -313,9 +268,7 @@ public final class GraphicsContext {
+      * @param mxt - the X coordinate translation element of the 3x4 matrix
+      * @param myt - the Y coordinate translation element of the 3x4 matrix
+      */
+-    public void transform(double mxx, double myx, double mxy, double myy, double mxt, double myt) {
+-        graphicsEnvironmentImpl.transform(mxx, myx, mxy, myy, mxt, myt);
+-    }
++    public abstract void transform(double mxx, double myx, double mxy, double myy, double mxt, double myt);
+ 
+     /**
+      * Concatenates the input with the current transform.
+@@ -327,9 +280,7 @@ public final class GraphicsContext {
+      * @param mxt - the X coordinate translation element of the 3x4 matrix
+      * @param myt - the Y coordinate translation element of the 3x4 matrix
+      */
+-    public void setTransform(double mxx, double myx, double mxy, double myy, double mxt, double myt) {
+-        graphicsEnvironmentImpl.setTransform(mxx, myx, mxy, myy, mxt, myt);
+-    }
++    public abstract void setTransform(double mxx, double myx, double mxy, double myy, double mxt, double myt);
+ 
+     /**
+      * Translates the current transform by x, y.
+@@ -337,9 +288,7 @@ public final class GraphicsContext {
+      * @param x value to translate along the x axis.
+      * @param y value to translate along the y axis.
+      */
+-    public void translate(double x, double y) {
+-        graphicsEnvironmentImpl.translate(x, y);
+-    }
++    public abstract void translate(double x, double y);
+ 
+     /**
+      * Scales the current transform by x, y.
+@@ -347,9 +296,7 @@ public final class GraphicsContext {
+      * @param x value to scale in the x axis.
+      * @param y value to scale in the y axis.
+      */
+-    public void scale(double x, double y) {
+-        graphicsEnvironmentImpl.scale(x, y);
+-    }
++    public abstract void scale(double x, double y);
+ 
+     /**
+      * Draws an image at the given x, y position using the width and height of
+@@ -361,10 +308,7 @@ public final class GraphicsContext {
+      * @param y the Y coordinate on the destination for the upper left of the
+      * image.
+      */
+-    public void drawImage(Image image, double x, double y) {
+-        Object nativeImage = graphicsEnvironmentImpl.drawImage(image, x, y, image.getCached());
+-        image.cache(nativeImage);
+-    }
++    public abstract void drawImage(Image image, double x, double y);
+ 
+     /**
+      * Draws an image into the given destination rectangle of the canvas. The
+@@ -378,10 +322,7 @@ public final class GraphicsContext {
+      * @param width the width of the destination rectangle.
+      * @param height the height of the destination rectangle.
+      */
+-    public void drawImage(Image image, double x, double y, double width, double height) {
+-        Object nativeImage = graphicsEnvironmentImpl.drawImage(image, x, y, width, height, image.getCached());
+-        image.cache(nativeImage);
+-    }
++    public abstract void drawImage(Image image, double x, double y, double width, double height);
+ 
+     /**
+      * Draws the current source rectangle of the given image to the given
+@@ -397,10 +338,7 @@ public final class GraphicsContext {
+      * @param dw the destination rectangle's width.
+      * @param dh the destination rectangle's height.
+      */
+-    public void drawImage(Image image, double sx, double sy, double sw, double sh, double dx, double dy, double dw, double dh) {
+-        Object nativeImage = graphicsEnvironmentImpl.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh, image.getCached());
+-        image.cache(nativeImage);
+-    }
++    public abstract void drawImage(Image image, double sx, double sy, double sw, double sh, double dx, double dy, double dw, double dh);
+ 
+     /**
+      * Merges two images drawing one on top of the other and returning the
+@@ -410,18 +348,7 @@ public final class GraphicsContext {
+      * @param b the upper Image
+      * @return
+      */
+-    public Image merge(Image a, Image b) {
+-        if (a.getCached() == null) {
+-            drawImage(a, 0, 0);
+-        }
+-        if (b.getCached() == null) {
+-            drawImage(b, 0, 0);
+-        }
+-        Object nativeImage = graphicsEnvironmentImpl.mergeImages(a, b, a.getCached(), b.getCached());
+-        Image merged = Image.create("should add real path here");
+-        merged.cache(nativeImage);
+-        return merged;
+-    }
++    public abstract Image merge(Image a, Image b);
+ 
+ //    public void setShadowColor(String color) {
+ //        graphicsEnvironmentImpl.setShadowColor(color);
+@@ -459,36 +386,28 @@ public final class GraphicsContext {
+      *
+      * @return a value of butt, round, or square.
+      */
+-    public String getLineCap() {
+-        return graphicsEnvironmentImpl.getLineCap();
+-    }
++    public abstract String getLineCap();
+ 
+     /**
+      * Sets the current stroke line cap attribute.
+      *
+      * @param style a value of miter, bevel, or round.
+      */
+-    public void setLineCap(String style) {
+-        graphicsEnvironmentImpl.setLineCap(style);
+-    }
++    public abstract void setLineCap(String style);
+ 
+     /**
+      * Gets the current stroke line join attribute.
+      *
+      * @return a value of miter, bevel, or round.
+      */
+-    public String getLineJoin() {
+-        return graphicsEnvironmentImpl.getLineJoin();
+-    }
++    public abstract String getLineJoin();
+ 
+     /**
+      * Sets the current stroke line join attribute.
+      *
+      * @param style a value of miter, bevel, or round.
+      */
+-    public void setLineJoin(String style) {
+-        graphicsEnvironmentImpl.setLineJoin(style);
+-    }
++    public abstract void setLineJoin(String style);
+ 
+     /**
+      * Gets the current line width attribute.
+@@ -497,9 +416,7 @@ public final class GraphicsContext {
+      * and leaving the value unchanged.
+      *
+      */
+-    public double getLineWidth() {
+-        return graphicsEnvironmentImpl.getLineWidth();
+-    }
++    public abstract double getLineWidth();
+ 
+     /**
+      * Sets the current line width attribute.
+@@ -508,9 +425,7 @@ public final class GraphicsContext {
+      * ignored and leaving the value unchanged.
+      *
+      */
+-    public void setLineWidth(double width) {
+-        graphicsEnvironmentImpl.setLineWidth(width);
+-    }
++    public abstract void setLineWidth(double width);
+ 
+     /**
+      * Gets the current miter limit attribute.
+@@ -518,19 +433,15 @@ public final class GraphicsContext {
+      * @return limit value between 0 and positive infinity with any other value
+      * being ignored and leaving the value unchanged.
+      */
+-    public double getMiterLimit() {
+-        return graphicsEnvironmentImpl.getMiterLimit();
+-    }
++    public abstract double getMiterLimit();
+ 
+     /**
+      * Sets the current miter limit attribute.
+      *
+-     * @param ml miter limit value between 0 and positive infinity with any
++     * @param limit miter limit value between 0 and positive infinity with any
+      * other value being ignored and leaving the value unchanged.
+      */
+-    public void setMiterLimit(double limit) {
+-        graphicsEnvironmentImpl.setMiterLimit(limit);
+-    }
++    public abstract void setMiterLimit(double limit);
+ 
+     /**
+      * Sets the fill style. Will be used when rendering something, e.g. calling
+@@ -538,19 +449,14 @@ public final class GraphicsContext {
+      *
+      * @param style
+      */
+-    public void setFillStyle(Style style) {
+-        Object nativeFillStyle = graphicsEnvironmentImpl.setFillStyle(style, style.getCached());
+-        style.cache(nativeFillStyle);
+-    }
++    public abstract void setFillStyle(Style style);
+ 
+     /**
+      * get the current font
+      *
+      * @return current Font. of the fillText Methods.
+      */
+-    public String getFont() {
+-        return graphicsEnvironmentImpl.getFont();
+-    }
++    public abstract String getFont();
+ 
+     /**
+      * Set the Font. Will be used when rendering Text, e.g. by calling one of
+@@ -558,28 +464,21 @@ public final class GraphicsContext {
+      *
+      * @param font
+      */
+-    public void setFont(String font) {
+-        graphicsEnvironmentImpl.setFont(font);
+-    }
++    public abstract void setFont(String font);
+ 
+     /**
+      * sets the Style of the Stroke.
+      *
+      * @param style
+      */
+-    public void setStrokeStyle(Style style) {
+-        Object nativeStrokeStyle = graphicsEnvironmentImpl.setStrokeStyle(style, style.getCached());
+-        style.cache(nativeStrokeStyle);
+-    }
++    public abstract void setStrokeStyle(Style style);
+ 
+     /**
+      * Gets the current TextAlignment attribute
+      *
+      * @return TextAlignment with values of left, center, right, or justify.
+      */
+-    public String getTextAlign() {
+-        return graphicsEnvironmentImpl.getTextAlign();
+-    }
++    public abstract String getTextAlign();
+ 
+     /**
+      * Defines horizontal text alignment, relative to the text {@code x} origin.
+@@ -602,27 +501,21 @@ public final class GraphicsContext {
+      *
+      * @param textAlign with values of left, center, right.
+      */
+-    public void setTextAlign(String textAlign) {
+-        graphicsEnvironmentImpl.setTextAlign(textAlign);
+-    }
++    public abstract void setTextAlign(String textAlign);
+ 
+     /**
+      * Gets the current Text Baseline attribute.
+      *
+      * @return baseline with values of top, center, baseline, or bottom
+      */
+-    public String getTextBaseline() {
+-        return graphicsEnvironmentImpl.getTextBaseline();
+-    }
++    public abstract String getTextBaseline();
+ 
+     /**
+      * Sets the current Text Baseline attribute.
+      *
+-     * @param baseline with values of top, center, baseline, or bottom
++     * @param textbaseline with values of top, center, baseline, or bottom
+      */
+-    public void setTextBaseline(String textbaseline) {
+-        graphicsEnvironmentImpl.setTextBaseline(textbaseline);
+-    }
++    public abstract void setTextBaseline(String textbaseline);
+ 
+     /**
+      * Renders the indicated String with current fill. default is black.
+@@ -631,9 +524,7 @@ public final class GraphicsContext {
+      * @param x x coordinate of start position
+      * @param y y coordinate of start position
+      */
+-    public void fillText(String text, double x, double y) {
+-        graphicsEnvironmentImpl.fillText(text, x, y);
+-    }
++    public abstract void fillText(String text, double x, double y);
+ 
+     /**
+      * Renders the indicated String with current fill. default is black.
+@@ -643,9 +534,7 @@ public final class GraphicsContext {
+      * @param y y coordinate of start position
+      * @param maxWidth maximum width of text
+      */
+-    public void fillText(String text, double x, double y, double maxWidth) {
+-        graphicsEnvironmentImpl.fillText(text, x, y, maxWidth);
+-    }
++    public abstract void fillText(String text, double x, double y, double maxWidth);
+ 
+     /**
+      * Check the length of a text before writing it to the Canvas. Takes into
+@@ -654,9 +543,7 @@ public final class GraphicsContext {
+      * @param text the text to measure
+      * @return the length in pixels
+      */
+-    public Dimension measureText(String text) {
+-        return graphicsEnvironmentImpl.measureText(text);
+-    }
++    public abstract Dimension measureText(String text);
+ 
+     /**
+      * Renders the indicated String (with no fill)
+@@ -665,9 +552,7 @@ public final class GraphicsContext {
+      * @param x x coordinate of start position
+      * @param y y coordinate of start position
+      */
+-    public void strokeText(String text, double x, double y) {
+-        graphicsEnvironmentImpl.strokeText(text, x, y);
+-    }
++    public abstract void strokeText(String text, double x, double y);
+ 
+     /**
+      * Renders the indicated String (with no fill)
+@@ -677,9 +562,7 @@ public final class GraphicsContext {
+      * @param y y coordinate of start position
+      * @param maxWidth maximum width of text
+      */
+-    public void strokeText(String text, double x, double y, double maxWidth) {
+-        graphicsEnvironmentImpl.strokeText(text, x, y, maxWidth);
+-    }
++    public abstract void strokeText(String text, double x, double y, double maxWidth);
+ 
+     /**
+      * Get a pixel array that you can manipulate, e.g. apply effects /
+@@ -689,9 +572,7 @@ public final class GraphicsContext {
+      * @param y height
+      * @return a PixelMap
+      */
+-    public ImageData createPixelMap(double x, double y) {
+-        return graphicsEnvironmentImpl.createPixelMap(x, y);
+-    }
++    public abstract ImageData createPixelMap(double x, double y);
+ 
+     /**
+      * Create a new ImageData object with the same dimensions as the object
+@@ -700,9 +581,7 @@ public final class GraphicsContext {
+      * @param pixelMap 
+      * @return
+      */
+-    public ImageData createPixelMap(ImageData pixelMap) {
+-        return graphicsEnvironmentImpl.createPixelMap(pixelMap);
+-    }
++    public abstract ImageData createPixelMap(ImageData pixelMap);
+     
+     /**
+      * Get the pixels for a region of your GraphicsContext
+@@ -712,9 +591,7 @@ public final class GraphicsContext {
+      * @param height height
+      * @return 
+      */
+-    public ImageData getSnapshot(double x, double y, double width, double height) {
+-        return graphicsEnvironmentImpl.getPixelMap(x, y, width, height);
+-    }
++    public abstract ImageData getSnapshot(double x, double y, double width, double height);
+     
+     /**
+      * Render an ImageData Object at the specified position
+@@ -722,9 +599,7 @@ public final class GraphicsContext {
+       * @param x start x coordinate
+      * @param y start y coordinate
+      */
+-    public void drawPixelMap(ImageData pixelMap, double x, double y) {
+-        graphicsEnvironmentImpl.putPixelMap(pixelMap, x, y);
+-    }
++    public abstract void drawPixelMap(ImageData pixelMap, double x, double y);
+ 
+       /**
+      * Render an ImageData Object at the specified position
+@@ -736,9 +611,7 @@ public final class GraphicsContext {
+      * @param dirtywidth The width to use to draw the image on the canvas
+      * @param dirtyheight The height to use to draw the image on the canvas
+      */
+-    public void drawPixelMap(ImageData pixelMap, double x, double y, double dirtyx, double dirtyy, double dirtywidth, double dirtyheight) {
+-        graphicsEnvironmentImpl.putPixelMap(pixelMap, x, y, dirtyx, dirtyy, dirtywidth, dirtyheight);
+-    }
++    public abstract void drawPixelMap(ImageData pixelMap, double x, double y, double dirtyx, double dirtyy, double dirtywidth, double dirtyheight);
+ 
+     /**
+      * Sets the global alpha of the current state.
+@@ -746,36 +619,28 @@ public final class GraphicsContext {
+      * @param alpha value in the range {@code 0.0-1.0}. The value is clamped if
+      * it is out of range.
+      */
+-    public void setGlobalAlpha(double alpha) {
+-        graphicsEnvironmentImpl.setGlobalAlpha(alpha);
+-    }
++    public abstract void setGlobalAlpha(double alpha);
+ 
+     /**
+      * Gets the current global alpha.
+      *
+      * @return the current global alpha.
+      */
+-    public double getGlobalAlpha() {
+-        return graphicsEnvironmentImpl.getGlobalAlpha();
+-    }
++    public abstract double getGlobalAlpha();
+ 
+     /**
+      * Sets the global blend mode.
+      *
+-     * @param op the BlendMode that will be set.
++     * @param operation the BlendMode that will be set.
+      */
+-    public void setGlobalCompositeOperation(String operation) {
+-        graphicsEnvironmentImpl.setGlobalCompositeOperation(operation);
+-    }
++    public abstract void setGlobalCompositeOperation(String operation);
+ 
+     /**
+      * Gets the global blend mode.
+      *
+      * @return the global BlendMode of the current state.
+      */
+-    public String getGlobalCompositeOperation() {
+-        return graphicsEnvironmentImpl.getGlobalCompositeOperation();
+-    }
++    public abstract String getGlobalCompositeOperation();
+ 
+     /**
+      * Create a LinearGradient to use in Canvas.
+@@ -786,9 +651,7 @@ public final class GraphicsContext {
+      * @param y1 y coordinate of end point
+      * @return the gradient
+      */
+-    public LinearGradient createLinearGradient(double x0, double y0, double x1, double y1, Map<Double, String> stops) {
+-        return Style.LinearGradient.create(x0, y0, x1, y1, stops);
+-    }
++    public abstract LinearGradient createLinearGradient(double x0, double y0, double x1, double y1, Map<Double, String> stops);
+ 
+     /**
+      * Create an Image Pattern from a source Image and a repeat style. Possible
+@@ -798,9 +661,7 @@ public final class GraphicsContext {
+      * @param repeat the repeat style
+      * @return the Pattern
+      */
+-    public Pattern createPattern(Image image, String repeat) {
+-        return new Pattern(image, repeat);
+-    }
++    public abstract Pattern createPattern(Image image, String repeat);
+ 
+     /**
+      * Create a RadialGradient
+@@ -813,9 +674,7 @@ public final class GraphicsContext {
+      * @param r1 radius of ending circle
+      * @return the Gradient
+      */
+-    public RadialGradient createRadialGradient(double x0, double y0, double r0, double x1, double y1, double r1, Map<Double, String> stops) {
+-        return RadialGradient.create(x0, y0, r0, x1, y1, r1, stops);
+-    }
++    public abstract RadialGradient createRadialGradient(double x0, double y0, double r0, double x1, double y1, double r1, Map<Double, String> stops);
+ 
+     /**
+      * Convert this String Representation of a Color to a Color Object.
+@@ -823,9 +682,7 @@ public final class GraphicsContext {
+      * @param webColor
+      * @return The Color represented by the input
+      */
+-    public Color getWebColor(String webColor) {
+-        return new Style.Color(webColor);
+-    }
++    public abstract Color getWebColor(String webColor);
+ 
+     /**
+      * Get the height of this GraphicsContext (which should be the same as the
+@@ -833,9 +690,7 @@ public final class GraphicsContext {
+      *
+      * @return the height of this GraphicsContext
+      */
+-    public int getHeight() {
+-        return graphicsEnvironmentImpl.getHeight();
+-    }
++    public abstract int getHeight();
+ 
+     /**
+      * Get the width of this GraphicsContext (which should be the same as the
+@@ -843,9 +698,7 @@ public final class GraphicsContext {
+      *
+      * @return the width of this GraphicsContext
+      */
+-    public int getWidth() {
+-        return graphicsEnvironmentImpl.getWidth();
+-    }
++    public abstract int getWidth();
+ 
+ //    public void setHeight(int height) {
+ //        graphicsEnvironmentImpl.setHeight(height);
+@@ -862,9 +715,7 @@ public final class GraphicsContext {
+      * @param centerY
+      * @param radius
+      */
+-    public void fillCircle(float centerX, float centerY, float radius) {
+-        graphicsEnvironmentImpl.arc(centerX, centerY, radius, 0, Math.PI * 2, false);
+-    }
++    public abstract void fillCircle(float centerX, float centerY, float radius);
+ 
+     /**
+      * Fills a polygon with the given points using the currently set fill paint.
+@@ -875,17 +726,5 @@ public final class GraphicsContext {
+      * points.
+      * @param vertexCount the number of points that make the polygon.
+      */
+-    public void fillPolygon(double[] x_coord, double[] y_coord, int vertexCount) {
+-        if (vertexCount >= 1 && x_coord != null && x_coord.length >= vertexCount && y_coord != null && y_coord.length >= vertexCount) {
+-            graphicsEnvironmentImpl.beginPath();
+-        }
+-        graphicsEnvironmentImpl.moveTo(x_coord[0], y_coord[0]);
+-        for (int i = 1; i < vertexCount; i++) {
+-            graphicsEnvironmentImpl.lineTo(x_coord[i], y_coord[i]);
+-
+-        }
+-        graphicsEnvironmentImpl.closePath();
+-        graphicsEnvironmentImpl.fill();
+-        graphicsEnvironmentImpl.stroke();
+-    }
++    public abstract void fillPolygon(double[] x_coord, double[] y_coord, int vertexCount);
+ }
+diff --git a/canvas-api/src/main/java/net/java/html/canvas/GraphicsContextImpl.java b/canvas-api/src/main/java/net/java/html/canvas/GraphicsContextImpl.java
+index 5d63dde..a294ffa 100644
+--- a/canvas-api/src/main/java/net/java/html/canvas/GraphicsContextImpl.java
++++ b/canvas-api/src/main/java/net/java/html/canvas/GraphicsContextImpl.java
+@@ -23,45 +23,15 @@ import net.java.html.canvas.Style.LinearGradient;
+ import net.java.html.canvas.Style.Pattern;
+ import net.java.html.canvas.Style.RadialGradient;
+ import net.java.html.canvas.spi.GraphicsEnvironment;
+-import org.apidesign.html.canvas.impl.CnvsAccssr;
+ 
+-/**
+- * A 2D Graphics Context similar to HTML5 or JavaFX GraphicsContext. Use this to
+- * paint on your Canvas. To get a GraphicsContext call {@link net.java.html.canvas.spi.GraphicsUtils#create(GraphicsEnvironment) GraphicsUtils.create}
+- * For HTML 5 :
+- * <pre>
+-* {@code
+- * GraphicsContext gc = GraphicsUtil.create(new Html5FXGraphicsEnvironment(200,200,"canvas"));
+- * }
+- * </pre>
+- * For JavaFX:
+- * <pre>
+-* {@code
+- * GraphicsContext gc = GraphicsUtil.create(new JavaFXGraphicsEnvironment());
+- *  }
+- * </pre>
+- * @author antonepple
+- */
+-public final class GraphicsContext {
+-
+-    public static void init() {
+-        // do nothing we need this in order to have the class loaded and static 
+-        // block executed for CnvsAccssr.
+-    }
+-
+-    GraphicsEnvironment graphicsEnvironmentImpl;
++final class GraphicsContextImpl<Canvas> extends GraphicsContext {
+ 
+-    static {
+-        CnvsAccssr cnvsAccssr = new CnvsAccssr() {
+-            @Override
+-            public GraphicsContext create(GraphicsEnvironment environment) {
+-                return new GraphicsContext(environment);
+-            }
+-        };
+-    }
++    final GraphicsEnvironment<Canvas> graphicsEnvironmentImpl;
++    final Canvas canvas;
+ 
+-    GraphicsContext(GraphicsEnvironment graphicsEnvironment) {
++    GraphicsContextImpl(GraphicsEnvironment<Canvas> graphicsEnvironment, Canvas c) {
+         this.graphicsEnvironmentImpl = graphicsEnvironment;
++        this.canvas = c;
+     }
+ 
+     /**
+@@ -80,7 +50,7 @@ public final class GraphicsContext {
+             double radius,
+             double endAngle,
+             boolean ccw) {
+-        graphicsEnvironmentImpl.arc(centerX, centerY, startAngle, radius, endAngle, ccw);
++        graphicsEnvironmentImpl.arc(canvas, centerX, centerY, startAngle, radius, endAngle, ccw);
+     }
+ 
+     /**
+@@ -97,7 +67,7 @@ public final class GraphicsContext {
+             double x2,
+             double y2,
+             double radius) {
+-        graphicsEnvironmentImpl.arcTo(x1, y1, x2, y2, radius);
++        graphicsEnvironmentImpl.arcTo(canvas, x1, y1, x2, y2, radius);
+     }
+ 
+     /**
+@@ -108,42 +78,42 @@ public final class GraphicsContext {
+      * @return true if the point given is inside the path, false otherwise.
+      */
+     public boolean isPointInPath(double x, double y) {
+-        return graphicsEnvironmentImpl.isPointInPath(x, y);
++        return graphicsEnvironmentImpl.isPointInPath(canvas, x, y);
+     }
+ 
+     /**
+      * Fills the path with the current fill paint.
+      */
+     public void fill() {
+-        graphicsEnvironmentImpl.fill();
++        graphicsEnvironmentImpl.fill(canvas);
+     }
+ 
+     /**
+      * Strokes the path with the current stroke paint.
+      */
+     public void stroke() {
+-        graphicsEnvironmentImpl.stroke();
++        graphicsEnvironmentImpl.stroke(canvas);
+     }
+ 
+     /**
+      * Starts a Path
+      */
+     public void beginPath() {
+-        graphicsEnvironmentImpl.beginPath();
++        graphicsEnvironmentImpl.beginPath(canvas);
+     }
+ 
+     /**
+      * Closes the path.
+      */
+     public void closePath() {
+-        graphicsEnvironmentImpl.closePath();
++        graphicsEnvironmentImpl.closePath(canvas);
+     }
+ 
+     /**
+      * Clips using the current path
+      */
+     public void clip() {
+-        graphicsEnvironmentImpl.clip();
++        graphicsEnvironmentImpl.clip(canvas);
+     }
+ 
+     /**
+@@ -153,7 +123,7 @@ public final class GraphicsContext {
+      * @param y0 the Y position for the move to command.
+      */
+     public void moveTo(double x, double y) {
+-        graphicsEnvironmentImpl.moveTo(x, y);
++        graphicsEnvironmentImpl.moveTo(canvas, x, y);
+     }
+ 
+     /**
+@@ -164,7 +134,7 @@ public final class GraphicsContext {
+      * @param y1 the Y coordinate of the ending point of the line.
+      */
+     public void lineTo(double x, double y) {
+-        graphicsEnvironmentImpl.lineTo(x, y);
++        graphicsEnvironmentImpl.lineTo(canvas, x, y);
+     }
+ 
+     /**
+@@ -176,7 +146,7 @@ public final class GraphicsContext {
+      * @param y the Y coordinate of the end point
+      */
+     public void quadraticCurveTo(double cpx, double cpy, double x, double y) {
+-        graphicsEnvironmentImpl.quadraticCurveTo(cpx, cpy, x, y);
++        graphicsEnvironmentImpl.quadraticCurveTo(canvas, cpx, cpy, x, y);
+     }
+ 
+     /**
+@@ -190,7 +160,7 @@ public final class GraphicsContext {
+      * @param y the Y coordinate of the end point.
+      */
+     public void bezierCurveTo(double cp1x, double cp1y, double cp2x, double cp2y, double x, double y) {
+-        graphicsEnvironmentImpl.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y);
++        graphicsEnvironmentImpl.bezierCurveTo(canvas, cp1x, cp1y, cp2x, cp2y, x, y);
+     }
+ 
+     /**
+@@ -202,7 +172,7 @@ public final class GraphicsContext {
+      * @param height the height of the rectangle.
+      */
+     public void fillRect(double x, double y, double width, double height) {
+-        graphicsEnvironmentImpl.fillRect(x, y, width, height);
++        graphicsEnvironmentImpl.fillRect(canvas, x, y, width, height);
+     }
+ 
+     /**
+@@ -214,7 +184,7 @@ public final class GraphicsContext {
+      * @param height the height of the rectangle.
+      */
+     public void strokeRect(double x, double y, double width, double height) {
+-        graphicsEnvironmentImpl.strokeRect(x, y, width, height);
++        graphicsEnvironmentImpl.strokeRect(canvas, x, y, width, height);
+     }
+ 
+     /**
+@@ -226,7 +196,7 @@ public final class GraphicsContext {
+      * @param height height of the rectangle.
+      */
+     public void clearRect(double x, double y, double width, double height) {
+-        graphicsEnvironmentImpl.clearRect(x, y, width, height);
++        graphicsEnvironmentImpl.clearRect(canvas, x, y, width, height);
+     }
+ 
+     /**
+@@ -238,7 +208,7 @@ public final class GraphicsContext {
+      * @param height height of the rectangle.
+      */
+     public void rect(double x, double y, double width, double height) {
+-        graphicsEnvironmentImpl.rect(x, y, width, height);
++        graphicsEnvironmentImpl.rect(canvas, x, y, width, height);
+     }
+ 
+     /**
+@@ -264,7 +234,7 @@ public final class GraphicsContext {
+      * the current path is not saved.
+      */
+     public void save() {
+-        graphicsEnvironmentImpl.save();
++        graphicsEnvironmentImpl.save(canvas);
+     }
+ 
+     /**
+@@ -291,7 +261,7 @@ public final class GraphicsContext {
+      * </ul>
+      */
+     public void restore() {
+-        graphicsEnvironmentImpl.restore();
++        graphicsEnvironmentImpl.restore(canvas);
+     }
+ 
+     /**
+@@ -300,7 +270,7 @@ public final class GraphicsContext {
+      * @param angle value in degrees to rotate the current transform.
+      */
+     public void rotate(double angle) {
+-        graphicsEnvironmentImpl.rotate(angle);
++        graphicsEnvironmentImpl.rotate(canvas, angle);
+     }
+ 
+     /**
+@@ -314,7 +284,7 @@ public final class GraphicsContext {
+      * @param myt - the Y coordinate translation element of the 3x4 matrix
+      */
+     public void transform(double mxx, double myx, double mxy, double myy, double mxt, double myt) {
+-        graphicsEnvironmentImpl.transform(mxx, myx, mxy, myy, mxt, myt);
++        graphicsEnvironmentImpl.transform(canvas, mxx, myx, mxy, myy, mxt, myt);
+     }
+ 
+     /**
+@@ -328,7 +298,7 @@ public final class GraphicsContext {
+      * @param myt - the Y coordinate translation element of the 3x4 matrix
+      */
+     public void setTransform(double mxx, double myx, double mxy, double myy, double mxt, double myt) {
+-        graphicsEnvironmentImpl.setTransform(mxx, myx, mxy, myy, mxt, myt);
++        graphicsEnvironmentImpl.setTransform(canvas, mxx, myx, mxy, myy, mxt, myt);
+     }
+ 
+     /**
+@@ -338,7 +308,7 @@ public final class GraphicsContext {
+      * @param y value to translate along the y axis.
+      */
+     public void translate(double x, double y) {
+-        graphicsEnvironmentImpl.translate(x, y);
++        graphicsEnvironmentImpl.translate(canvas, x, y);
+     }
+ 
+     /**
+@@ -348,7 +318,7 @@ public final class GraphicsContext {
+      * @param y value to scale in the y axis.
+      */
+     public void scale(double x, double y) {
+-        graphicsEnvironmentImpl.scale(x, y);
++        graphicsEnvironmentImpl.scale(canvas, x, y);
+     }
+ 
+     /**
+@@ -362,7 +332,7 @@ public final class GraphicsContext {
+      * image.
+      */
+     public void drawImage(Image image, double x, double y) {
+-        Object nativeImage = graphicsEnvironmentImpl.drawImage(image, x, y, image.getCached());
++        Object nativeImage = graphicsEnvironmentImpl.drawImage(canvas, image, x, y, image.getCached());
+         image.cache(nativeImage);
+     }
+ 
+@@ -379,7 +349,7 @@ public final class GraphicsContext {
+      * @param height the height of the destination rectangle.
+      */
+     public void drawImage(Image image, double x, double y, double width, double height) {
+-        Object nativeImage = graphicsEnvironmentImpl.drawImage(image, x, y, width, height, image.getCached());
++        Object nativeImage = graphicsEnvironmentImpl.drawImage(canvas, image, x, y, width, height, image.getCached());
+         image.cache(nativeImage);
+     }
+ 
+@@ -398,7 +368,7 @@ public final class GraphicsContext {
+      * @param dh the destination rectangle's height.
+      */
+     public void drawImage(Image image, double sx, double sy, double sw, double sh, double dx, double dy, double dw, double dh) {
+-        Object nativeImage = graphicsEnvironmentImpl.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh, image.getCached());
++        Object nativeImage = graphicsEnvironmentImpl.drawImage(canvas, image, sx, sy, sw, sh, dx, dy, dw, dh, image.getCached());
+         image.cache(nativeImage);
+     }
+ 
+@@ -417,7 +387,7 @@ public final class GraphicsContext {
+         if (b.getCached() == null) {
+             drawImage(b, 0, 0);
+         }
+-        Object nativeImage = graphicsEnvironmentImpl.mergeImages(a, b, a.getCached(), b.getCached());
++        Object nativeImage = graphicsEnvironmentImpl.mergeImages(canvas, a, b, a.getCached(), b.getCached());
+         Image merged = Image.create("should add real path here");
+         merged.cache(nativeImage);
+         return merged;
+@@ -460,7 +430,7 @@ public final class GraphicsContext {
+      * @return a value of butt, round, or square.
+      */
+     public String getLineCap() {
+-        return graphicsEnvironmentImpl.getLineCap();
++        return graphicsEnvironmentImpl.getLineCap(canvas);
+     }
+ 
+     /**
+@@ -469,7 +439,7 @@ public final class GraphicsContext {
+      * @param style a value of miter, bevel, or round.
+      */
+     public void setLineCap(String style) {
+-        graphicsEnvironmentImpl.setLineCap(style);
++        graphicsEnvironmentImpl.setLineCap(canvas, style);
+     }
+ 
+     /**
+@@ -478,7 +448,7 @@ public final class GraphicsContext {
+      * @return a value of miter, bevel, or round.
+      */
+     public String getLineJoin() {
+-        return graphicsEnvironmentImpl.getLineJoin();
++        return graphicsEnvironmentImpl.getLineJoin(canvas);
+     }
+ 
+     /**
+@@ -487,7 +457,7 @@ public final class GraphicsContext {
+      * @param style a value of miter, bevel, or round.
+      */
+     public void setLineJoin(String style) {
+-        graphicsEnvironmentImpl.setLineJoin(style);
++        graphicsEnvironmentImpl.setLineJoin(canvas, style);
+     }
+ 
+     /**
+@@ -498,7 +468,7 @@ public final class GraphicsContext {
+      *
+      */
+     public double getLineWidth() {
+-        return graphicsEnvironmentImpl.getLineWidth();
++        return graphicsEnvironmentImpl.getLineWidth(canvas);
+     }
+ 
+     /**
+@@ -509,7 +479,7 @@ public final class GraphicsContext {
+      *
+      */
+     public void setLineWidth(double width) {
+-        graphicsEnvironmentImpl.setLineWidth(width);
++        graphicsEnvironmentImpl.setLineWidth(canvas, width);
+     }
+ 
+     /**
+@@ -519,7 +489,7 @@ public final class GraphicsContext {
+      * being ignored and leaving the value unchanged.
+      */
+     public double getMiterLimit() {
+-        return graphicsEnvironmentImpl.getMiterLimit();
++        return graphicsEnvironmentImpl.getMiterLimit(canvas);
+     }
+ 
+     /**
+@@ -529,7 +499,7 @@ public final class GraphicsContext {
+      * other value being ignored and leaving the value unchanged.
+      */
+     public void setMiterLimit(double limit) {
+-        graphicsEnvironmentImpl.setMiterLimit(limit);
++        graphicsEnvironmentImpl.setMiterLimit(canvas, limit);
+     }
+ 
+     /**
+@@ -539,7 +509,7 @@ public final class GraphicsContext {
+      * @param style
+      */
+     public void setFillStyle(Style style) {
+-        Object nativeFillStyle = graphicsEnvironmentImpl.setFillStyle(style, style.getCached());
++        Object nativeFillStyle = graphicsEnvironmentImpl.setFillStyle(canvas, style, style.getCached());
+         style.cache(nativeFillStyle);
+     }
+ 
+@@ -549,7 +519,7 @@ public final class GraphicsContext {
+      * @return current Font. of the fillText Methods.
+      */
+     public String getFont() {
+-        return graphicsEnvironmentImpl.getFont();
++        return graphicsEnvironmentImpl.getFont(canvas);
+     }
+ 
+     /**
+@@ -559,7 +529,7 @@ public final class GraphicsContext {
+      * @param font
+      */
+     public void setFont(String font) {
+-        graphicsEnvironmentImpl.setFont(font);
++        graphicsEnvironmentImpl.setFont(canvas, font);
+     }
+ 
+     /**
+@@ -568,7 +538,7 @@ public final class GraphicsContext {
+      * @param style
+      */
+     public void setStrokeStyle(Style style) {
+-        Object nativeStrokeStyle = graphicsEnvironmentImpl.setStrokeStyle(style, style.getCached());
++        Object nativeStrokeStyle = graphicsEnvironmentImpl.setStrokeStyle(canvas, style, style.getCached());
+         style.cache(nativeStrokeStyle);
+     }
+ 
+@@ -578,7 +548,7 @@ public final class GraphicsContext {
+      * @return TextAlignment with values of left, center, right, or justify.
+      */
+     public String getTextAlign() {
+-        return graphicsEnvironmentImpl.getTextAlign();
++        return graphicsEnvironmentImpl.getTextAlign(canvas);
+     }
+ 
+     /**
+@@ -603,7 +573,7 @@ public final class GraphicsContext {
+      * @param textAlign with values of left, center, right.
+      */
+     public void setTextAlign(String textAlign) {
+-        graphicsEnvironmentImpl.setTextAlign(textAlign);
++        graphicsEnvironmentImpl.setTextAlign(canvas, textAlign);
+     }
+ 
+     /**
+@@ -612,7 +582,7 @@ public final class GraphicsContext {
+      * @return baseline with values of top, center, baseline, or bottom
+      */
+     public String getTextBaseline() {
+-        return graphicsEnvironmentImpl.getTextBaseline();
++        return graphicsEnvironmentImpl.getTextBaseline(canvas);
+     }
+ 
+     /**
+@@ -621,7 +591,7 @@ public final class GraphicsContext {
+      * @param baseline with values of top, center, baseline, or bottom
+      */
+     public void setTextBaseline(String textbaseline) {
+-        graphicsEnvironmentImpl.setTextBaseline(textbaseline);
++        graphicsEnvironmentImpl.setTextBaseline(canvas, textbaseline);
+     }
+ 
+     /**
+@@ -632,7 +602,7 @@ public final class GraphicsContext {
+      * @param y y coordinate of start position
+      */
+     public void fillText(String text, double x, double y) {
+-        graphicsEnvironmentImpl.fillText(text, x, y);
++        graphicsEnvironmentImpl.fillText(canvas, text, x, y);
+     }
+ 
+     /**
+@@ -644,7 +614,7 @@ public final class GraphicsContext {
+      * @param maxWidth maximum width of text
+      */
+     public void fillText(String text, double x, double y, double maxWidth) {
+-        graphicsEnvironmentImpl.fillText(text, x, y, maxWidth);
++        graphicsEnvironmentImpl.fillText(canvas, text, x, y, maxWidth);
+     }
+ 
+     /**
+@@ -655,7 +625,7 @@ public final class GraphicsContext {
+      * @return the length in pixels
+      */
+     public Dimension measureText(String text) {
+-        return graphicsEnvironmentImpl.measureText(text);
++        return graphicsEnvironmentImpl.measureText(canvas, text);
+     }
+ 
+     /**
+@@ -666,7 +636,7 @@ public final class GraphicsContext {
+      * @param y y coordinate of start position
+      */
+     public void strokeText(String text, double x, double y) {
+-        graphicsEnvironmentImpl.strokeText(text, x, y);
++        graphicsEnvironmentImpl.strokeText(canvas, text, x, y);
+     }
+ 
+     /**
+@@ -678,7 +648,7 @@ public final class GraphicsContext {
+      * @param maxWidth maximum width of text
+      */
+     public void strokeText(String text, double x, double y, double maxWidth) {
+-        graphicsEnvironmentImpl.strokeText(text, x, y, maxWidth);
++        graphicsEnvironmentImpl.strokeText(canvas, text, x, y, maxWidth);
+     }
+ 
+     /**
+@@ -690,7 +660,7 @@ public final class GraphicsContext {
+      * @return a PixelMap
+      */
+     public ImageData createPixelMap(double x, double y) {
+-        return graphicsEnvironmentImpl.createPixelMap(x, y);
++        return graphicsEnvironmentImpl.createPixelMap(canvas, x, y);
+     }
+ 
+     /**
+@@ -701,7 +671,7 @@ public final class GraphicsContext {
+      * @return
+      */
+     public ImageData createPixelMap(ImageData pixelMap) {
+-        return graphicsEnvironmentImpl.createPixelMap(pixelMap);
++        return graphicsEnvironmentImpl.createPixelMap(canvas, pixelMap);
+     }
+     
+     /**
+@@ -713,7 +683,7 @@ public final class GraphicsContext {
+      * @return 
+      */
+     public ImageData getSnapshot(double x, double y, double width, double height) {
+-        return graphicsEnvironmentImpl.getPixelMap(x, y, width, height);
++        return graphicsEnvironmentImpl.getPixelMap(canvas, x, y, width, height);
+     }
+     
+     /**
+@@ -723,7 +693,7 @@ public final class GraphicsContext {
+      * @param y start y coordinate
+      */
+     public void drawPixelMap(ImageData pixelMap, double x, double y) {
+-        graphicsEnvironmentImpl.putPixelMap(pixelMap, x, y);
++        graphicsEnvironmentImpl.putPixelMap(canvas, pixelMap, x, y);
+     }
+ 
+       /**
+@@ -737,7 +707,7 @@ public final class GraphicsContext {
+      * @param dirtyheight The height to use to draw the image on the canvas
+      */
+     public void drawPixelMap(ImageData pixelMap, double x, double y, double dirtyx, double dirtyy, double dirtywidth, double dirtyheight) {
+-        graphicsEnvironmentImpl.putPixelMap(pixelMap, x, y, dirtyx, dirtyy, dirtywidth, dirtyheight);
++        graphicsEnvironmentImpl.putPixelMap(canvas, pixelMap, x, y, dirtyx, dirtyy, dirtywidth, dirtyheight);
+     }
+ 
+     /**
+@@ -747,7 +717,7 @@ public final class GraphicsContext {
+      * it is out of range.
+      */
+     public void setGlobalAlpha(double alpha) {
+-        graphicsEnvironmentImpl.setGlobalAlpha(alpha);
++        graphicsEnvironmentImpl.setGlobalAlpha(canvas, alpha);
+     }
+ 
+     /**
+@@ -756,7 +726,7 @@ public final class GraphicsContext {
+      * @return the current global alpha.
+      */
+     public double getGlobalAlpha() {
+-        return graphicsEnvironmentImpl.getGlobalAlpha();
++        return graphicsEnvironmentImpl.getGlobalAlpha(canvas);
+     }
+ 
+     /**
+@@ -765,7 +735,7 @@ public final class GraphicsContext {
+      * @param op the BlendMode that will be set.
+      */
+     public void setGlobalCompositeOperation(String operation) {
+-        graphicsEnvironmentImpl.setGlobalCompositeOperation(operation);
++        graphicsEnvironmentImpl.setGlobalCompositeOperation(canvas, operation);
+     }
+ 
+     /**
+@@ -774,7 +744,7 @@ public final class GraphicsContext {
+      * @return the global BlendMode of the current state.
+      */
+     public String getGlobalCompositeOperation() {
+-        return graphicsEnvironmentImpl.getGlobalCompositeOperation();
++        return graphicsEnvironmentImpl.getGlobalCompositeOperation(canvas);
+     }
+ 
+     /**
+@@ -834,7 +804,7 @@ public final class GraphicsContext {
+      * @return the height of this GraphicsContext
+      */
+     public int getHeight() {
+-        return graphicsEnvironmentImpl.getHeight();
++        return graphicsEnvironmentImpl.getHeight(canvas);
+     }
+ 
+     /**
+@@ -844,7 +814,7 @@ public final class GraphicsContext {
+      * @return the width of this GraphicsContext
+      */
+     public int getWidth() {
+-        return graphicsEnvironmentImpl.getWidth();
++        return graphicsEnvironmentImpl.getWidth(canvas);
+     }
+ 
+ //    public void setHeight(int height) {
+@@ -863,7 +833,7 @@ public final class GraphicsContext {
+      * @param radius
+      */
+     public void fillCircle(float centerX, float centerY, float radius) {
+-        graphicsEnvironmentImpl.arc(centerX, centerY, radius, 0, Math.PI * 2, false);
++        graphicsEnvironmentImpl.arc(canvas, centerX, centerY, radius, 0, Math.PI * 2, false);
+     }
+ 
+     /**
+@@ -877,15 +847,15 @@ public final class GraphicsContext {
+      */
+     public void fillPolygon(double[] x_coord, double[] y_coord, int vertexCount) {
+         if (vertexCount >= 1 && x_coord != null && x_coord.length >= vertexCount && y_coord != null && y_coord.length >= vertexCount) {
+-            graphicsEnvironmentImpl.beginPath();
++            graphicsEnvironmentImpl.beginPath(canvas);
+         }
+-        graphicsEnvironmentImpl.moveTo(x_coord[0], y_coord[0]);
++        graphicsEnvironmentImpl.moveTo(canvas, x_coord[0], y_coord[0]);
+         for (int i = 1; i < vertexCount; i++) {
+-            graphicsEnvironmentImpl.lineTo(x_coord[i], y_coord[i]);
++            graphicsEnvironmentImpl.lineTo(canvas, x_coord[i], y_coord[i]);
+ 
+         }
+-        graphicsEnvironmentImpl.closePath();
+-        graphicsEnvironmentImpl.fill();
+-        graphicsEnvironmentImpl.stroke();
++        graphicsEnvironmentImpl.closePath(canvas);
++        graphicsEnvironmentImpl.fill(canvas);
++        graphicsEnvironmentImpl.stroke(canvas);
+     }
+ }
+diff --git a/canvas-api/src/main/java/net/java/html/canvas/spi/GraphicsEnvironment.java b/canvas-api/src/main/java/net/java/html/canvas/spi/GraphicsEnvironment.java
+index 227f044..30972ff 100644
+--- a/canvas-api/src/main/java/net/java/html/canvas/spi/GraphicsEnvironment.java
++++ b/canvas-api/src/main/java/net/java/html/canvas/spi/GraphicsEnvironment.java
+@@ -26,12 +26,14 @@ import net.java.html.canvas.Style;
+  * Provider API for Canvas. Implement this to add support for your platform.
+  *
+  * @author antonepple
++ * @param <Canvas> the internal state of the canvas
+  */
+-public interface GraphicsEnvironment {
++public interface GraphicsEnvironment<Canvas> {
+ 
+     /**
+      * Adds path elements to the current path to make an arc.
+      *
++     * @param canvas internal state of the canvas
+      * @param centerX the center x position of the arc.
+      * @param centerY the center y position of the arc.
+      * @param startAngle the startAngle of the arc
+@@ -39,7 +41,7 @@ public interface GraphicsEnvironment {
+      * @param endAngle the endAngle of the arc
+      * @param ccw the direction of the arc (counterclockwise)
+      */
+-    public void arc(double centerX,
++    public void arc(Canvas canvas, double centerX,
+             double centerY,
+             double startAngle,
+             double radius,
+@@ -49,13 +51,14 @@ public interface GraphicsEnvironment {
+     /**
+      * Adds segments to the current path to make an arc.
+      *
++     * @param canvas internal state of the canvas
+      * @param x1 the X coordinate of the first point of the arc.
+      * @param y1 the Y coordinate of the first point of the arc.
+      * @param x2 the X coordinate of the second point of the arc.
+      * @param y2 the Y coordinate of the second point of the arc.
+      * @param radius the radius of the arc in the range {0.0-positive infinity}.
+      */
+-    public void arcTo(double x1,
++    public void arcTo(Canvas canvas, double x1,
+             double y1,
+             double x2,
+             double y2,
+@@ -64,67 +67,77 @@ public interface GraphicsEnvironment {
+     /**
+      * Returns true if the the given x,y point is inside the path.
+      *
++     * @param canvas internal state of the canvas
+      * @param x the X coordinate to use for the check.
+      * @param y the Y coordinate to use for the check.
+      * @return true if the point given is inside the path, false otherwise.
+      */
+-    public boolean isPointInPath(double x, double y);
++    public boolean isPointInPath(Canvas canvas, double x, double y);
+ 
+     /**
+      * Fills the path with the current fill paint.
++     * @param canvas internal state of the canvas
+      */
+-    public void fill();
++    public void fill(Canvas canvas);
+ 
+     /**
+      * Strokes the path with the current stroke paint.
++     * @param canvas internal state of the canvas
+      */
+-    public void stroke();
++    public void stroke(Canvas canvas);
+ 
+     /**
+      * Starts a Path
++     * @param canvas internal state of the canvas
+      */
+-    public void beginPath();
++    public void beginPath(Canvas canvas);
+ 
+     /**
+      * Closes the path.
++     * @param canvas internal state of the canvas
+      */
+-    public void closePath();
++    public void closePath(Canvas canvas);
+ 
+     /**
+      * Clips using the current path
++     * @param canvas internal state of the canvas
+      */
+-    public void clip();
++    public void clip(Canvas canvas);
+ 
+     /**
+      * Issues a move command for the current path to the given x,y coordinate.
+      *
++     * @param canvas internal state of the canvas
+      * @param x the X position for the move to command.
+      * @param y the Y position for the move to command.
+      */
+-    public void moveTo(double x, double y);
++    public void moveTo(Canvas canvas, double x, double y);
+ 
+     /**
+      * Adds segments to the current path to make a line at the given x,y
+      * coordinate.
+      *
++     * @param canvas internal state of the canvas
+      * @param x the X coordinate of the ending point of the line.
+      * @param y the Y coordinate of the ending point of the line.
+      */
+-    public void lineTo(double x, double y);
++    public void lineTo(Canvas canvas, double x, double y);
+ 
+     /**
+      * Adds segments to the current path to make a quadratic curve.
+      *
++     * @param canvas internal state of the canvas
+      * @param cpx the X coordinate of the control point
+      * @param cpy the Y coordinate of the control point
+      * @param x the X coordinate of the end point
+      * @param y the Y coordinate of the end point
+      */
+-    public void quadraticCurveTo(double cpx, double cpy, double x, double y);
++    public void quadraticCurveTo(Canvas canvas, double cpx, double cpy, double x, double y);
+ 
+     /**
+      * Adds segments to the current path to make a cubic bezier curve.
+      *
++     * @param canvas internal state of the canvas
+      * @param cp1x the X coordinate of first bezier control point.
+      * @param cp1y the Y coordinate of the first bezier control point.
+      * @param cp2x the X coordinate of the second bezier control point.
+@@ -132,47 +145,51 @@ public interface GraphicsEnvironment {
+      * @param x the X coordinate of the end point.
+      * @param y the Y coordinate of the end point.
+      */
+-    public void bezierCurveTo(double cp1x, double cp1y, double cp2x, double cp2y, double x, double y);
++    public void bezierCurveTo(Canvas canvas, double cp1x, double cp1y, double cp2x, double cp2y, double x, double y);
+ 
+     /**
+      * Fills a rectangle using the current fill paint.
+      *
++     * @param canvas internal state of the canvas
+      * @param x the X position of the upper left corner of the rectangle.
+      * @param y the Y position of the upper left corner of the rectangle.
+      * @param width the width of the rectangle.
+      * @param height the height of the rectangle.
+      */
+-    public void fillRect(double x, double y, double width, double height);
++    public void fillRect(Canvas canvas, double x, double y, double width, double height);
+ 
+     /**
+      * Strokes a rectangle using the current stroke paint.
+      *
++     * @param canvas internal state of the canvas
+      * @param x the X position of the upper left corner of the rectangle.
+      * @param y the Y position of the upper left corner of the rectangle.
+      * @param width the width of the rectangle.
+      * @param height the height of the rectangle.
+      */
+-    public void strokeRect(double x, double y, double width, double height);
++    public void strokeRect(Canvas canvas, double x, double y, double width, double height);
+ 
+     /**
+      * Clears a portion of the canvas with a transparent color value.
+      *
++     * @param canvas internal state of the canvas
+      * @param x X position of the upper left corner of the rectangle.
+      * @param y Y position of the upper left corner of the rectangle.
+      * @param width width of the rectangle.
+      * @param height height of the rectangle.
+      */
+-    public void clearRect(double x, double y, double width, double height);
++    public void clearRect(Canvas canvas, double x, double y, double width, double height);
+ 
+     /**
+      * Clears a portion of the canvas with a transparent color value.
+      *
++     * @param canvas internal state of the canvas
+      * @param x X position of the upper left corner of the rectangle.
+      * @param y Y position of the upper left corner of the rectangle.
+      * @param width width of the rectangle.
+      * @param height height of the rectangle.
+      */
+-    public void rect(double x, double y, double width, double height);
++    public void rect(Canvas canvas, double x, double y, double width, double height);
+ 
+     /**
+      * Saves the following attributes onto a stack.
+@@ -195,8 +212,9 @@ public interface GraphicsEnvironment {
+      * </ul>
+      * This method does NOT alter the current state in any way. Also, not that
+      * the current path is not saved.
++     * @param canvas internal state of the canvas
+      */
+-    public void save();
++    public void save(Canvas canvas);
+ 
+     /**
+      * Pops the state off of the stack, setting the following attributes to
+@@ -220,19 +238,22 @@ public interface GraphicsEnvironment {
+      * <li>Effect</li>
+      * <li>Fill Rule</li>
+      * </ul>
++     * @param canvas internal state of the canvas
+      */
+-    public void restore();
++    public void restore(Canvas canvas);
+ 
+     /**
+      * Rotates the current transform in degrees.
+      *
++     * @param canvas internal state of the canvas
+      * @param angle value in degrees to rotate the current transform.
+      */
+-    public void rotate(double angle);
++    public void rotate(Canvas canvas, double angle);
+ 
+     /**
+      * Concatenates the input with the current transform.
+      *
++     * @param canvas internal state of the canvas
+      * @param a - the X coordinate scaling element of the 3x4 matrix
+      * @param b - the Y coordinate shearing element of the 3x4 matrix
+      * @param c - the X coordinate shearing element of the 3x4 matrix
+@@ -240,11 +261,12 @@ public interface GraphicsEnvironment {
+      * @param e - the X coordinate translation element of the 3x4 matrix
+      * @param f - the Y coordinate translation element of the 3x4 matrix
+      */
+-    public void transform(double a, double b, double c, double d, double e, double f);
++    public void transform(Canvas canvas, double a, double b, double c, double d, double e, double f);
+ 
+     /**
+      * Concatenates the input with the current transform.
+      *
++     * @param canvas internal state of the canvas
+      * @param a - the X coordinate scaling element of the 3x4 matrix
+      * @param b - the Y coordinate shearing element of the 3x4 matrix
+      * @param c - the X coordinate shearing element of the 3x4 matrix
+@@ -252,28 +274,31 @@ public interface GraphicsEnvironment {
+      * @param e - the X coordinate translation element of the 3x4 matrix
+      * @param f - the Y coordinate translation element of the 3x4 matrix
+      */
+-    public void setTransform(double a, double b, double c, double d, double e, double f);
++    public void setTransform(Canvas canvas, double a, double b, double c, double d, double e, double f);
+ 
+     /**
+      * Translates the current transform by x, y.
+      *
++     * @param canvas internal state of the canvas
+      * @param x value to translate along the x axis.
+      * @param y value to translate along the y axis.
+      */
+-    public void translate(double x, double y);
++    public void translate(Canvas canvas, double x, double y);
+ 
+     /**
+      * Scales the current transform by x, y.
+      *
++     * @param canvas internal state of the canvas
+      * @param x value to scale in the x axis.
+      * @param y value to scale in the y axis.
+      */
+-    public void scale(double x, double y);
++    public void scale(Canvas canvas, double x, double y);
+ 
+     /**
+      * Draws an image at the given x, y position using the width and height of
+      * the given image.
+      *
++     * @param canvas internal state of the canvas
+      * @param image the image to be drawn.
+      * @param x the X coordinate on the destination for the upper left of the
+      * image.
+@@ -281,12 +306,13 @@ public interface GraphicsEnvironment {
+      * image.
+      * @return the native Image for caching.
+      */
+-    public Object drawImage(Image image, double x, double y, Object nativeImage);
++    public Object drawImage(Canvas canvas, Image image, double x, double y, Object nativeImage);
+ 
+     /**
+      * Draws an image into the given destination rectangle of the canvas. The
+      * Image is scaled to fit into the destination rectagnle.
+      *
++     * @param canvas internal state of the canvas
+      * @param image the image to be drawn.
+      * @param x the X coordinate on the destination for the upper left of the
+      * image.
+@@ -297,12 +323,13 @@ public interface GraphicsEnvironment {
+      * @return the native Image for caching.
+      *
+      */
+-    public Object drawImage(Image image, double x, double y, double width, double height, Object nativeImage);
++    public Object drawImage(Canvas canvas, Image image, double x, double y, double width, double height, Object nativeImage);
+ 
+     /**
+      * Draws the current source rectangle of the given image to the given
+      * destination rectangle of the Canvas.
+      *
++     * @param canvas internal state of the canvas
+      * @param image the image to be drawn.
+      * @param sx the source rectangle's X coordinate position.
+      * @param sy the source rectangle's Y coordinate position.
+@@ -314,25 +341,27 @@ public interface GraphicsEnvironment {
+      * @param height the destination rectangle's height.
+      * @return the native Image for caching.
+      */
+-    public Object drawImage(Image image, double sx, double sy, double sWidth, double sHeight, double x, double y, double width, double height, Object nativeImage);
++    public Object drawImage(Canvas canvas, Image image, double sx, double sy, double sWidth, double sHeight, double x, double y, double width, double height, Object nativeImage);
+ 
+     /**
+      * Get the width of this Image
+      *
++     * @param canvas internal state of the canvas
+      * @param image the image to measure
+      * @param nativeImage the cached native Image or null
+      * @return the width of the image
+      */
+-    public int getWidth(Image image, Object nativeImage);
++    public int getWidth(Canvas canvas, Image image, Object nativeImage);
+ 
+     /**
+      * Get the height of this Image
+      *
++     * @param canvas internal state of the canvas
+      * @param image the image to measure
+      * @param nativeImage the cached native Image or null
+      * @return the height of the image
+      */
+-    public int getHeight(Image image, Object nativeImage);
++    public int getHeight(Canvas canvas, Image image, Object nativeImage);
+ 
+     /**
+      * When implementing you can return an Object of your choice to enable
+@@ -340,12 +369,13 @@ public interface GraphicsEnvironment {
+      * the cache hasn't been invalidated, the Object you returned will be passed
+      * as a parameter.
+      *
++     * @param canvas internal state of the canvas
+      * @param style The style object you should use to create your native style
+      * @param nativeStyle your native object if cached, null otherwise
+      * @return return native Object for caching
+      *
+      */
+-    public Object setFillStyle(Style style, Object nativeStyle);
++    public Object setFillStyle(Canvas canvas, Style style, Object nativeStyle);
+ 
+     /**
+      * When implementing you can return an Object of your choice to enable
+@@ -353,12 +383,13 @@ public interface GraphicsEnvironment {
+      * the cache hasn't been invalidated, the Object you returned will be passed
+      * as a parameter.
+      *
++     * @param canvas internal state of the canvas
+      * @param style The style object you should use to create your native style
+      * @param nativeStyle your native object if cached, null otherwise
+      * @return return native Object for caching
+      *
+      */
+-    public Object setStrokeStyle(Style style, Object nativeStyle);
++    public Object setStrokeStyle(Canvas canvas, Style style, Object nativeStyle);
+ 
+ //    public void setShadowColor(String color);
+ //
+@@ -378,111 +409,125 @@ public interface GraphicsEnvironment {
+     /**
+      * Gets the current stroke line cap.
+      *
++     * @param canvas internal state of the canvas
+      * @return {@code StrokeLineCap} with a value of Butt, Round, or Square.
+      */
+-    public String getLineCap();
++    public String getLineCap(Canvas canvas);
+ 
+     /**
+      * Sets the current stroke line cap.
+      *
++     * @param canvas internal state of the canvas
+      * @param style a value of Butt, Round, or Square.
+      */
+-    public void setLineCap(String style);
++    public void setLineCap(Canvas canvas, String style);
+ 
+     /**
+      * Gets the current stroke line join.
+      *
++     * @param canvas internal state of the canvas
+      * @return a value of Miter, Bevel, or Round.
+      */
+-    public String getLineJoin();
++    public String getLineJoin(Canvas canvas);
+ 
+     /**
+      * Sets the current stroke line join.
+      *
++     * @param canvas internal state of the canvas
+      * @param style with a value of Miter, Bevel, or Round.
+      */
+-    public void setLineJoin(String style);
++    public void setLineJoin(Canvas canvas, String style);
+ 
+     /**
+      * Gets the current line width.
+      *
++     * @param canvas internal state of the canvas
+      * @return value between 0 and infinity.
+      */
+-    public double getLineWidth();
++    public double getLineWidth(Canvas canvas);
+ 
+     /**
+      * Sets the current line width.
+      *
++     * @param canvas internal state of the canvas
+      * @param width value in the range {0-positive infinity}, with any other
+      * value being ignored and leaving the value unchanged.
+      */
+-    public void setLineWidth(double width);
++    public void setLineWidth(Canvas canvas, double width);
+ 
+     /**
+      * Gets the current miter limit. v
+      *
++     * @param canvas internal state of the canvas
+      * @return the miter limit value in the range {@code 0.0-positive infinity}
+      */
+-    public double getMiterLimit();
++    public double getMiterLimit(Canvas canvas);
+ 
+     /**
+      * Sets the current miter limit.
+      *
++     * @param canvas internal state of the canvas
+      * @param limit miter limit value between 0 and positive infinity with any
+      * other value being ignored and leaving the value unchanged.
+      */
+-    public void setMiterLimit(double limit);
++    public void setMiterLimit(Canvas canvas, double limit);
+ 
+     /**
+      * Gets the current Font.
+      *
++     * @param canvas internal state of the canvas
+      * @return the Font
+      */
+-    public String getFont();
++    public String getFont(Canvas canvas);
+ 
+     /**
+      * Sets the current Font.
+      *
++     * @param canvas internal state of the canvas
+      */
+-    public void setFont(String font);
++    public void setFont(Canvas canvas, String font);
+ 
+     /**
+      * Gets the current {@code TextAlignment}.
+      *
++     * @param canvas internal state of the canvas
+      * @return TextAlignment with values of Left, Center, Right, or Justify.
+      */
+-    public String getTextAlign();
++    public String getTextAlign(Canvas canvas);
+ 
+     /**
+      * Defines horizontal text alignment, relative to the text origin.
+      *
++     * @param canvas internal state of the canvas
+      * @param textAlign with values of Left, Center, Right.
+      */
+-    public void setTextAlign(String textAlign);
++    public void setTextAlign(Canvas canvas, String textAlign);
+ 
+     /**
+      * Sets the current Text Baseline.
+      *
+-     * @param baseline with values of Top, Center, Baseline, or Bottom
++     * @param canvas internal state of the canvas
+      */
+-    public String getTextBaseline();
++    public String getTextBaseline(Canvas canvas);
+ 
+     /**
+      * Sets the current Text Baseline.
+      *
++     * @param canvas internal state of the canvas
+      * @param baseline with values of Top, Center, Baseline, or Bottom
+      */
+-    public void setTextBaseline(String baseline);
++    public void setTextBaseline(Canvas canvas, String baseline);
+ 
+     /**
+      * Fills the given string of text at position x, y (0,0 at top left) with
+      * the current fill paint attribute.
+      *
++     * @param canvas internal state of the canvas
+      * @param text the string of text.
+      * @param x position on the x axis.
+      * @param y position on the y axis.
+      */
+-    public void fillText(String text, double x, double y);
++    public void fillText(Canvas canvas, String text, double x, double y);
+ 
+     /**
+      * Fills text and includes a maximum width of the string.
+@@ -490,30 +535,33 @@ public interface GraphicsEnvironment {
+      * If the width of the text extends past max width, then it will be sized to
+      * fit.
+      *
++     * @param canvas internal state of the canvas
+      * @param text the string of text.
+      * @param x position on the x axis.
+      * @param y position on the y axis.
+      * @param maxWidth maximum width the text string can have.
+      */
+-    public void fillText(String text, double x, double y, double maxWidth);
++    public void fillText(Canvas canvas, String text, double x, double y, double maxWidth);
+ 
+     /**
+      * The Dimension of this text using the current Font settings
+      *
++     * @param canvas internal state of the canvas
+      * @param text
+      * @return the Dimension of this text using the current Font settings
+      */
+-    public Dimension measureText(String text);
++    public Dimension measureText(Canvas canvas, String text);
+ 
+     /**
+      * draws the given string of text at position x, y (0,0 at top left) with
+      * the current stroke paint attribute.
+      *
++     * @param canvas internal state of the canvas
+      * @param text the string of text.
+      * @param x position on the x axis.
+      * @param y position on the y axis.
+      */
+-    public void strokeText(String text, double x, double y);
++    public void strokeText(Canvas canvas, String text, double x, double y);
+ 
+     /**
+      * Draws text with stroke paint and includes a maximum width of the string.
+@@ -521,49 +569,55 @@ public interface GraphicsEnvironment {
+      * If the width of the text extends past max width, then it will be sized to
+      * fit.
+      *
++     * @param canvas internal state of the canvas
+      * @param text the string of text.
+      * @param x position on the x axis.
+      * @param y position on the y axis.
+      * @param maxWidth maximum width the text string can have.
+      */
+-    public void strokeText(String text, double x, double y, double maxWidth);
++    public void strokeText(Canvas canvas, String text, double x, double y, double maxWidth);
+ 
+     /**
+      * Get a pixel array that you can manipulate, e.g. apply effects / transparency
++     * @param canvas internal state of the canvas
+      * @param x width
+      * @param y height
+      * @return a PixelMap
+      */
+-    public ImageData createPixelMap(double x, double y);
++    public ImageData createPixelMap(Canvas canvas, double x, double y);
+ 
+     /**
+      * Create a new ImageData object with the same dimensions as the 
+      * object specified by imageData (this does not copy the image data)
++     * @param canvas internal state of the canvas
+      * @param imageData
+      * @return 
+      */
+-    public ImageData createPixelMap(ImageData imageData);
++    public ImageData createPixelMap(Canvas canvas, ImageData imageData);
+ 
+     /**
+      * Get the pixels for a region of your GraphicsContext
++     * @param canvas internal state of the canvas
+      * @param x start x coordinate
+      * @param y start y coordinate
+      * @param width width
+      * @param height height
+      * @return 
+      */
+-    public ImageData getPixelMap(double x, double y, double width, double height);
++    public ImageData getPixelMap(Canvas canvas, double x, double y, double width, double height);
+ 
+     /**
+      * Render an ImageData Object at the specified position
++     * @param canvas internal state of the canvas
+      * @param imageData the Pixel array
+-      * @param x start x coordinate
++     * @param x start x coordinate
+      * @param y start y coordinate
+      */
+-   public void putPixelMap(ImageData imageData, double x, double y);
++   public void putPixelMap(Canvas canvas, ImageData imageData, double x, double y);
+ 
+     /**
+      * Render an ImageData Object at the specified position
++     * @param canvas internal state of the canvas
+      * @param imageData the Pixel array to draw
+      * @param x start x coordinate
+      * @param y start y coordinate
+@@ -572,51 +626,57 @@ public interface GraphicsEnvironment {
+      * @param dirtywidth The width to use to draw the image on the canvas
+      * @param dirtyheight The height to use to draw the image on the canvas
+      */
+-    public void putPixelMap(ImageData imageData, double x, double y, double dirtyx, double dirtyy, double dirtywidth, double dirtyheight);
++    public void putPixelMap(Canvas canvas, ImageData imageData, double x, double y, double dirtyx, double dirtyy, double dirtywidth, double dirtyheight);
+     /**
+      * Sets the global alpha of the current state.
+      *
++     * @param canvas internal state of the canvas
+      * @param alpha value in the range {@code 0.0-1.0}. The value is clamped if
+      * it is out of range.
+      */
+-    public void setGlobalAlpha(double alpha);
++    public void setGlobalAlpha(Canvas canvas, double alpha);
+ 
+     /**
+      * Get the global alpha of the current state.
+      *
++     * @param canvas internal state of the canvas
+      * @return alpha value in the range {@code 0.0-1.0}.
+      */
+-    public double getGlobalAlpha();
++    public double getGlobalAlpha(Canvas canvas);
+ 
+     /**
+      * Sets the global blend mode.
+      *
++     * @param canvas internal state of the canvas
+      * @param operation the BlendMode that will be set.
+      */
+-    public void setGlobalCompositeOperation(String operation);
++    public void setGlobalCompositeOperation(Canvas canvas, String operation);
+ 
+     /**
+      * Gets the global blend mode.
+      *
++     * @param canvas internal state of the canvas
+      * @return the global BlendMode of the current state.
+      */
+-    public String getGlobalCompositeOperation();
++    public String getGlobalCompositeOperation(Canvas canvas);
+ 
+     /**
+-     * Get the height of this GraphicsContext (which should be the same as the
++     * Get the height of this graphics context (which should be the same as the
+      * enclosing canvas height)
+      *
++     * @param canvas internal state of the canvas
+      * @return the height of this GraphicsContext
+      */
+-    public int getHeight();
++    public int getHeight(Canvas canvas);
+ 
+     /**
+      * Get the width of this GraphicsContext (which should be the same as the
+      * enclosing canvas height)
+      *
++     * @param canvas internal state of the canvas
+      * @return the width of this GraphicsContext
+      */
+-    public int getWidth();
++    public int getWidth(Canvas canvas);
+ 
+ //    public void setHeight(int height);
+ //
+@@ -625,11 +685,12 @@ public interface GraphicsEnvironment {
+      * Merges two images drawing one on top of the other and returning the
+      * result.
+      *
++     * @param canvas internal state of the canvas
+      * @param a the lower Image
+      * @param b the upper Image
+      * @param cachedA the native cached Image, if available, or null.
+      * @param cachedB the native cached Image, if available, or null.
+      * @return
+      */  
+-    public Object mergeImages(Image a, Image b, Object cachedA, Object cachedB);
++    public Object mergeImages(Canvas canvas, Image a, Image b, Object cachedA, Object cachedB);
+ }
+diff --git a/canvas-api/src/main/java/net/java/html/canvas/spi/GraphicsUtils.java b/canvas-api/src/main/java/net/java/html/canvas/spi/GraphicsUtils.java
+index de85a43..41841e2 100644
+--- a/canvas-api/src/main/java/net/java/html/canvas/spi/GraphicsUtils.java
++++ b/canvas-api/src/main/java/net/java/html/canvas/spi/GraphicsUtils.java
+@@ -32,11 +32,13 @@ public class GraphicsUtils {
+     /**
+      * Use this to get A GraphicsContext to draw on. Pass in an implementation of 
+      * GraphicsEnvironment, e.g. for JavaFX or HTML5. 
++     * @param <Canvas>
+      * @param environment
++     * @param canvas
+      * @return 
+      */
+-    public static GraphicsContext create(GraphicsEnvironment environment){
+-        return CnvsAccssr.getDefault().create(environment);
++    public static <Canvas> GraphicsContext create(GraphicsEnvironment<Canvas> environment, Canvas canvas){
++        return CnvsAccssr.getDefault().create(environment, canvas);
+     }
+     
+     
+diff --git a/canvas-api/src/main/java/org/apidesign/html/canvas/impl/CnvsAccssr.java b/canvas-api/src/main/java/org/apidesign/html/canvas/impl/CnvsAccssr.java
+index 3868da6..bfa6696 100644
+--- a/canvas-api/src/main/java/org/apidesign/html/canvas/impl/CnvsAccssr.java
++++ b/canvas-api/src/main/java/org/apidesign/html/canvas/impl/CnvsAccssr.java
+@@ -17,6 +17,8 @@
+  */
+ package org.apidesign.html.canvas.impl;
+ 
++import java.util.logging.Level;
++import java.util.logging.Logger;
+ import net.java.html.canvas.GraphicsContext;
+ import net.java.html.canvas.spi.GraphicsEnvironment;
+ 
+@@ -34,9 +36,15 @@ public abstract class CnvsAccssr {
+     }
+ 
+     public static CnvsAccssr getDefault() {
+-        if (DEFAULT== null) GraphicsContext.init();
++        if (DEFAULT== null) {
++            try {
++                Class.forName(GraphicsContext.class.getName(), true, GraphicsContext.class.getClassLoader());
++            } catch (ClassNotFoundException ex) {
++                throw new IllegalStateException(ex);
++            }
++        }
+         return DEFAULT;
+     }
+ 
+-    public abstract GraphicsContext create(GraphicsEnvironment environment);
++    public abstract <Canvas> GraphicsContext create(GraphicsEnvironment<Canvas> environment, Canvas c);
+ }
