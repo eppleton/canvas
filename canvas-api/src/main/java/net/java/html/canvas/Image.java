@@ -61,36 +61,6 @@ public final class Image {
         return src;
     }
 
-    /**
-     * get the width of this Image. Might be an expensive operation, depending on the 
-     * GraphicsEnvironment, it might need to be rendered.
-     * @return the width of this Image.
-     */
-    public int getWidth() {
-        ServiceLoader<GraphicsEnvironment> loader = ServiceLoader.load(GraphicsEnvironment.class);
-        GraphicsEnvironment ge = null;
-        for (GraphicsEnvironment graphicsEnvironment : loader) {
-            ge = graphicsEnvironment;
-            break;
-        }
-        return ge.getWidth(this, cached);
-    }
-
-    /**
-     * get the height of this Image. Might be an expensive operation, depending on the 
-     * GraphicsEnvironment, it might need to be rendered.
-     * @return the height of this Image.
-     */
-    public int getHeight() {
-        ServiceLoader<GraphicsEnvironment> loader = ServiceLoader.load(GraphicsEnvironment.class);
-        GraphicsEnvironment ge = null;
-        for (GraphicsEnvironment graphicsEnvironment : loader) {
-            ge = graphicsEnvironment;
-            break;
-        }
-        return ge.getHeight(this, cached);
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
