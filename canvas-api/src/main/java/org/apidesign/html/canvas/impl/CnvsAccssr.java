@@ -18,7 +18,7 @@ package org.apidesign.html.canvas.impl;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.java.html.canvas.GraphicsContext;
+import net.java.html.canvas.GraphicsContext2D;
 import net.java.html.canvas.spi.GraphicsEnvironment;
 
 /**
@@ -39,7 +39,7 @@ public abstract class CnvsAccssr {
     public static CnvsAccssr getDefault() {
         if (DEFAULT == null) {
             try {
-                Class.forName(GraphicsContext.class.getName(), true, GraphicsContext.class.getClassLoader());
+                Class.forName(GraphicsContext2D.class.getName(), true, GraphicsContext2D.class.getClassLoader());
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(CnvsAccssr.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -47,5 +47,5 @@ public abstract class CnvsAccssr {
         return DEFAULT;
     }
 
-    public abstract GraphicsContext create(GraphicsEnvironment environment);
+    public abstract GraphicsContext2D create(GraphicsEnvironment environment, String id);
 }

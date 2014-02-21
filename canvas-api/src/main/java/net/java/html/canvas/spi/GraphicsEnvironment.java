@@ -18,18 +18,33 @@
 package net.java.html.canvas.spi;
 
 import net.java.html.canvas.Dimension;
+import net.java.html.canvas.GraphicsContext2D;
 import net.java.html.canvas.Image;
 import net.java.html.canvas.ImageData;
 import net.java.html.canvas.Style;
 
 /**
  * Provider API for Canvas. Implement this to add support for your platform.
- *
+ * The Provider is supposed to create/find a Canvas identified by an ID and 
+ * enable drawing operations. 
+ * 
+ * Users don't use the GraphicsEnvironment directly. They interact with 
+ * @see GraphicsUtils 
+ * and
+ * @see GraphicsContext2D
+ * 
  * @author antonepple
  * @param <Canvas>
  */
 public interface GraphicsEnvironment <Canvas>{
 
+   /**
+    * Get the Canvas with this ID or create it.
+    * @param id
+    * @return 
+    */
+    public Canvas getOrCreateCanvas(String id); 
+    
     /**
      * Adds path elements to the current path to make an arc.
      *
@@ -682,9 +697,19 @@ public interface GraphicsEnvironment <Canvas>{
      */
     public int getWidth(Canvas canvas);
 
-//    public void setHeight(int height);
-//
-//    public void setWidth(int width);
+    /**
+     * set the width of this Canvas
+     * @param canvas
+     * @param height 
+     */
+    public void setHeight(Canvas canvas, int height);
+
+    /**
+     * set the height of this Canvas
+     * @param canvas
+     * @param width 
+     */
+    public void setWidth(Canvas canvas, int width);
      /**
      * Merges two images drawing one on top of the other and returning the
      * result.
