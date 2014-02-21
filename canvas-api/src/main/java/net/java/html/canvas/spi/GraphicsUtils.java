@@ -17,6 +17,7 @@
 package net.java.html.canvas.spi;
 
 import java.util.ServiceLoader;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.java.html.canvas.GraphicsContext2D;
 import org.apidesign.html.canvas.impl.CnvsAccssr;
@@ -33,6 +34,7 @@ public class GraphicsUtils {
     /**
      * Use this to get A GraphicsContext to draw on.
      *
+     * @param id
      * @param environment
      * @return
      */
@@ -41,12 +43,15 @@ public class GraphicsUtils {
         GraphicsEnvironment env = null;
         for (GraphicsEnvironment graphicsEnvironment : sl) {
             if (env != null) {
-                Logger.getLogger(GraphicsUtils.class.getName()).warning("More than one GraphicsEnvironment registered, using this one "+env+" but also found "+graphicsEnvironment);
+                Logger.getLogger(GraphicsUtils.class.getName()).log(Level.WARNING, "More than one GraphicsEnvironment registered, using this one {0} but also found {1}", new Object[]{env, graphicsEnvironment});
             } else {
                 env = graphicsEnvironment;
             }
         }
-        return CnvsAccssr.getDefault().create(env, id);
+        if (env == null) {
+            throw new IllegalStateException("No GraphicsEnvironment in Classpath.");
+        }
+        return CnvsAccssr.getDefault().create(env, env.getOrCreateCanvas(id));
     }
 
 }

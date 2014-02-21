@@ -47,5 +47,5 @@ public abstract class CnvsAccssr {
         return DEFAULT;
     }
 
-    public abstract GraphicsContext2D create(GraphicsEnvironment environment, String id);
+    public abstract <Canvas> GraphicsContext2D create(GraphicsEnvironment<Canvas> environment, Canvas c);
 }
