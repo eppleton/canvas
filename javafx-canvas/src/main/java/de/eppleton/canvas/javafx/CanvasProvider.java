@@ -14,6 +14,6 @@ import javafx.scene.canvas.Canvas;
  */
 public interface CanvasProvider {
     
-    public Canvas getCanvas();
+    public Canvas getCanvas(String id);
     
 }
