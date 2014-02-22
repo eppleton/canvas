@@ -23,6 +23,13 @@
         <tag>HEAD</tag>
     </scm>
     <name>canvas</name>
+    <repositories>
+        <repository>
+            <id>netbeans</id>
+            <name>NetBeans</name>
+            <url>http://bits.netbeans.org/maven2/</url>
+        </repository>
+    </repositories>
     <modules>
         <module>canvas-api</module>
         <module>javafx-canvas</module>
