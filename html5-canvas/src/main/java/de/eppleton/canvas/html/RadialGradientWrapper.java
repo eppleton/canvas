@@ -1,6 +1,6 @@
 /**
  * Canvas API
- * Copyright (C) 2013 AntonEpple <toni.epple@eppleton.de>
+ * Copyright (C) 2013 AntonEpple toni.epple@eppleton.de
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ import net.java.html.js.JavaScriptBody;
 
 /**
  *
- * @author Anton Epple <toni.epple@eppleton.de>
+ * @author Anton Epple toni.epple@eppleton.de
  */
 public class RadialGradientWrapper {
 
