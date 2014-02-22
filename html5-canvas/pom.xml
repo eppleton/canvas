@@ -52,13 +52,8 @@
         <dependency>
             <groupId>org.netbeans.html</groupId>
             <artifactId>net.java.html.boot</artifactId>
-            <version>0.8-SNAPSHOT</version>
+            <version>0.7.5</version>
             <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.openide</groupId>
-            <artifactId>org.openide.util.lookup</artifactId>
-            <version>7.4-SNAPSHOT</version>       
         </dependency>
     </dependencies>
 </project>
