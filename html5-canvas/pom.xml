@@ -56,9 +56,9 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>org.openide</groupId>
-            <artifactId>org.openide.util.lookup</artifactId>
-            <version>7.4-SNAPSHOT</version>       
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util-lookup</artifactId>
+            <version>RELEASE74</version>       
         </dependency>
     </dependencies>
 </project>
