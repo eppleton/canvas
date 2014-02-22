@@ -42,18 +42,18 @@ import net.java.html.canvas.Image;
 import net.java.html.canvas.ImageData;
 import net.java.html.canvas.Style;
 import net.java.html.canvas.spi.GraphicsEnvironment;
-import org.openide.util.lookup.ServiceProviders;
-import org.openide.util.lookup.ServiceProvider;
+//import org.openide.util.lookup.ServiceProviders;
+//import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author antonepple
  */
 
-@ServiceProviders( value = {
-    @ServiceProvider(service = GraphicsEnvironment.class),
-    @ServiceProvider(service = CanvasProvider.class)})
-public class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas>, CanvasProvider {
+//@ServiceProviders( value = {
+//    @ServiceProvider(service = GraphicsEnvironment.class),
+//    @ServiceProvider(service = CanvasProvider.class)})
+public class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
 
     @Override
     public void arc(Canvas canvas, double centerX, double centerY, double startAngle, double radius, double endAngle, boolean ccw) {
@@ -448,8 +448,7 @@ public class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas>, C
      * @param id
      * @return the Canvas
      */
-    @Override
-    public Canvas getCanvas(String id) {
+    private Canvas getCanvas(String id) {
         Logger.getLogger(JavaFXGraphicsEnvironment.class.getName()).info("Getting canvas with id "+id);
 
         if (canvasList.containsValue(id)) {
