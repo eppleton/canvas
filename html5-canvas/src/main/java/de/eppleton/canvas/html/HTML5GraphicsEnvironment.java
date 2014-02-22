@@ -29,13 +29,11 @@ import net.java.html.canvas.Style.RadialGradient;
 import net.java.html.canvas.spi.GraphicsEnvironment;
 
 import net.java.html.js.JavaScriptBody;
-import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Anton Epple <toni.epple@eppleton.de>
  */
-@ServiceProvider(service = GraphicsEnvironment.class)
 public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
 
     @Override
@@ -245,7 +243,7 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
             = "gradient.addColorStop(position,color)")
     private static native void addColorStopImpl(Object gradient, double position, String color);
 
-    @JavaScriptBody(args = {"canvas", "obj"}, body = "canvas..getContext('2d').fillStyle=obj;")
+    @JavaScriptBody(args = {"canvas", "obj"}, body = "canvas.getContext('2d').fillStyle=obj;")
     private native void setFillStyleImpl(Object canvas, Object obj);
 
     @JavaScriptBody(args = {"canvas", "style"}, body = "canvas.getContext('2d').strokeStyle=style.valueOf();")
