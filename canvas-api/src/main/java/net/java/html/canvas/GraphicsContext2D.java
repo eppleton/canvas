@@ -27,7 +27,7 @@ import org.apidesign.html.canvas.impl.CnvsAccssr;
 
 /**
  * A 2D Graphics Context similar to HTML5 or JavaFX GraphicsContext. Use this to
- * paint on your Canvas. To get a GraphicsContext call {@link net.java.html.canvas.spi.GraphicsUtils#create(GraphicsEnvironment) GraphicsUtils.create}
+ * paint on your Canvas. To get a GraphicsContext call {@link net.java.html.canvas.spi.GraphicsUtils#getOrCreate(net.java.html.canvas.spi.GraphicsEnvironment, java.lang.String) GraphicsUtils.create}
  * For HTML 5 :
  * <pre>
 * {@code
@@ -421,7 +421,7 @@ public abstract class GraphicsContext2D {
     /**
      * Sets the current line width attribute.
      *
-     * @param lw value between 0 and infinity, with any other value being
+     * @param width value between 0 and infinity, with any other value being
      * ignored and leaving the value unchanged.
      *
      */

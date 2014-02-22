@@ -320,13 +320,16 @@ public class Style {
             return r1;
         }
 
-        /**
+        /*
          * set the radius of the end circle.
          *
          * @param r1 the radius.
          *
          * public void setR1(double r1) { this.r1 = r1; }
          */
+        
+        
+        
         @Override
         public int hashCode() {
             int hash = super.hashCode();

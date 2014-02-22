@@ -526,7 +526,7 @@ public interface GraphicsEnvironment <Canvas>{
      * Sets the current Text Baseline.
      *
      * @param canvas
-     * @param baseline with values of Top, Center, Baseline, or Bottom
+     * @return baseline with values of Top, Center, Baseline, or Bottom
      */
     public String getTextBaseline(Canvas canvas);
 
