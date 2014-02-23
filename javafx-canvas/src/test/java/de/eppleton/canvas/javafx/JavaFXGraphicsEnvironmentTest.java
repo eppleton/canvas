@@ -201,6 +201,7 @@ public class JavaFXGraphicsEnvironmentTest {
     }
 
     public void testClipImpl() throws Exception {
+        graphicsContext.save();
         // Clip a rectangular area
         graphicsContext.beginPath();
         graphicsContext.rect(20, 20, 60, 60);
@@ -220,22 +221,81 @@ public class JavaFXGraphicsEnvironmentTest {
             storeImage("testClip1", snapShot);
             fail("Area inside clip should be red");
         }
+        graphicsContext.beginPath();
+        graphicsContext.rect(0, 0, 100, 100);
+        graphicsContext.restore();
     }
 
     /**
      * Test of closePath method, of class JavaFXGraphicsEnvironment.
      */
     @Test
-    public void testClosePath() {
+    public void testClosePath() throws Exception {
+        JavaFXTestUtil.runOnEventQueue(this, "testClosePathImpl");
+    }
+
+    public void testClosePathImpl() throws Exception {
+        graphicsContext.clearRect(0, 0, 100, 100);
+        graphicsContext.beginPath();
+        graphicsContext.moveTo(10, 10);
+        graphicsContext.lineTo(20, 10);
+        graphicsContext.lineTo(20, 20);
+        graphicsContext.lineTo(10, 20);
+        graphicsContext.stroke();
+        Image snapShot = snapShot(canvas);
+        graphicsContext.clearRect(0, 0, 100, 100);
+        graphicsContext.closePath();
+        graphicsContext.stroke();
+        Image snapShot1 = snapShot(canvas);
+        if (isSameImage(snapShot, snapShot1)) {
+            storeImage("testClosePath", snapShot);
+            storeImage("testClosePath1", snapShot1);
+            fail("image with closed path should be different");
+        }
+        boolean checkColor = checkColor(snapShot1, 10, 10, 10, 20, Color.BLACK.getRGB());
+        if (!checkColor) {
+            storeImage("testClosePath2", snapShot1);
+            fail("closed path should have a line between 10,10 and 10,20");
+        }
+        boolean checkColor2 = checkColor(snapShot, 10, 10, 10, 20, Color.BLACK.getRGB());
+        if (!checkColor2) {
+            storeImage("testClosePath3", snapShot);
+            fail("unclosed path shouldn't have a line between 10,10 and 10,20");
+        }
     }
 
     /**
      * Test of fill method, of class JavaFXGraphicsEnvironment.
      */
     @Test
-    public void testFill() {
+    public void testFill() throws Exception {
+        JavaFXTestUtil.runOnEventQueue(this, "testFillImpl");
     }
 
+    public void testFillImpl() throws Exception{
+        graphicsContext.clearRect(0, 0, 100, 100);
+        graphicsContext.beginPath();
+        graphicsContext.moveTo(10, 10);
+        graphicsContext.lineTo(20, 10);
+        graphicsContext.lineTo(20, 20);
+        graphicsContext.lineTo(10, 20);
+        graphicsContext.closePath();
+        graphicsContext.stroke();
+        Image snapShot = snapShot(canvas);
+        graphicsContext.setFillStyle(new Style.Color("#00ff00"));
+        graphicsContext.fill();
+        Image snapShot1 = snapShot(canvas);
+        if (isSameImage(snapShot, snapShot1)) {
+            storeImage("testFill", snapShot);
+            storeImage("testFill1", snapShot1);
+            fail("filled image should be different");
+        }
+        boolean checkColor = checkColor(snapShot1, 10, 10, 20, 20, Color.GREEN.getRGB());
+        if (!checkColor) {
+            storeImage("testFill2", snapShot1);
+            fail("filled image should be green between 10,10 and 20,20");
+        }
+    }
     /**
      * Test of fillRect method, of class JavaFXGraphicsEnvironment.
      */
