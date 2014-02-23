@@ -201,13 +201,14 @@ public class JavaFXGraphicsEnvironmentTest {
     }
 
     public void testClipImpl() throws Exception {
+        // need to save and restore the graphicscontext, 
+        // otherwise the rest of the tests will fail because of the clip
         graphicsContext.save();
         // Clip a rectangular area
         graphicsContext.beginPath();
         graphicsContext.rect(20, 20, 60, 60);
-//        graphicsContext.stroke();
         graphicsContext.clip();
-// Draw red rectangle after clip()
+        // Draw red rectangle after clip() only the parts inside clip should be red
         graphicsContext.setFillStyle(new Style.Color("#ff0000"));
         graphicsContext.fillRect(0, 0, 100, 100);
         Image snapShot = snapShot(canvas);
@@ -272,7 +273,7 @@ public class JavaFXGraphicsEnvironmentTest {
         JavaFXTestUtil.runOnEventQueue(this, "testFillImpl");
     }
 
-    public void testFillImpl() throws Exception{
+    public void testFillImpl() throws Exception {
         graphicsContext.clearRect(0, 0, 100, 100);
         graphicsContext.beginPath();
         graphicsContext.moveTo(10, 10);
@@ -296,6 +297,7 @@ public class JavaFXGraphicsEnvironmentTest {
             fail("filled image should be green between 10,10 and 20,20");
         }
     }
+
     /**
      * Test of fillRect method, of class JavaFXGraphicsEnvironment.
      */
@@ -305,25 +307,59 @@ public class JavaFXGraphicsEnvironmentTest {
     }
 
     public void testFillRectImpl() throws Exception {
-        graphicsContext.setFillStyle(new Style.Color("#ff00ff67"));
+        graphicsContext.setFillStyle(new Style.Color("#0000ff"));
+
         graphicsContext.fillRect(10, 10, 15, 15);
-        Image snapShot = JavaFXTestUtil.snapShot(stackPane);
-        boolean sameImage = JavaFXTestUtil.isSameImage(snapShot, snapShot);
-        System.out.println("is same " + sameImage);
+        Image snapShot = snapShot(canvas);
+        boolean checkColor = checkColor(snapShot, 10, 10, 15, 15, Color.BLUE.getRGB());
+        if (!checkColor) {
+            storeImage("testFillRect", snapShot);
+            fail("area from 10,10 to 15,15 should be blue");
+        }
+        checkColor = checkColor(snapShot, 0, 0, 10, 10, Color.WHITE.getRGB());
+        if (!checkColor) {
+            storeImage("testFillRect1", snapShot);
+            fail("area outside 10,10 to 15,15 should be white");
+        }
     }
 
     /**
      * Test of fillText method, of class JavaFXGraphicsEnvironment.
      */
     @Test
-    public void testFillText_4args() {
+    public void testFillText_4args() throws Exception {
+        JavaFXTestUtil.runOnEventQueue(this, "testFillText_4argsImpl");
+    }
+
+    public void testFillText_4argsImpl() throws Exception {
+        graphicsContext.clearRect(0, 0, 100, 100);
+        graphicsContext.setFillStyle(new Style.Color("#0000ff"));
+        graphicsContext.fillText("Hallo Welt", 10, 10);
     }
 
     /**
      * Test of fillText method, of class JavaFXGraphicsEnvironment.
      */
     @Test
-    public void testFillText_5args() {
+    public void testFillText_5args() throws Exception {
+        JavaFXTestUtil.runOnEventQueue(this, "testFillText_5argsImpl");
+    }
+
+    public void testFillText_5argsImpl() throws Exception {
+        graphicsContext.clearRect(0, 0, 100, 100);
+        graphicsContext.setFillStyle(new Style.Color("#0000ff"));
+        graphicsContext.fillText("Hallo Welt", 10, 10);
+        Image snapShot = snapShot(canvas);
+        // a test to check if 5 args is different
+        graphicsContext.clearRect(0, 0, 100, 100);
+        graphicsContext.setFillStyle(new Style.Color("#0000ff"));
+        graphicsContext.fillText("Hallo Welt", 10, 10, 20);
+        Image snapShot1 = snapShot(canvas);
+        if (isSameImage(snapShot, snapShot1)) {
+            storeImage("testFillText_5args1", snapShot);
+            storeImage("testFillText_5args2", snapShot1);
+            fail("5 args filled text should be compressed compared to 4 args method");
+        }
     }
 
     /**
@@ -331,6 +367,8 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testGetFont() {
+        String font = graphicsContext.getFont();
+        assert (font != null & !font.isEmpty());
     }
 
     /**
@@ -338,6 +376,13 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testGetGlobalAlpha() {
+        graphicsContext.setGlobalAlpha(.5);
+        double globalAlpha = graphicsContext.getGlobalAlpha();
+        if (globalAlpha != .5) {
+            fail("GlobalAlpha should be .5 but is " + globalAlpha);
+        }
+        graphicsContext.setGlobalAlpha(1.0);
+
     }
 
     /**
@@ -346,6 +391,10 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testGetGlobalCompositeOperation() {
+        String globalCompositeOperation = graphicsContext.getGlobalCompositeOperation();
+        if (globalCompositeOperation == null || globalCompositeOperation.isEmpty()){
+            fail("globalCompositeOperation shouldn't be empty "+globalCompositeOperation);
+        }
     }
 
     /**
@@ -353,6 +402,11 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testGetLineCap() {
+        graphicsContext.setLineCap("ROUND");
+        String lineCap = graphicsContext.getLineCap();
+        if (lineCap == null || lineCap.isEmpty() || !lineCap.toLowerCase().equals("round")){
+            fail("lineCap shouldbe 'round', but is "+lineCap);
+        }
     }
 
     /**

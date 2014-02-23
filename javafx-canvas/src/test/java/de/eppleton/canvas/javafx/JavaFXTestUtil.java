@@ -24,7 +24,7 @@ import javax.imageio.ImageIO;
  */
 public class JavaFXTestUtil {
 
-    public static synchronized void runOnEventQueue(final Object instance, final String method) throws Exception {
+    public static void runOnEventQueue(final Object instance, final String method) throws Exception {
         Task<Void> task = new Task<Void>() {
 
             @Override

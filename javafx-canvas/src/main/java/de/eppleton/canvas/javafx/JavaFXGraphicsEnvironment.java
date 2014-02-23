@@ -129,7 +129,7 @@ public class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
 
     @Override
     public String getLineCap(Canvas canvas) {
-        return canvas.getGraphicsContext2D().getLineCap().name();
+        return canvas.getGraphicsContext2D().getLineCap().name().toLowerCase();
     }
 
     @Override
@@ -219,7 +219,7 @@ public class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
 
     @Override
     public void setLineCap(Canvas canvas, String style) {
-        canvas.getGraphicsContext2D().setLineCap(StrokeLineCap.valueOf(style));
+        canvas.getGraphicsContext2D().setLineCap(StrokeLineCap.valueOf(style.toUpperCase()));
     }
 
     @Override
