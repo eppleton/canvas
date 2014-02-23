@@ -407,6 +407,7 @@ public class JavaFXGraphicsEnvironmentTest {
         if (lineCap == null || lineCap.isEmpty() || !lineCap.toLowerCase().equals("round")){
             fail("lineCap shouldbe 'round', but is "+lineCap);
         }
+        graphicsContext.setLineCap("square");
     }
 
     /**
@@ -414,6 +415,14 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testGetLineJoin() {
+        String orig = graphicsContext.getLineJoin();
+        graphicsContext.setLineJoin("ROUND");
+        String lineJoin = graphicsContext.getLineJoin();
+        if (lineJoin == null || lineJoin.isEmpty() || !lineJoin.toLowerCase().equals("round")){
+            fail("lineJoin shouldbe 'round', but is "+lineJoin);
+        }
+        fail(orig);
+        graphicsContext.setLineJoin(orig);
     }
 
     /**

@@ -124,7 +124,7 @@ public class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
 
     @Override
     public String getGlobalCompositeOperation(Canvas canvas) {
-        return canvas.getGraphicsContext2D().getGlobalBlendMode().name();
+        return canvas.getGraphicsContext2D().getGlobalBlendMode().name().toLowerCase();
     }
 
     @Override
@@ -134,7 +134,7 @@ public class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
 
     @Override
     public String getLineJoin(Canvas canvas) {
-        return canvas.getGraphicsContext2D().getLineJoin().name();
+        return canvas.getGraphicsContext2D().getLineJoin().name().toLowerCase();
     }
 
     @Override
@@ -214,7 +214,7 @@ public class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
 
     @Override
     public void setGlobalCompositeOperation(Canvas canvas, String operation) {
-        canvas.getGraphicsContext2D().setGlobalBlendMode(BlendMode.valueOf(operation));
+        canvas.getGraphicsContext2D().setGlobalBlendMode(BlendMode.valueOf(operation.toUpperCase()));
     }
 
     @Override
@@ -224,7 +224,7 @@ public class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
 
     @Override
     public void setLineJoin(Canvas canvas, String style) {
-        canvas.getGraphicsContext2D().setLineJoin(StrokeLineJoin.valueOf(style));
+        canvas.getGraphicsContext2D().setLineJoin(StrokeLineJoin.valueOf(style.toUpperCase()));
     }
 
     @Override
