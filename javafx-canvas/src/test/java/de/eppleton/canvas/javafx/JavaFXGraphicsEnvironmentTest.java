@@ -5,18 +5,19 @@
  */
 package de.eppleton.canvas.javafx;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import static de.eppleton.canvas.javafx.JavaFXTestUtil.isSameImage;
+import static de.eppleton.canvas.javafx.JavaFXTestUtil.snapShot;
+import static de.eppleton.canvas.javafx.JavaFXTestUtil.storeImage;
+import java.util.concurrent.ExecutionException;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.WritableImage;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import net.java.html.canvas.GraphicsContext2D;
+import net.java.html.canvas.Style;
 import net.java.html.canvas.spi.GraphicsUtils;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -40,14 +41,14 @@ public class JavaFXGraphicsEnvironmentTest {
         javaFXGraphicsEnvironment = new JavaFXGraphicsEnvironment();
         graphicsContext = GraphicsUtils.getOrCreate(javaFXGraphicsEnvironment, "test");
         canvas = javaFXGraphicsEnvironment.getOrCreateCanvas("test");
-        canvas.setHeight(20);
-        canvas.setWidth(20);
+        canvas.setHeight(100);
+        canvas.setWidth(100);
         stackPane = new StackPane(canvas);
         Task<Void> task = new Task<Void>() {
 
             @Override
             protected Void call() throws Exception {
-                Scene scene = new Scene(stackPane);
+                Scene scene = new Scene(stackPane, 100, 100);
                 return null;
             }
         };
@@ -76,30 +77,72 @@ public class JavaFXGraphicsEnvironmentTest {
     public void tearDownMethod() throws Exception {
     }
 
-    @Test(enabled = false)
-    public void arc() {
-        graphicsContext.arc(100, 100, 1, 50, 34, true);
+    @Test(expectedExceptions = ExecutionException.class)
+    public void testArc() throws Exception {
+        JavaFXTestUtil.runOnEventQueue(this, "testArcImpl");
     }
 
-    /**
-     * Test of arc method, of class JavaFXGraphicsEnvironment.
-     */
-    @Test
-    public void testArc() {
+    public void testArcImpl() {
+        graphicsContext.arc(10, 10, 1.5, 5, 90, true);
     }
 
     /**
      * Test of arcTo method, of class JavaFXGraphicsEnvironment.
      */
     @Test
-    public void testArcTo() {
+    public void testArcTo() throws Exception {
+        JavaFXTestUtil.runOnEventQueue(this, "testArcToImpl");
+    }
+
+    public void testArcToImpl() throws Exception {
+        graphicsContext.setFillStyle(new Style.Color("#000000"));
+//        graphicsContext.fillRect(0, 0, 100,100);
+        graphicsContext.beginPath();
+        graphicsContext.moveTo(1, 1);           // Create a starting point
+        graphicsContext.lineTo(10, 1);          // Create a horizontal line
+        graphicsContext.arcTo(15, 1, 15, 20, 5); // Create an arc
+        graphicsContext.lineTo(15, 100);
+        graphicsContext.stroke();
+//        storeImage( "testArcTo", snapShot(canvas));
     }
 
     /**
      * Test of beginPath method, of class JavaFXGraphicsEnvironment.
      */
     @Test
-    public void testBeginPath() {
+    public void testBeginPath() throws Exception {
+        JavaFXTestUtil.runOnEventQueue(this, "testBeginPathImpl");
+    }
+
+    public void testBeginPathImpl() throws Exception {
+        graphicsContext.setFillStyle(new Style.Color("#000000"));
+        graphicsContext.beginPath();
+        graphicsContext.moveTo(1, 1);           // Create a starting point
+        graphicsContext.lineTo(10, 1);
+        graphicsContext.clearRect(0, 0, 100, 100);
+        graphicsContext.beginPath();
+        graphicsContext.moveTo(10, 1);           // Create a starting point
+        graphicsContext.lineTo(10, 10);
+        graphicsContext.stroke();
+        Image snapShot = snapShot(canvas);
+        // this time we don't begin a new path. 
+        // clear should have no effect
+        graphicsContext.setFillStyle(new Style.Color("#000000"));
+        graphicsContext.beginPath();
+        graphicsContext.moveTo(1, 1);           // Create a starting point
+        graphicsContext.lineTo(10, 1);
+        graphicsContext.clearRect(0, 0, 100, 100);
+        graphicsContext.moveTo(10, 1);           // Create a starting point
+        graphicsContext.lineTo(10, 10);
+        graphicsContext.stroke();
+        Image snapShot1 = snapShot(canvas);
+        boolean sameImage = isSameImage(snapShot, snapShot1);
+        if (sameImage) {
+            storeImage("testBeginPath", snapShot);
+            storeImage("testBeginPath1", snapShot1);
+            Assert.fail("images are the same and shouldn't be");
+        }
+        graphicsContext.stroke();
     }
 
     /**
@@ -141,9 +184,16 @@ public class JavaFXGraphicsEnvironmentTest {
      * Test of fillRect method, of class JavaFXGraphicsEnvironment.
      */
     @Test
-    public void testFillRect() {
-        graphicsContext.fillRect(10, 10, 15, 15);
+    public void testFillRect() throws Exception {
+        JavaFXTestUtil.runOnEventQueue(this, "testFillRectImpl");
+    }
 
+    public void testFillRectImpl() throws Exception {
+        graphicsContext.setFillStyle(new Style.Color("#ff00ff67"));
+        graphicsContext.fillRect(10, 10, 15, 15);
+        Image snapShot = JavaFXTestUtil.snapShot(stackPane);
+        boolean sameImage = JavaFXTestUtil.isSameImage(snapShot, snapShot);
+        System.out.println("is same " + sameImage);
     }
 
     /**
@@ -530,23 +580,8 @@ public class JavaFXGraphicsEnvironmentTest {
      * Test of getOrCreateCanvas method, of class JavaFXGraphicsEnvironment.
      */
     @Test
-    public void testGetOrCreateCanvas() throws Exception  {
-            JavaFXTestUtil.runOnEventQueue(this, "snapShot");
-    }
-
-    public void snapShot() throws Exception {
-
-        WritableImage snapshot = stackPane.snapshot(new SnapshotParameters(), null);
-        PixelReader pixelReader = snapshot.getPixelReader();
-        for (int i = 0; i < snapshot.getWidth(); i++) {
-            for (int j = 0; j < snapshot.getHeight(); j++) {
-                System.out.print("" + pixelReader.getColor(i, j).getRed() + ",");
-            }
-            System.out.println("");
-        }
-        
-
-
+    public void testGetOrCreateCanvas() throws Exception {
+//        JavaFXTestUtil.runOnEventQueue(this, "snapShot");
     }
 
 }
