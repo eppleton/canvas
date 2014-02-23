@@ -749,7 +749,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
         graphicsEnvironmentImpl.putPixelMap(canvas, pixelMap, x, y);
     }
 
-    /**
+    /*
      * Render an ImageData Object at the specified position
      *
      * @param pixelMap the Pixel array to draw
@@ -762,10 +762,10 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param dirtywidth The width to use to draw the image on the canvas
      * @param dirtyheight The height to use to draw the image on the canvas
      */
-    @Override
-    public void drawPixelMap(ImageData pixelMap, double x, double y, double dirtyx, double dirtyy, double dirtywidth, double dirtyheight) {
-        graphicsEnvironmentImpl.putPixelMap(canvas, pixelMap, x, y, dirtyx, dirtyy, dirtywidth, dirtyheight);
-    }
+//    @Override
+//    public void drawPixelMap(ImageData pixelMap, double x, double y, double dirtyx, double dirtyy, double dirtywidth, double dirtyheight) {
+//        graphicsEnvironmentImpl.putPixelMap(canvas, pixelMap, x, y, dirtyx, dirtyy, dirtywidth, dirtyheight);
+//    }
 
     /**
      * Sets the global alpha of the current state.

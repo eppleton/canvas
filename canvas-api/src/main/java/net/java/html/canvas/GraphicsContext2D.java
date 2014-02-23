@@ -601,7 +601,7 @@ public abstract class GraphicsContext2D {
      */
     public abstract void drawPixelMap(ImageData pixelMap, double x, double y);
 
-      /**
+      /*
      * Render an ImageData Object at the specified position
      * @param pixelMap  the Pixel array to draw
      * @param x start x coordinate
@@ -611,7 +611,7 @@ public abstract class GraphicsContext2D {
      * @param dirtywidth The width to use to draw the image on the canvas
      * @param dirtyheight The height to use to draw the image on the canvas
      */
-    public abstract void drawPixelMap(ImageData pixelMap, double x, double y, double dirtyx, double dirtyy, double dirtywidth, double dirtyheight);
+//    public abstract void drawPixelMap(ImageData pixelMap, double x, double y, double dirtyx, double dirtyy, double dirtywidth, double dirtyheight);
 
     /**
      * Sets the global alpha of the current state.
