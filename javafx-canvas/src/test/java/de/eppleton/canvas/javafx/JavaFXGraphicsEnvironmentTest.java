@@ -421,7 +421,6 @@ public class JavaFXGraphicsEnvironmentTest {
         if (lineJoin == null || lineJoin.isEmpty() || !lineJoin.toLowerCase().equals("round")){
             fail("lineJoin shouldbe 'round', but is "+lineJoin);
         }
-        fail(orig);
         graphicsContext.setLineJoin(orig);
     }
 
