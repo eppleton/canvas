@@ -149,7 +149,7 @@ public class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
 
     @Override
     public String getTextAlign(Canvas canvas) {
-        return canvas.getGraphicsContext2D().getTextAlign().name();
+        return canvas.getGraphicsContext2D().getTextAlign().name().toLowerCase();
     }
 
     @Override
@@ -239,7 +239,7 @@ public class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
 
     @Override
     public void setTextAlign(Canvas canvas, String textAlign) {
-        canvas.getGraphicsContext2D().setTextAlign(TextAlignment.valueOf(textAlign));
+        canvas.getGraphicsContext2D().setTextAlign(TextAlignment.valueOf(textAlign.toUpperCase()));
     }
 
     @Override

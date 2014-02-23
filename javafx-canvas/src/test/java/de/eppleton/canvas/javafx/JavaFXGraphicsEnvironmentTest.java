@@ -22,6 +22,7 @@ import net.java.html.canvas.GraphicsContext2D;
 import net.java.html.canvas.Style;
 import net.java.html.canvas.spi.GraphicsUtils;
 import org.testng.Assert;
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -429,6 +430,10 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testGetLineWidth() {
+        double lw = 20;
+        graphicsContext.setLineWidth(lw);
+        double lineWidth = graphicsContext.getLineWidth();
+        assertEquals(lineWidth, lw);
     }
 
     /**
@@ -436,6 +441,10 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testGetMiterLimit() {
+         double ml = 20;
+        graphicsContext.setMiterLimit(ml);
+        double mlimit = graphicsContext.getMiterLimit();
+        assertEquals(mlimit, ml);
     }
 
     /**
@@ -443,6 +452,9 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testGetTextAlign() {
+        graphicsContext.setTextAlign("left");
+        String textAlign = graphicsContext.getTextAlign();
+        assertEquals(textAlign, "left");
     }
 
     /**
