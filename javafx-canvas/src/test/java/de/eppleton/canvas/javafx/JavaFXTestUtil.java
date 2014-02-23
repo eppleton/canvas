@@ -38,6 +38,16 @@ public class JavaFXTestUtil {
         task.get();
     }
 
+    public static boolean checkColor(Image image, int fromX, int fromY, int toX, int toY, int argb){
+        PixelReader pixelReader = image.getPixelReader();
+        for (int i = fromX; i < toX; i++) {
+            for (int j = fromY; j < toY; j++) {
+                if (pixelReader.getArgb(i, j) != argb) return false;         
+            }     
+        }
+        return true;
+    }
+    
     public static Image snapShot(Node node) throws Exception {
 
         WritableImage snapshot = node.snapshot(new SnapshotParameters(), null);

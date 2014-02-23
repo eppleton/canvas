@@ -5,9 +5,11 @@
  */
 package de.eppleton.canvas.javafx;
 
+import static de.eppleton.canvas.javafx.JavaFXTestUtil.checkColor;
 import static de.eppleton.canvas.javafx.JavaFXTestUtil.isSameImage;
 import static de.eppleton.canvas.javafx.JavaFXTestUtil.snapShot;
 import static de.eppleton.canvas.javafx.JavaFXTestUtil.storeImage;
+import java.awt.Color;
 import java.util.concurrent.ExecutionException;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -20,6 +22,7 @@ import net.java.html.canvas.GraphicsContext2D;
 import net.java.html.canvas.Style;
 import net.java.html.canvas.spi.GraphicsUtils;
 import org.testng.Assert;
+import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -116,9 +119,11 @@ public class JavaFXGraphicsEnvironmentTest {
 
     public void testBeginPathImpl() throws Exception {
         graphicsContext.setFillStyle(new Style.Color("#000000"));
+        // creating two lines, clearing gc after first line is stroked
         graphicsContext.beginPath();
         graphicsContext.moveTo(1, 1);           // Create a starting point
         graphicsContext.lineTo(10, 1);
+        graphicsContext.stroke();
         graphicsContext.clearRect(0, 0, 100, 100);
         graphicsContext.beginPath();
         graphicsContext.moveTo(10, 1);           // Create a starting point
@@ -149,14 +154,42 @@ public class JavaFXGraphicsEnvironmentTest {
      * Test of bezierCurveTo method, of class JavaFXGraphicsEnvironment.
      */
     @Test
-    public void testBezierCurveTo() {
+    public void testBezierCurveTo() throws Exception {
+        JavaFXTestUtil.runOnEventQueue(this, "testBezierCurveToImpl");
+    }
+
+    public void testBezierCurveToImpl() throws Exception {
+        graphicsContext.beginPath();
+        graphicsContext.moveTo(20, 20);
+        graphicsContext.bezierCurveTo(20, 100, 100, 100, 100, 20);
+        graphicsContext.stroke();
+//        storeImage("testBezierCurveTo", snapShot(canvas));
     }
 
     /**
      * Test of clearRect method, of class JavaFXGraphicsEnvironment.
      */
     @Test
-    public void testClearRect() {
+    public void testClearRect() throws Exception {
+        JavaFXTestUtil.runOnEventQueue(this, "testClearRectImpl");
+    }
+
+    public void testClearRectImpl() throws Exception {
+        graphicsContext.fillRect(0, 0, 100, 100);
+        Image snapShot = snapShot(canvas);
+        graphicsContext.clearRect(0, 0, 100, 100);
+        Image snapShot1 = snapShot(canvas);
+        boolean sameImage = isSameImage(snapShot, snapShot1);
+        if (sameImage) {
+            storeImage("testClearRect", snapShot);
+            storeImage("testClearRect1", snapShot1);
+            Assert.fail("images are the same and shouldn't be");
+        }
+        boolean checkColor = checkColor(snapShot1, 0, 0, 100, 100, Color.WHITE.getRGB());
+        if (!checkColor) {
+            storeImage("testClearRect2", snapShot1);
+            fail("this isn't cleared");
+        }
     }
 
     /**
