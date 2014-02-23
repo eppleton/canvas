@@ -196,7 +196,30 @@ public class JavaFXGraphicsEnvironmentTest {
      * Test of clip method, of class JavaFXGraphicsEnvironment.
      */
     @Test
-    public void testClip() {
+    public void testClip() throws Exception {
+        JavaFXTestUtil.runOnEventQueue(this, "testClipImpl");
+    }
+
+    public void testClipImpl() throws Exception {
+        // Clip a rectangular area
+        graphicsContext.beginPath();
+        graphicsContext.rect(20, 20, 60, 60);
+//        graphicsContext.stroke();
+        graphicsContext.clip();
+// Draw red rectangle after clip()
+        graphicsContext.setFillStyle(new Style.Color("#ff0000"));
+        graphicsContext.fillRect(0, 0, 100, 100);
+        Image snapShot = snapShot(canvas);
+        boolean checkColor = checkColor(snapShot, 0, 0, 20, 100, Color.WHITE.getRGB());
+        if (!checkColor) {
+            storeImage("testClip", snapShot);
+            fail("Area outside clip should be white");
+        }
+        boolean checkColor1 = checkColor(snapShot, 20, 20, 80, 80, Color.RED.getRGB());
+        if (!checkColor1) {
+            storeImage("testClip1", snapShot);
+            fail("Area inside clip should be red");
+        }
     }
 
     /**
