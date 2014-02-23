@@ -27,9 +27,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.geometry.Rectangle2D;
 import javafx.geometry.VPos;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.effect.BlendMode;
+import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
@@ -49,7 +52,6 @@ import net.java.html.canvas.spi.GraphicsEnvironment;
  *
  * @author antonepple
  */
-
 //@ServiceProviders( value = {
 //    @ServiceProvider(service = GraphicsEnvironment.class),
 //    @ServiceProvider(service = CanvasProvider.class)})
@@ -349,29 +351,38 @@ public class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
         return nativeStyle;
     }
 
+    @Override
     public Object setStrokeStyle(Canvas canvas, Style style, Object nativeStyle) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
     public ImageData createPixelMap(Canvas canvas, double x, double y) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        WritableImage writableImage = new WritableImage((int) x, (int) y);
+        return new ImageDataWrapper(writableImage, x, y);
     }
 
+    @Override
     public ImageData createPixelMap(Canvas canvas, ImageData imageData) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        WritableImage writableImage = new WritableImage((int) imageData.getWidth(), (int) imageData.getHeight());
+        return new ImageDataWrapper(writableImage, (int) imageData.getWidth(), (int) imageData.getHeight());
     }
 
+    @Override
     public ImageData getPixelMap(Canvas canvas, double x, double y, double width, double height) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SnapshotParameters snapshotParameters = new SnapshotParameters();
+        snapshotParameters.setViewport(new Rectangle2D(x, y, width, height));
+        WritableImage snapshot = canvas.snapshot(snapshotParameters, null);
+        return new ImageDataWrapper(snapshot, width, height);
     }
 
     public void putPixelMap(Canvas canvas, ImageData imageData, double x, double y) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        canvas.getGraphicsContext2D().drawImage((javafx.scene.image.Image)imageData.getImage(), x, y);
     }
 
-    public void putPixelMap(Canvas canvas, ImageData imageData, double x, double y, double dirtyx, double dirtyy, double dirtywidth, double dirtyheight) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+//    public void putPixelMap(Canvas canvas, ImageData imageData, double x, double y, double dirtyx, double dirtyy, double dirtywidth, double dirtyheight) {
+//        canvas.getGraphicsContext2D().drawImage((javafx.scene.image.Image)imageData.getImage(), x, y,y, y, y, y, y, y);
+//    }
 
     public int getHeight(Canvas canvas) {
         return (int) canvas.getHeight();
@@ -429,9 +440,9 @@ public class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
 
     @Override
     public Canvas getOrCreateCanvas(String id) {
-        Logger.getLogger(JavaFXGraphicsEnvironment.class.getName()).info("Creating canvas with id "+id);
+        Logger.getLogger(JavaFXGraphicsEnvironment.class.getName()).info("Creating canvas with id " + id);
         Canvas canvas = getCanvas(id);
-        
+
         if (canvas == null) {
             canvas = new Canvas();
             canvas.setId(id);
@@ -449,7 +460,7 @@ public class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
      * @return the Canvas
      */
     private Canvas getCanvas(String id) {
-        Logger.getLogger(JavaFXGraphicsEnvironment.class.getName()).info("Getting canvas with id "+id);
+        Logger.getLogger(JavaFXGraphicsEnvironment.class.getName()).info("Getting canvas with id " + id);
 
         if (canvasList.containsValue(id)) {
             Set<Map.Entry<Canvas, String>> entrySet = canvasList.entrySet();

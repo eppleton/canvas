@@ -24,7 +24,7 @@ package net.java.html.canvas;
  *
  * @author antonepple
  */
-public interface ImageData {
+public interface ImageData <Image> {
 
     /**
      * get the height.
@@ -111,4 +111,6 @@ public interface ImageData {
      * @param value the alpha value as an int (0 - 255)
      */
     public void setA(int x, int y, int value);
+    
+    public Image getImage();
 }

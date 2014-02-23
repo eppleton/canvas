@@ -634,7 +634,7 @@ public interface GraphicsEnvironment <Canvas>{
      */
    public void putPixelMap(Canvas canvas, ImageData imageData, double x, double y);
 
-    /**
+    /*
      * Render an ImageData Object at the specified position
      * @param canvas
      * @param imageData the Pixel array to draw
@@ -645,7 +645,7 @@ public interface GraphicsEnvironment <Canvas>{
      * @param dirtywidth The width to use to draw the image on the canvas
      * @param dirtyheight The height to use to draw the image on the canvas
      */
-    public void putPixelMap(Canvas canvas, ImageData imageData, double x, double y, double dirtyx, double dirtyy, double dirtywidth, double dirtyheight);
+//    public void putPixelMap(Canvas canvas, ImageData imageData, double x, double y, double dirtyx, double dirtyy, double dirtywidth, double dirtyheight);
     /**
      * Sets the global alpha of the current state.
      *

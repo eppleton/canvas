@@ -30,9 +30,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
-<!--        <dependency>
+
+   
+        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
+            <version>6.7</version>
             <scope>test</scope>
             <exclusions>
                 <exclusion>
@@ -40,13 +43,12 @@
                     <groupId>junit</groupId>
                 </exclusion>
             </exclusions>
-        </dependency>
-  -->
-        <dependency>
-            <groupId>org.apidesign.canvas</groupId>
-            <artifactId>canvas-api</artifactId>
-            <version>0.8-SNAPSHOT</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>canvas-api</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

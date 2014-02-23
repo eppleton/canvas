@@ -413,10 +413,10 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
             body = "canvas.getContext('2d').putImageData(imageData,x,y);")
     private native void putPixelMapImpl(Object canvas, Object imageData, double x, double y);
 
-    @Override
-    public void putPixelMap(Object canvas, ImageData imageData, double x, double y, double dirtyx, double dirtyy, double dirtywidth, double dirtyheight) {
-        putPixelMapImpl(canvas, ((ImageDataWrapper) imageData).object(), x, y, dirtyx, dirtyy, dirtywidth, dirtyheight);
-    }
+//    @Override
+//    public void putPixelMap(Object canvas, ImageData imageData, double x, double y, double dirtyx, double dirtyy, double dirtywidth, double dirtyheight) {
+//        putPixelMapImpl(canvas, ((ImageDataWrapper) imageData).object(), x, y, dirtyx, dirtyy, dirtywidth, dirtyheight);
+//    }
 
     @JavaScriptBody(args = {"canvas", "imageData", "x", "y", "dirtyx", "dirtyy", "dirtywidth", "dirtyheight"},
             body = "canvas.getContext('2d').putImageData(imageData,x,y, dirtyx, dirtyy, dirtywidth,dirtyheight);")
