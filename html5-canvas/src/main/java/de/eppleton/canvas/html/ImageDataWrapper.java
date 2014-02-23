@@ -26,7 +26,7 @@ import net.java.html.js.JavaScriptBody;
  *
  * @author Anton Epple toni.epple@eppleton.de
  */
-public class ImageDataWrapper implements ImageData {
+public class ImageDataWrapper implements ImageData <Object>{
 
     private double width, height = -1;
     private Object imageData;
@@ -116,6 +116,11 @@ public class ImageDataWrapper implements ImageData {
     public void setA(int x, int y, int value) {
         int idx = (x + y * (int)width) * 4;
         getData().set(idx + 3, value);
+    }
+
+    @Override
+    public Object getImage() {
+        return imageData;
     }
 
     private static class Data {
