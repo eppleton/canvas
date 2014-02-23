@@ -353,7 +353,25 @@ public class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
 
     @Override
     public Object setStrokeStyle(Canvas canvas, Style style, Object nativeStyle) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (nativeStyle == null) {
+            if (style instanceof Style.LinearGradient) {
+                Style.LinearGradient orig = (Style.LinearGradient) style;
+                Map<Double, String> stops = orig.getStops();
+                throw new UnsupportedOperationException("Gradients are not yet implemented");
+            } else if (style instanceof Style.Color) {
+                Style.Color originalColor = (Style.Color) style;
+                nativeStyle = Color.web(originalColor.getAsString());
+                canvas.getGraphicsContext2D().setStroke((Paint) nativeStyle);
+            } else if (style instanceof Style.Pattern) {
+                Style.Pattern original = (Style.Pattern) style;
+                Image imageResource = original.getImageResource();
+                javafx.scene.image.Image image = new javafx.scene.image.Image(imageResource.getSrc());
+                ImagePattern pattern = new ImagePattern(image, 0, 0, image.getWidth(), image.getHeight(), false);
+                canvas.getGraphicsContext2D().setStroke(pattern);
+            }
+        }
+
+        return nativeStyle;
     }
 
     @Override

@@ -38,23 +38,40 @@ public class JavaFXTestUtil {
         task.get();
     }
 
-    public static boolean checkColor(Image image, int fromX, int fromY, int toX, int toY, int argb){
+    public static boolean checkColor(Image image, int fromX, int fromY, int toX, int toY, int argb) {
         PixelReader pixelReader = image.getPixelReader();
         for (int i = fromX; i < toX; i++) {
             for (int j = fromY; j < toY; j++) {
-                if (pixelReader.getArgb(i, j) != argb) return false;         
-            }     
+                if (pixelReader.getArgb(i, j) != argb) {
+                    System.out.println("mismatch "+i+", "+j+" expected "+argb+ " found "+pixelReader.getArgb(i, j));
+                    return false;
+                }
+            }
         }
         return true;
     }
-    
-    public static Image snapShot(Node node) throws Exception {
 
-        WritableImage snapshot = node.snapshot(new SnapshotParameters(), null);
-        return snapshot;
+    public static Image snapShot(final Node node) throws Exception {
+        if (!Platform.isFxApplicationThread()) {
+            Task<Image> task = new Task<Image>() {
+
+                @Override
+                protected Image call() throws Exception {
+                    WritableImage snapshot = node.snapshot(new SnapshotParameters(), null);
+                    return snapshot;
+                }
+            };
+            Platform.runLater(task);
+            return task.get();
+        } else {
+            WritableImage snapshot = node.snapshot(new SnapshotParameters(), null);
+            return snapshot;
+        }
+
     }
 
     public static void storeImage(String name, Image snapshot) {
+
         File file = new File(name + ".png");
         try {
             ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", file);

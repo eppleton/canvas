@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
+import net.java.html.canvas.Dimension;
 import net.java.html.canvas.GraphicsContext2D;
 import net.java.html.canvas.Style;
 import net.java.html.canvas.spi.GraphicsUtils;
@@ -90,9 +91,6 @@ public class JavaFXGraphicsEnvironmentTest {
         graphicsContext.arc(10, 10, 1.5, 5, 90, true);
     }
 
-    /**
-     * Test of arcTo method, of class JavaFXGraphicsEnvironment.
-     */
     @Test
     public void testArcTo() throws Exception {
         JavaFXTestUtil.runOnEventQueue(this, "testArcToImpl");
@@ -110,9 +108,6 @@ public class JavaFXGraphicsEnvironmentTest {
 //        storeImage( "testArcTo", snapShot(canvas));
     }
 
-    /**
-     * Test of beginPath method, of class JavaFXGraphicsEnvironment.
-     */
     @Test
     public void testBeginPath() throws Exception {
         JavaFXTestUtil.runOnEventQueue(this, "testBeginPathImpl");
@@ -151,9 +146,6 @@ public class JavaFXGraphicsEnvironmentTest {
         graphicsContext.stroke();
     }
 
-    /**
-     * Test of bezierCurveTo method, of class JavaFXGraphicsEnvironment.
-     */
     @Test
     public void testBezierCurveTo() throws Exception {
         JavaFXTestUtil.runOnEventQueue(this, "testBezierCurveToImpl");
@@ -167,9 +159,6 @@ public class JavaFXGraphicsEnvironmentTest {
 //        storeImage("testBezierCurveTo", snapShot(canvas));
     }
 
-    /**
-     * Test of clearRect method, of class JavaFXGraphicsEnvironment.
-     */
     @Test
     public void testClearRect() throws Exception {
         JavaFXTestUtil.runOnEventQueue(this, "testClearRectImpl");
@@ -193,9 +182,6 @@ public class JavaFXGraphicsEnvironmentTest {
         }
     }
 
-    /**
-     * Test of clip method, of class JavaFXGraphicsEnvironment.
-     */
     @Test
     public void testClip() throws Exception {
         JavaFXTestUtil.runOnEventQueue(this, "testClipImpl");
@@ -228,9 +214,6 @@ public class JavaFXGraphicsEnvironmentTest {
         graphicsContext.restore();
     }
 
-    /**
-     * Test of closePath method, of class JavaFXGraphicsEnvironment.
-     */
     @Test
     public void testClosePath() throws Exception {
         JavaFXTestUtil.runOnEventQueue(this, "testClosePathImpl");
@@ -266,9 +249,6 @@ public class JavaFXGraphicsEnvironmentTest {
         }
     }
 
-    /**
-     * Test of fill method, of class JavaFXGraphicsEnvironment.
-     */
     @Test
     public void testFill() throws Exception {
         JavaFXTestUtil.runOnEventQueue(this, "testFillImpl");
@@ -299,9 +279,6 @@ public class JavaFXGraphicsEnvironmentTest {
         }
     }
 
-    /**
-     * Test of fillRect method, of class JavaFXGraphicsEnvironment.
-     */
     @Test
     public void testFillRect() throws Exception {
         JavaFXTestUtil.runOnEventQueue(this, "testFillRectImpl");
@@ -324,9 +301,6 @@ public class JavaFXGraphicsEnvironmentTest {
         }
     }
 
-    /**
-     * Test of fillText method, of class JavaFXGraphicsEnvironment.
-     */
     @Test
     public void testFillText_4args() throws Exception {
         JavaFXTestUtil.runOnEventQueue(this, "testFillText_4argsImpl");
@@ -338,9 +312,6 @@ public class JavaFXGraphicsEnvironmentTest {
         graphicsContext.fillText("Hallo Welt", 10, 10);
     }
 
-    /**
-     * Test of fillText method, of class JavaFXGraphicsEnvironment.
-     */
     @Test
     public void testFillText_5args() throws Exception {
         JavaFXTestUtil.runOnEventQueue(this, "testFillText_5argsImpl");
@@ -393,8 +364,8 @@ public class JavaFXGraphicsEnvironmentTest {
     @Test
     public void testGetGlobalCompositeOperation() {
         String globalCompositeOperation = graphicsContext.getGlobalCompositeOperation();
-        if (globalCompositeOperation == null || globalCompositeOperation.isEmpty()){
-            fail("globalCompositeOperation shouldn't be empty "+globalCompositeOperation);
+        if (globalCompositeOperation == null || globalCompositeOperation.isEmpty()) {
+            fail("globalCompositeOperation shouldn't be empty " + globalCompositeOperation);
         }
     }
 
@@ -405,8 +376,8 @@ public class JavaFXGraphicsEnvironmentTest {
     public void testGetLineCap() {
         graphicsContext.setLineCap("ROUND");
         String lineCap = graphicsContext.getLineCap();
-        if (lineCap == null || lineCap.isEmpty() || !lineCap.toLowerCase().equals("round")){
-            fail("lineCap shouldbe 'round', but is "+lineCap);
+        if (lineCap == null || lineCap.isEmpty() || !lineCap.toLowerCase().equals("round")) {
+            fail("lineCap shouldbe 'round', but is " + lineCap);
         }
         graphicsContext.setLineCap("square");
     }
@@ -419,8 +390,8 @@ public class JavaFXGraphicsEnvironmentTest {
         String orig = graphicsContext.getLineJoin();
         graphicsContext.setLineJoin("ROUND");
         String lineJoin = graphicsContext.getLineJoin();
-        if (lineJoin == null || lineJoin.isEmpty() || !lineJoin.toLowerCase().equals("round")){
-            fail("lineJoin shouldbe 'round', but is "+lineJoin);
+        if (lineJoin == null || lineJoin.isEmpty() || !lineJoin.toLowerCase().equals("round")) {
+            fail("lineJoin shouldbe 'round', but is " + lineJoin);
         }
         graphicsContext.setLineJoin(orig);
     }
@@ -441,7 +412,7 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testGetMiterLimit() {
-         double ml = 20;
+        double ml = 20;
         graphicsContext.setMiterLimit(ml);
         double mlimit = graphicsContext.getMiterLimit();
         assertEquals(mlimit, ml);
@@ -467,18 +438,42 @@ public class JavaFXGraphicsEnvironmentTest {
         assertEquals(textBaseline, "top");
     }
 
-    /**
-     * Test of isPointInPath method, of class JavaFXGraphicsEnvironment.
-     */
     @Test
-    public void testIsPointInPath() {
+    public void testIsPointInPath() throws Exception {
+        graphicsContext.clearRect(0, 0, 100, 100);
+        graphicsContext.beginPath();
+        graphicsContext.rect(10, 10, 20, 20);
+        boolean pointInPath = graphicsContext.isPointInPath(10, 20);
+        if (!pointInPath) {
+            storeImage("testIsPointInPath", snapShot(canvas));
+            fail("10, 20 should be in path");
+        }
+        boolean pointNotInPath = graphicsContext.isPointInPath(5, 20);
+        if (pointNotInPath) {
+            storeImage("testIsPointInPath1", snapShot(canvas));
+            fail("5,20 should not be in path");
+        }
     }
 
-    /**
-     * Test of lineTo method, of class JavaFXGraphicsEnvironment.
-     */
     @Test
-    public void testLineTo() {
+    public void testLineTo() throws Exception {
+        JavaFXTestUtil.runOnEventQueue(this, "testLineToImpl");
+    }
+
+    public void testLineToImpl() throws Exception {
+        graphicsContext.clearRect(0, 0, 100, 100);
+        graphicsContext.setStrokeStyle(new Style.Color("#000000"));
+        graphicsContext.setLineWidth(5);
+        graphicsContext.beginPath();
+        graphicsContext.moveTo(10, 10);
+        graphicsContext.lineTo(20, 10);
+        graphicsContext.stroke();
+        Image snapShot = snapShot(canvas);
+        boolean checkColor = checkColor(snapShot, 9, 9, 20, 11, Color.BLACK.getRGB());
+        if (!checkColor) {
+            storeImage("testLineTo", snapShot);
+            fail("that area should be black");
+        }
     }
 
     /**
@@ -486,6 +481,10 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testMoveTo() {
+        graphicsContext.clearRect(0, 0, 100, 100);
+        graphicsContext.beginPath();
+        graphicsContext.moveTo(10, 10);
+        // nothing to really test here. This is tested in various other tests
     }
 
     /**
@@ -718,6 +717,8 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testGetHeight_Canvas() {
+        int height = graphicsContext.getHeight();
+        assertEquals(100, height);
     }
 
     /**
@@ -725,20 +726,8 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testGetWidth_Canvas() {
-    }
-
-    /**
-     * Test of setHeight method, of class JavaFXGraphicsEnvironment.
-     */
-    @Test
-    public void testSetHeight() {
-    }
-
-    /**
-     * Test of setWidth method, of class JavaFXGraphicsEnvironment.
-     */
-    @Test
-    public void testSetWidth() {
+        int width = graphicsContext.getWidth();
+        assertEquals(100, width);
     }
 
     /**
@@ -749,32 +738,40 @@ public class JavaFXGraphicsEnvironmentTest {
     }
 
     /**
-     * Test of getWidth method, of class JavaFXGraphicsEnvironment.
-     */
-    @Test
-    public void testGetWidth_3args() {
-    }
-
-    /**
      * Test of getHeight method, of class JavaFXGraphicsEnvironment.
      */
     @Test
-    public void testGetHeight_3args() {
+    public void testGetDimension() {
+        Dimension dimension = graphicsContext.getDimension(net.java.html.canvas.Image.create("image1.png"));
+        assertEquals(100d, dimension.getHeight());
+        assertEquals(100d, dimension.getWidth());
+
     }
 
-    /**
-     * Test of mergeImages method, of class JavaFXGraphicsEnvironment.
-     */
     @Test
-    public void testMergeImages() {
+    public void testMergeImages() throws Exception {
+        JavaFXTestUtil.runOnEventQueue(this, "testMergeImagesImpl");
     }
 
-    /**
-     * Test of getOrCreateCanvas method, of class JavaFXGraphicsEnvironment.
-     */
-    @Test
-    public void testGetOrCreateCanvas() throws Exception {
-//        JavaFXTestUtil.runOnEventQueue(this, "snapShot");
+    public void testMergeImagesImpl() throws Exception {
+
+        net.java.html.canvas.Image image1 = net.java.html.canvas.Image.create("image1.png");
+        net.java.html.canvas.Image image2 = net.java.html.canvas.Image.create("image2.png");
+        net.java.html.canvas.Image merged = graphicsContext.merge(image2, image1);
+        graphicsContext.drawImage(merged, 0, 0);
+        Image image = snapShot(canvas);
+        boolean checkColor = checkColor(image, 0, 0, 49, 49, Color.RED.getRGB());
+        boolean checkColor1 = checkColor(image, 50, 50, 50, 50, Color.BLUE.getRGB());
+        if (!checkColor || !checkColor1) {
+
+            storeImage("testMergeImages", image);
+            fail("Image not merged correctly");
+        }
+//        
     }
 
+//    @Test No test required setup is test enough
+//    public void testGetOrCreateCanvas() throws Exception {
+//        
+//    }
 }
