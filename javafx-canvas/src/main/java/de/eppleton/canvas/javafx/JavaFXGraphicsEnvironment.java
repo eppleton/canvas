@@ -154,7 +154,7 @@ public class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
 
     @Override
     public String getTextBaseline(Canvas canvas) {
-        return canvas.getGraphicsContext2D().getTextBaseline().name();
+        return canvas.getGraphicsContext2D().getTextBaseline().name().toLowerCase();
     }
 
     @Override
@@ -244,7 +244,7 @@ public class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
 
     @Override
     public void setTextBaseline(Canvas canvas, String textbaseline) {
-        canvas.getGraphicsContext2D().setTextBaseline(VPos.valueOf(textbaseline));
+        canvas.getGraphicsContext2D().setTextBaseline(VPos.valueOf(textbaseline.toUpperCase()));
     }
 
     @Override

@@ -462,6 +462,9 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testGetTextBaseline() {
+        graphicsContext.setTextBaseline("top");
+        String textBaseline = graphicsContext.getTextBaseline();
+        assertEquals(textBaseline, "top");
     }
 
     /**
