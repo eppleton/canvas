@@ -24,7 +24,7 @@ import net.java.html.js.JavaScriptBody;
  *
  * @author Anton Epple toni.epple@eppleton.de
  */
-public class LinearGradientWrapper{
+class LinearGradientWrapper{
 
     private final Object gradient;
 

@@ -21,7 +21,7 @@ package de.eppleton.canvas.html;
  *
  * @author Anton Epple toni.epple@eppleton.de
  */
-public class PatternWrapper {
+class PatternWrapper {
 
     private Object pattern;
 

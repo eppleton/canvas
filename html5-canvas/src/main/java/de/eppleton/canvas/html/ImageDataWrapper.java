@@ -26,7 +26,7 @@ import net.java.html.js.JavaScriptBody;
  *
  * @author Anton Epple toni.epple@eppleton.de
  */
-public class ImageDataWrapper implements ImageData <Object>{
+class ImageDataWrapper implements ImageData <Object>{
 
     private double width, height = -1;
     private Object imageData;
