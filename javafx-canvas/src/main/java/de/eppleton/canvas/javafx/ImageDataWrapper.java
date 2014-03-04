@@ -16,7 +16,7 @@ import net.java.html.canvas.ImageData;
  *
  * @author antonepple
  */
-public class ImageDataWrapper implements ImageData<Image> {
+class ImageDataWrapper implements ImageData<Image> {
 
     private final WritableImage image;
     private final double height;

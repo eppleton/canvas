@@ -28,7 +28,7 @@ import javafx.scene.paint.Color;
  *
  * @author antonepple
  */
-public class ImageUtilities {
+class ImageUtilities {
 
     /**
      * Used to decorate an Image. E.g. Take a picture of the player and add a

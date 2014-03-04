@@ -20,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import net.java.html.canvas.Dimension;
 import net.java.html.canvas.GraphicsContext2D;
+import net.java.html.canvas.ImageData;
 import net.java.html.canvas.Style;
 import net.java.html.canvas.spi.GraphicsUtils;
 import org.testng.Assert;
@@ -682,6 +683,19 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testCreatePixelMap_3args() {
+        ImageData pm = graphicsContext.createPixelMap(10, 10);
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                pm.setB(i, j, 10);
+                pm.setR(i, j, 20);
+            }
+        }
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                if( pm.getB(i, j) != 10) fail("B should be 10, but is "+pm.getB(i, j)+" index "+i+", "+j);
+                if( pm.getR(i, j) != 20) fail("B should be 20, but is "+pm.getR(i, j)+" index "+i+", "+j);
+            }
+        }
     }
 
     /**
@@ -701,15 +715,9 @@ public class JavaFXGraphicsEnvironmentTest {
     /**
      * Test of putPixelMap method, of class JavaFXGraphicsEnvironment.
      */
-    @Test
+    @Test(enabled = false)
     public void testPutPixelMap_4args() {
-    }
 
-    /**
-     * Test of putPixelMap method, of class JavaFXGraphicsEnvironment.
-     */
-    @Test
-    public void testPutPixelMap_8args() {
     }
 
     /**
@@ -733,8 +741,9 @@ public class JavaFXGraphicsEnvironmentTest {
     /**
      * Test of measureText method, of class JavaFXGraphicsEnvironment.
      */
-    @Test
+    @Test(enabled = false)
     public void testMeasureText() {
+        Dimension measureText = graphicsContext.measureText("Hallo Welt!");
     }
 
     /**
