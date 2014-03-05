@@ -18,8 +18,6 @@
 package net.java.html.canvas;
 
 import java.util.Objects;
-import java.util.ServiceLoader;
-import net.java.html.canvas.spi.GraphicsEnvironment;
 
 /**
  * Image represents an Image Resource defined by a path.

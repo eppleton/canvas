@@ -391,7 +391,7 @@ public abstract class GraphicsContext2D {
     /**
      * Sets the current stroke line cap attribute.
      *
-     * @param style a value of miter, bevel, or round.
+     * @param style a value of butt,round,square.
      */
     public abstract void setLineCap(String style);
 
