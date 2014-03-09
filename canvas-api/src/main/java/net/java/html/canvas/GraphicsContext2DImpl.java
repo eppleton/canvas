@@ -934,4 +934,14 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
         int height = graphicsEnvironmentImpl.getHeight(canvas, img, img.getCached());
         return new Dimension(width, height);
     }
+
+    @Override
+    public void setWidth(int width) {
+        graphicsEnvironmentImpl.setWidth(canvas, width);
+    }
+
+    @Override
+    public void setHeight(int height) {
+        graphicsEnvironmentImpl.setHeight(canvas, height);
+    }
 }

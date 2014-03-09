@@ -4,7 +4,7 @@
     <parent>
         <artifactId>canvas</artifactId>
         <groupId>org.apidesign.canvas</groupId>
-        <version>0.8-SNAPSHOT</version>
+        <version>0.5-SNAPSHOT</version>
     </parent>
   
     <groupId>org.apidesign.canvas</groupId>

@@ -1,19 +1,18 @@
 /**
- * Canvas API
- * Copyright (C) 2013 AntonEpple <toni.epple@eppleton.de>
+ * Canvas API Copyright (C) 2013 AntonEpple <toni.epple@eppleton.de>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, version 2 of the License.
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, version 2 of the License.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program. Look for COPYING file in the top folder.
- * If not, see http://opensource.org/licenses/GPL-2.0.
+ * You should have received a copy of the GNU General Public License along with
+ * this program. Look for COPYING file in the top folder. If not, see
+ * http://opensource.org/licenses/GPL-2.0.
  */
 package net.java.html.canvas;
 
@@ -27,19 +26,20 @@ import org.apidesign.html.canvas.impl.CnvsAccssr;
 
 /**
  * A 2D Graphics Context similar to HTML5 or JavaFX GraphicsContext. Use this to
- * paint on your Canvas. To get a GraphicsContext call {@link net.java.html.canvas.spi.GraphicsUtils#getOrCreate(net.java.html.canvas.spi.GraphicsEnvironment, java.lang.String) GraphicsUtils.create}
+ * paint on your Canvas. To get a GraphicsContext call
+ * {@link net.java.html.canvas.spi.GraphicsUtils#getOrCreate(net.java.html.canvas.spi.GraphicsEnvironment, java.lang.String) GraphicsUtils.create}
  * For HTML 5 :
  * <pre>
-* {@code
+ * {@code
  * GraphicsContext gc = GraphicsUtil.create(new Html5FXGraphicsEnvironment(200,200,"canvas"));
  * }
- * </pre>
- * For JavaFX:
+ * </pre> For JavaFX:
  * <pre>
-* {@code
+ * {@code
  * GraphicsContext gc = GraphicsUtil.create(new JavaFXGraphicsEnvironment());
  *  }
  * </pre>
+ *
  * @author antonepple
  */
 public abstract class GraphicsContext2D {
@@ -53,7 +53,9 @@ public abstract class GraphicsContext2D {
         };
     }
 
-    /** only one subclass GraphicsContextImpl */
+    /**
+     * only one subclass GraphicsContextImpl
+     */
     GraphicsContext2D() {
     }
 
@@ -578,30 +580,32 @@ public abstract class GraphicsContext2D {
      * Create a new ImageData object with the same dimensions as the object
      * specified by imageData (this does not copy the image data)
      *
-     * @param pixelMap 
+     * @param pixelMap
      * @return
      */
     public abstract ImageData createPixelMap(ImageData pixelMap);
-    
+
     /**
      * Get the pixels for a region of your GraphicsContext
+     *
      * @param x start x coordinate
      * @param y start y coordinate
      * @param width width
      * @param height height
-     * @return 
+     * @return
      */
     public abstract ImageData getSnapshot(double x, double y, double width, double height);
-    
+
     /**
      * Render an ImageData Object at the specified position
-     * @param pixelMap  the Pixel array
-      * @param x start x coordinate
+     *
+     * @param pixelMap the Pixel array
+     * @param x start x coordinate
      * @param y start y coordinate
      */
     public abstract void drawPixelMap(ImageData pixelMap, double x, double y);
 
-      /*
+    /*
      * Render an ImageData Object at the specified position
      * @param pixelMap  the Pixel array to draw
      * @param x start x coordinate
@@ -612,7 +616,6 @@ public abstract class GraphicsContext2D {
      * @param dirtyheight The height to use to draw the image on the canvas
      */
 //    public abstract void drawPixelMap(ImageData pixelMap, double x, double y, double dirtyx, double dirtyy, double dirtywidth, double dirtyheight);
-
     /**
      * Sets the global alpha of the current state.
      *
@@ -730,8 +733,22 @@ public abstract class GraphicsContext2D {
 
     /**
      * Get the Dimension of an Image
+     *
      * @param img
      * @return the Dimension of this Image
      */
-    public abstract Dimension getDimension(Image img) ;
+    public abstract Dimension getDimension(Image img);
+
+    /**
+     * Set the width of this GraphicsContext2D
+     * @param width 
+     */
+    public abstract void setWidth(int width);
+
+    /**
+     * set the height of this GraphicsContext2D
+     * @param height 
+     */
+    public abstract void setHeight(int height);
+
 }
