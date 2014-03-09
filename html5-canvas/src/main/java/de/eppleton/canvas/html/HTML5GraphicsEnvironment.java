@@ -34,7 +34,7 @@ import net.java.html.js.JavaScriptBody;
  *
  * @author Anton Epple toni.epple@eppleton.de
  */
-public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
+ class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
 
     @Override
     public Object getOrCreateCanvas(String id) {
