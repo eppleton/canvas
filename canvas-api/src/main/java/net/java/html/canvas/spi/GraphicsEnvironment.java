@@ -28,9 +28,7 @@ import net.java.html.canvas.Style;
  * The Provider is supposed to create/find a Canvas identified by an ID and 
  * enable drawing operations. 
  * 
- * Users don't use the GraphicsEnvironment directly. They interact with 
- * @see GraphicsUtils 
- * and
+ * Users don't use the GraphicsEnvironment directly. They interact with {@link net.java.html.canvas.GraphicsContext2D GraphicsContext2D}
  * @see GraphicsContext2D
  * 
  * @author antonepple
