@@ -26,7 +26,7 @@ import org.apidesign.html.canvas.impl.CnvsAccssr;
 
 /**
  * A 2D Graphics Context similar to HTML5 or JavaFX GraphicsContext. Use this to
- * paint on your Canvas. To get a GraphicsContext call
+ * paint on your Canvas. To get a GraphicsContext2D call
  * For HTML 5 :
  * <pre>
  * {@code
@@ -35,7 +35,7 @@ import org.apidesign.html.canvas.impl.CnvsAccssr;
  * </pre> For JavaFX:
  * <pre>
  * {@code
- * GraphicsContext gc = JavaFXGraphics.getOrCreate("canvas");
+ * GraphicsContext2D gc = JavaFXGraphics.getOrCreate("canvas");
  *  }
  * </pre>
  *
@@ -585,7 +585,7 @@ public abstract class GraphicsContext2D {
     public abstract ImageData createPixelMap(ImageData pixelMap);
 
     /**
-     * Get the pixels for a region of your GraphicsContext
+     * Get the pixels for a region of your GraphicsContext2D
      *
      * @param x start x coordinate
      * @param y start y coordinate
@@ -689,18 +689,18 @@ public abstract class GraphicsContext2D {
     public abstract Color getWebColor(String webColor);
 
     /**
-     * Get the height of this GraphicsContext (which should be the same as the
+     * Get the height of this GraphicsContext2D (which should be the same as the
      * enclosing canvas height)
      *
-     * @return the height of this GraphicsContext
+     * @return the height of this GraphicsContext2D
      */
     public abstract int getHeight();
 
     /**
-     * Get the width of this GraphicsContext (which should be the same as the
+     * Get the width of this GraphicsContext2D (which should be the same as the
      * enclosing canvas height)
      *
-     * @return the width of this GraphicsContext
+     * @return the width of this GraphicsContext2D
      */
     public abstract int getWidth();
 

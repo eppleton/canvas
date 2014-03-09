@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Style for Stroke and Fill of GraphicsContext. Styles are created using
+ * Style for Stroke and Fill of GraphicsContext2D. Styles are created using
  * GraphicsContexts factory methods. If the Implementation supports it, native
  * Styles will be cached for performance reasons. This happens the first time
  * the Style is actually used.

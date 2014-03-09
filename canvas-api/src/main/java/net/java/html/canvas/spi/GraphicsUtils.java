@@ -29,14 +29,14 @@ public class GraphicsUtils {
     }
 
     /**
-     * Use this to get A GraphicsContext to draw on. Pass in a  
+     * Use this to get A GraphicsContext2D to draw on. Pass in a  
      * {@link net.java.html.canvas.spi.GraphicsEnvironment} and a String to identify
      * your Canvas. 
      * In the HTML5 implementation, the {@link net.java.html.canvas.spi.GraphicsEnvironment} 
      * will look for a Canvas with that ID in your HTML (or add a new one to the page).
      * @param env the GraphicsEnvironment
      * @param id used by the {@link GraphicsEnvironment to identify the Canvas}
-     * @return A GraphicsContext
+     * @return A GraphicsContext2D
      */
     public static GraphicsContext2D getOrCreate(GraphicsEnvironment env, String id) {       
         return CnvsAccssr.getDefault().create(env, env.getOrCreateCanvas(id));

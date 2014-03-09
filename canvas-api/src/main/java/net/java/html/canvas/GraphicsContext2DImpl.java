@@ -724,7 +724,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
     }
 
     /**
-     * Get the pixels for a region of your GraphicsContext
+     * Get the pixels for a region of your GraphicsContext2D
      *
      * @param x start x coordinate
      * @param y start y coordinate
@@ -863,10 +863,10 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
     }
 
     /**
-     * Get the height of this GraphicsContext (which should be the same as the
+     * Get the height of this GraphicsContext2D (which should be the same as the
      * enclosing canvas height)
      *
-     * @return the height of this GraphicsContext
+     * @return the height of this GraphicsContext2D
      */
     @Override
     public int getHeight() {
@@ -874,10 +874,10 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
     }
 
     /**
-     * Get the width of this GraphicsContext (which should be the same as the
+     * Get the width of this GraphicsContext2D (which should be the same as the
      * enclosing canvas height)
      *
-     * @return the width of this GraphicsContext
+     * @return the width of this GraphicsContext2D
      */
     @Override
     public int getWidth() {

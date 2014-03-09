@@ -45,7 +45,7 @@ public class JavaFXGraphicsEnvironmentTest {
     public static void setUpClass() throws Exception {
         new JFXPanel(); // initialize Platform
         javaFXGraphicsEnvironment = new JavaFXGraphicsEnvironment();
-        graphicsContext = GraphicsUtils.getOrCreate(javaFXGraphicsEnvironment, "test");
+        graphicsContext2D = GraphicsUtils.getOrCreate(javaFXGraphicsEnvironment, "test");
         canvas = javaFXGraphicsEnvironment.getOrCreateCanvas("test");
         canvas.setHeight(100);
         canvas.setWidth(100);
@@ -64,7 +64,7 @@ public class JavaFXGraphicsEnvironmentTest {
     private static StackPane stackPane;
     private static Canvas canvas;
     private static JavaFXGraphicsEnvironment javaFXGraphicsEnvironment;
-    private static GraphicsContext2D graphicsContext;
+    private static GraphicsContext2D graphicsContext2D;
 
     @AfterClass
     public static void tearDownClass() throws Exception {
@@ -89,7 +89,7 @@ public class JavaFXGraphicsEnvironmentTest {
     }
 
     public void testArcImpl() {
-        graphicsContext.arc(10, 10, 1.5, 5, 90, true);
+        graphicsContext2D.arc(10, 10, 1.5, 5, 90, true);
     }
 
     @Test
@@ -98,14 +98,14 @@ public class JavaFXGraphicsEnvironmentTest {
     }
 
     public void testArcToImpl() throws Exception {
-        graphicsContext.setFillStyle(new Style.Color("#000000"));
+        graphicsContext2D.setFillStyle(new Style.Color("#000000"));
 //        graphicsContext.fillRect(0, 0, 100,100);
-        graphicsContext.beginPath();
-        graphicsContext.moveTo(1, 1);           // Create a starting point
-        graphicsContext.lineTo(10, 1);          // Create a horizontal line
-        graphicsContext.arcTo(15, 1, 15, 20, 5); // Create an arc
-        graphicsContext.lineTo(15, 100);
-        graphicsContext.stroke();
+        graphicsContext2D.beginPath();
+        graphicsContext2D.moveTo(1, 1);           // Create a starting point
+        graphicsContext2D.lineTo(10, 1);          // Create a horizontal line
+        graphicsContext2D.arcTo(15, 1, 15, 20, 5); // Create an arc
+        graphicsContext2D.lineTo(15, 100);
+        graphicsContext2D.stroke();
 //        storeImage( "testArcTo", snapShot(canvas));
     }
 
@@ -115,28 +115,28 @@ public class JavaFXGraphicsEnvironmentTest {
     }
 
     public void testBeginPathImpl() throws Exception {
-        graphicsContext.setFillStyle(new Style.Color("#000000"));
+        graphicsContext2D.setFillStyle(new Style.Color("#000000"));
         // creating two lines, clearing gc after first line is stroked
-        graphicsContext.beginPath();
-        graphicsContext.moveTo(1, 1);           // Create a starting point
-        graphicsContext.lineTo(10, 1);
-        graphicsContext.stroke();
-        graphicsContext.clearRect(0, 0, 100, 100);
-        graphicsContext.beginPath();
-        graphicsContext.moveTo(10, 1);           // Create a starting point
-        graphicsContext.lineTo(10, 10);
-        graphicsContext.stroke();
+        graphicsContext2D.beginPath();
+        graphicsContext2D.moveTo(1, 1);           // Create a starting point
+        graphicsContext2D.lineTo(10, 1);
+        graphicsContext2D.stroke();
+        graphicsContext2D.clearRect(0, 0, 100, 100);
+        graphicsContext2D.beginPath();
+        graphicsContext2D.moveTo(10, 1);           // Create a starting point
+        graphicsContext2D.lineTo(10, 10);
+        graphicsContext2D.stroke();
         Image snapShot = snapShot(canvas);
         // this time we don't begin a new path. 
         // clear should have no effect
-        graphicsContext.setFillStyle(new Style.Color("#000000"));
-        graphicsContext.beginPath();
-        graphicsContext.moveTo(1, 1);           // Create a starting point
-        graphicsContext.lineTo(10, 1);
-        graphicsContext.clearRect(0, 0, 100, 100);
-        graphicsContext.moveTo(10, 1);           // Create a starting point
-        graphicsContext.lineTo(10, 10);
-        graphicsContext.stroke();
+        graphicsContext2D.setFillStyle(new Style.Color("#000000"));
+        graphicsContext2D.beginPath();
+        graphicsContext2D.moveTo(1, 1);           // Create a starting point
+        graphicsContext2D.lineTo(10, 1);
+        graphicsContext2D.clearRect(0, 0, 100, 100);
+        graphicsContext2D.moveTo(10, 1);           // Create a starting point
+        graphicsContext2D.lineTo(10, 10);
+        graphicsContext2D.stroke();
         Image snapShot1 = snapShot(canvas);
         boolean sameImage = isSameImage(snapShot, snapShot1);
         if (sameImage) {
@@ -144,7 +144,7 @@ public class JavaFXGraphicsEnvironmentTest {
             storeImage("testBeginPath1", snapShot1);
             Assert.fail("images are the same and shouldn't be");
         }
-        graphicsContext.stroke();
+        graphicsContext2D.stroke();
     }
 
     @Test
@@ -153,10 +153,10 @@ public class JavaFXGraphicsEnvironmentTest {
     }
 
     public void testBezierCurveToImpl() throws Exception {
-        graphicsContext.beginPath();
-        graphicsContext.moveTo(20, 20);
-        graphicsContext.bezierCurveTo(20, 100, 100, 100, 100, 20);
-        graphicsContext.stroke();
+        graphicsContext2D.beginPath();
+        graphicsContext2D.moveTo(20, 20);
+        graphicsContext2D.bezierCurveTo(20, 100, 100, 100, 100, 20);
+        graphicsContext2D.stroke();
 //        storeImage("testBezierCurveTo", snapShot(canvas));
     }
 
@@ -166,9 +166,9 @@ public class JavaFXGraphicsEnvironmentTest {
     }
 
     public void testClearRectImpl() throws Exception {
-        graphicsContext.fillRect(0, 0, 100, 100);
+        graphicsContext2D.fillRect(0, 0, 100, 100);
         Image snapShot = snapShot(canvas);
-        graphicsContext.clearRect(0, 0, 100, 100);
+        graphicsContext2D.clearRect(0, 0, 100, 100);
         Image snapShot1 = snapShot(canvas);
         boolean sameImage = isSameImage(snapShot, snapShot1);
         if (sameImage) {
@@ -191,14 +191,14 @@ public class JavaFXGraphicsEnvironmentTest {
     public void testClipImpl() throws Exception {
         // need to save and restore the graphicscontext, 
         // otherwise the rest of the tests will fail because of the clip
-        graphicsContext.save();
+        graphicsContext2D.save();
         // Clip a rectangular area
-        graphicsContext.beginPath();
-        graphicsContext.rect(20, 20, 60, 60);
-        graphicsContext.clip();
+        graphicsContext2D.beginPath();
+        graphicsContext2D.rect(20, 20, 60, 60);
+        graphicsContext2D.clip();
         // Draw red rectangle after clip() only the parts inside clip should be red
-        graphicsContext.setFillStyle(new Style.Color("#ff0000"));
-        graphicsContext.fillRect(0, 0, 100, 100);
+        graphicsContext2D.setFillStyle(new Style.Color("#ff0000"));
+        graphicsContext2D.fillRect(0, 0, 100, 100);
         Image snapShot = snapShot(canvas);
         boolean checkColor = checkColor(snapShot, 0, 0, 20, 100, Color.WHITE.getRGB());
         if (!checkColor) {
@@ -210,9 +210,9 @@ public class JavaFXGraphicsEnvironmentTest {
             storeImage("testClip1", snapShot);
             fail("Area inside clip should be red");
         }
-        graphicsContext.beginPath();
-        graphicsContext.rect(0, 0, 100, 100);
-        graphicsContext.restore();
+        graphicsContext2D.beginPath();
+        graphicsContext2D.rect(0, 0, 100, 100);
+        graphicsContext2D.restore();
     }
 
     @Test
@@ -221,17 +221,17 @@ public class JavaFXGraphicsEnvironmentTest {
     }
 
     public void testClosePathImpl() throws Exception {
-        graphicsContext.clearRect(0, 0, 100, 100);
-        graphicsContext.beginPath();
-        graphicsContext.moveTo(10, 10);
-        graphicsContext.lineTo(20, 10);
-        graphicsContext.lineTo(20, 20);
-        graphicsContext.lineTo(10, 20);
-        graphicsContext.stroke();
+        graphicsContext2D.clearRect(0, 0, 100, 100);
+        graphicsContext2D.beginPath();
+        graphicsContext2D.moveTo(10, 10);
+        graphicsContext2D.lineTo(20, 10);
+        graphicsContext2D.lineTo(20, 20);
+        graphicsContext2D.lineTo(10, 20);
+        graphicsContext2D.stroke();
         Image snapShot = snapShot(canvas);
-        graphicsContext.clearRect(0, 0, 100, 100);
-        graphicsContext.closePath();
-        graphicsContext.stroke();
+        graphicsContext2D.clearRect(0, 0, 100, 100);
+        graphicsContext2D.closePath();
+        graphicsContext2D.stroke();
         Image snapShot1 = snapShot(canvas);
         if (isSameImage(snapShot, snapShot1)) {
             storeImage("testClosePath", snapShot);
@@ -256,17 +256,17 @@ public class JavaFXGraphicsEnvironmentTest {
     }
 
     public void testFillImpl() throws Exception {
-        graphicsContext.clearRect(0, 0, 100, 100);
-        graphicsContext.beginPath();
-        graphicsContext.moveTo(10, 10);
-        graphicsContext.lineTo(20, 10);
-        graphicsContext.lineTo(20, 20);
-        graphicsContext.lineTo(10, 20);
-        graphicsContext.closePath();
-        graphicsContext.stroke();
+        graphicsContext2D.clearRect(0, 0, 100, 100);
+        graphicsContext2D.beginPath();
+        graphicsContext2D.moveTo(10, 10);
+        graphicsContext2D.lineTo(20, 10);
+        graphicsContext2D.lineTo(20, 20);
+        graphicsContext2D.lineTo(10, 20);
+        graphicsContext2D.closePath();
+        graphicsContext2D.stroke();
         Image snapShot = snapShot(canvas);
-        graphicsContext.setFillStyle(new Style.Color("#00ff00"));
-        graphicsContext.fill();
+        graphicsContext2D.setFillStyle(new Style.Color("#00ff00"));
+        graphicsContext2D.fill();
         Image snapShot1 = snapShot(canvas);
         if (isSameImage(snapShot, snapShot1)) {
             storeImage("testFill", snapShot);
@@ -286,9 +286,9 @@ public class JavaFXGraphicsEnvironmentTest {
     }
 
     public void testFillRectImpl() throws Exception {
-        graphicsContext.setFillStyle(new Style.Color("#0000ff"));
+        graphicsContext2D.setFillStyle(new Style.Color("#0000ff"));
 
-        graphicsContext.fillRect(10, 10, 15, 15);
+        graphicsContext2D.fillRect(10, 10, 15, 15);
         Image snapShot = snapShot(canvas);
         boolean checkColor = checkColor(snapShot, 10, 10, 15, 15, Color.BLUE.getRGB());
         if (!checkColor) {
@@ -308,9 +308,9 @@ public class JavaFXGraphicsEnvironmentTest {
     }
 
     public void testFillText_4argsImpl() throws Exception {
-        graphicsContext.clearRect(0, 0, 100, 100);
-        graphicsContext.setFillStyle(new Style.Color("#0000ff"));
-        graphicsContext.fillText("Hallo Welt", 10, 10);
+        graphicsContext2D.clearRect(0, 0, 100, 100);
+        graphicsContext2D.setFillStyle(new Style.Color("#0000ff"));
+        graphicsContext2D.fillText("Hallo Welt", 10, 10);
     }
 
     @Test
@@ -319,14 +319,14 @@ public class JavaFXGraphicsEnvironmentTest {
     }
 
     public void testFillText_5argsImpl() throws Exception {
-        graphicsContext.clearRect(0, 0, 100, 100);
-        graphicsContext.setFillStyle(new Style.Color("#0000ff"));
-        graphicsContext.fillText("Hallo Welt", 10, 10);
+        graphicsContext2D.clearRect(0, 0, 100, 100);
+        graphicsContext2D.setFillStyle(new Style.Color("#0000ff"));
+        graphicsContext2D.fillText("Hallo Welt", 10, 10);
         Image snapShot = snapShot(canvas);
         // a test to check if 5 args is different
-        graphicsContext.clearRect(0, 0, 100, 100);
-        graphicsContext.setFillStyle(new Style.Color("#0000ff"));
-        graphicsContext.fillText("Hallo Welt", 10, 10, 20);
+        graphicsContext2D.clearRect(0, 0, 100, 100);
+        graphicsContext2D.setFillStyle(new Style.Color("#0000ff"));
+        graphicsContext2D.fillText("Hallo Welt", 10, 10, 20);
         Image snapShot1 = snapShot(canvas);
         if (isSameImage(snapShot, snapShot1)) {
             storeImage("testFillText_5args1", snapShot);
@@ -340,7 +340,7 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testGetFont() {
-        String font = graphicsContext.getFont();
+        String font = graphicsContext2D.getFont();
         assert (font != null & !font.isEmpty());
     }
 
@@ -349,12 +349,12 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testGetGlobalAlpha() {
-        graphicsContext.setGlobalAlpha(.5);
-        double globalAlpha = graphicsContext.getGlobalAlpha();
+        graphicsContext2D.setGlobalAlpha(.5);
+        double globalAlpha = graphicsContext2D.getGlobalAlpha();
         if (globalAlpha != .5) {
             fail("GlobalAlpha should be .5 but is " + globalAlpha);
         }
-        graphicsContext.setGlobalAlpha(1.0);
+        graphicsContext2D.setGlobalAlpha(1.0);
 
     }
 
@@ -364,7 +364,7 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testGetGlobalCompositeOperation() {
-        String globalCompositeOperation = graphicsContext.getGlobalCompositeOperation();
+        String globalCompositeOperation = graphicsContext2D.getGlobalCompositeOperation();
         if (globalCompositeOperation == null || globalCompositeOperation.isEmpty()) {
             fail("globalCompositeOperation shouldn't be empty " + globalCompositeOperation);
         }
@@ -375,12 +375,12 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testGetLineCap() {
-        graphicsContext.setLineCap("ROUND");
-        String lineCap = graphicsContext.getLineCap();
+        graphicsContext2D.setLineCap("ROUND");
+        String lineCap = graphicsContext2D.getLineCap();
         if (lineCap == null || lineCap.isEmpty() || !lineCap.toLowerCase().equals("round")) {
             fail("lineCap shouldbe 'round', but is " + lineCap);
         }
-        graphicsContext.setLineCap("square");
+        graphicsContext2D.setLineCap("square");
     }
 
     /**
@@ -388,13 +388,13 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testGetLineJoin() {
-        String orig = graphicsContext.getLineJoin();
-        graphicsContext.setLineJoin("ROUND");
-        String lineJoin = graphicsContext.getLineJoin();
+        String orig = graphicsContext2D.getLineJoin();
+        graphicsContext2D.setLineJoin("ROUND");
+        String lineJoin = graphicsContext2D.getLineJoin();
         if (lineJoin == null || lineJoin.isEmpty() || !lineJoin.toLowerCase().equals("round")) {
             fail("lineJoin shouldbe 'round', but is " + lineJoin);
         }
-        graphicsContext.setLineJoin(orig);
+        graphicsContext2D.setLineJoin(orig);
     }
 
     /**
@@ -403,8 +403,8 @@ public class JavaFXGraphicsEnvironmentTest {
     @Test
     public void testGetLineWidth() {
         double lw = 20;
-        graphicsContext.setLineWidth(lw);
-        double lineWidth = graphicsContext.getLineWidth();
+        graphicsContext2D.setLineWidth(lw);
+        double lineWidth = graphicsContext2D.getLineWidth();
         assertEquals(lineWidth, lw);
     }
 
@@ -414,8 +414,8 @@ public class JavaFXGraphicsEnvironmentTest {
     @Test
     public void testGetMiterLimit() {
         double ml = 20;
-        graphicsContext.setMiterLimit(ml);
-        double mlimit = graphicsContext.getMiterLimit();
+        graphicsContext2D.setMiterLimit(ml);
+        double mlimit = graphicsContext2D.getMiterLimit();
         assertEquals(mlimit, ml);
     }
 
@@ -424,8 +424,8 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testGetTextAlign() {
-        graphicsContext.setTextAlign("left");
-        String textAlign = graphicsContext.getTextAlign();
+        graphicsContext2D.setTextAlign("left");
+        String textAlign = graphicsContext2D.getTextAlign();
         assertEquals(textAlign, "left");
     }
 
@@ -434,22 +434,22 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testGetTextBaseline() {
-        graphicsContext.setTextBaseline("top");
-        String textBaseline = graphicsContext.getTextBaseline();
+        graphicsContext2D.setTextBaseline("top");
+        String textBaseline = graphicsContext2D.getTextBaseline();
         assertEquals(textBaseline, "top");
     }
 
     @Test
     public void testIsPointInPath() throws Exception {
-        graphicsContext.clearRect(0, 0, 100, 100);
-        graphicsContext.beginPath();
-        graphicsContext.rect(10, 10, 20, 20);
-        boolean pointInPath = graphicsContext.isPointInPath(10, 20);
+        graphicsContext2D.clearRect(0, 0, 100, 100);
+        graphicsContext2D.beginPath();
+        graphicsContext2D.rect(10, 10, 20, 20);
+        boolean pointInPath = graphicsContext2D.isPointInPath(10, 20);
         if (!pointInPath) {
             storeImage("testIsPointInPath", snapShot(canvas));
             fail("10, 20 should be in path");
         }
-        boolean pointNotInPath = graphicsContext.isPointInPath(5, 20);
+        boolean pointNotInPath = graphicsContext2D.isPointInPath(5, 20);
         if (pointNotInPath) {
             storeImage("testIsPointInPath1", snapShot(canvas));
             fail("5,20 should not be in path");
@@ -462,13 +462,13 @@ public class JavaFXGraphicsEnvironmentTest {
     }
 
     public void testLineToImpl() throws Exception {
-        graphicsContext.clearRect(0, 0, 100, 100);
-        graphicsContext.setStrokeStyle(new Style.Color("#000000"));
-        graphicsContext.setLineWidth(5);
-        graphicsContext.beginPath();
-        graphicsContext.moveTo(10, 10);
-        graphicsContext.lineTo(20, 10);
-        graphicsContext.stroke();
+        graphicsContext2D.clearRect(0, 0, 100, 100);
+        graphicsContext2D.setStrokeStyle(new Style.Color("#000000"));
+        graphicsContext2D.setLineWidth(5);
+        graphicsContext2D.beginPath();
+        graphicsContext2D.moveTo(10, 10);
+        graphicsContext2D.lineTo(20, 10);
+        graphicsContext2D.stroke();
         Image snapShot = snapShot(canvas);
         boolean checkColor = checkColor(snapShot, 9, 9, 20, 11, Color.BLACK.getRGB());
         if (!checkColor) {
@@ -482,9 +482,9 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testMoveTo() {
-        graphicsContext.clearRect(0, 0, 100, 100);
-        graphicsContext.beginPath();
-        graphicsContext.moveTo(10, 10);
+        graphicsContext2D.clearRect(0, 0, 100, 100);
+        graphicsContext2D.beginPath();
+        graphicsContext2D.moveTo(10, 10);
         // nothing to really test here. This is tested in various other tests
     }
 
@@ -685,7 +685,7 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test (enabled = false) 
     public void testCreatePixelMap_3args() {
-        ImageData pm = graphicsContext.createPixelMap(10, 10);
+        ImageData pm = graphicsContext2D.createPixelMap(10, 10);
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 pm.setB(i, j, 10);
@@ -727,7 +727,7 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testGetHeight_Canvas() {
-        int height = graphicsContext.getHeight();
+        int height = graphicsContext2D.getHeight();
         assertEquals(100, height);
     }
 
@@ -736,7 +736,7 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testGetWidth_Canvas() {
-        int width = graphicsContext.getWidth();
+        int width = graphicsContext2D.getWidth();
         assertEquals(100, width);
     }
 
@@ -745,7 +745,7 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test(enabled = false)
     public void testMeasureText() {
-        Dimension measureText = graphicsContext.measureText("Hallo Welt!");
+        Dimension measureText = graphicsContext2D.measureText("Hallo Welt!");
     }
 
     /**
@@ -753,7 +753,7 @@ public class JavaFXGraphicsEnvironmentTest {
      */
     @Test
     public void testGetDimension() {
-        Dimension dimension = graphicsContext.getDimension(net.java.html.canvas.Image.create("image1.png"));
+        Dimension dimension = graphicsContext2D.getDimension(net.java.html.canvas.Image.create("image1.png"));
         assertEquals(100d, dimension.getHeight());
         assertEquals(100d, dimension.getWidth());
 
@@ -768,8 +768,8 @@ public class JavaFXGraphicsEnvironmentTest {
 
         net.java.html.canvas.Image image1 = net.java.html.canvas.Image.create("image1.png");
         net.java.html.canvas.Image image2 = net.java.html.canvas.Image.create("image2.png");
-        net.java.html.canvas.Image merged = graphicsContext.merge(image2, image1);
-        graphicsContext.drawImage(merged, 0, 0);
+        net.java.html.canvas.Image merged = graphicsContext2D.merge(image2, image1);
+        graphicsContext2D.drawImage(merged, 0, 0);
         Image image = snapShot(canvas);
         boolean checkColor = checkColor(image, 0, 0, 49, 49, Color.RED.getRGB());
         boolean checkColor1 = checkColor(image, 50, 50, 50, 50, Color.BLUE.getRGB());

@@ -19,8 +19,8 @@ package net.java.html.canvas;
 
 /**
  * ImageData is an updateable 2-Dimensional Map of Color values. Created (
- * createPixelMap / getSnapShot ) by GraphicsContext. you can modify the
- * individual pixels and render it using paintPixelMap on GraphicsContext
+ * createPixelMap / getSnapShot ) by GraphicsContext2D. you can modify the
+ * individual pixels and render it using paintPixelMap on GraphicsContext2D
  *
  * @author antonepple
  * @param <Image> The native Image Type

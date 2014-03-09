@@ -617,7 +617,7 @@ public interface GraphicsEnvironment <Canvas>{
     public ImageData createPixelMap(Canvas canvas, ImageData imageData);
 
     /**
-     * Get the pixels for a region of your GraphicsContext
+     * Get the pixels for a region of your GraphicsContext2D
      * @param canvas the native Canvas
      * @param x start x coordinate
      * @param y start y coordinate
@@ -682,20 +682,20 @@ public interface GraphicsEnvironment <Canvas>{
     public String getGlobalCompositeOperation(Canvas canvas);
 
     /**
-     * Get the height of this GraphicsContext (which should be the same as the
+     * Get the height of this GraphicsContext2D (which should be the same as the
      * enclosing canvas height)
      *
      * @param canvas the native Canvas
-     * @return the height of this GraphicsContext
+     * @return the height of this GraphicsContext2D
      */
     public int getHeight(Canvas canvas);
 
     /**
-     * Get the width of this GraphicsContext (which should be the same as the
+     * Get the width of this GraphicsContext2D (which should be the same as the
      * enclosing canvas height)
      *
      * @param canvas the native Canvas
-     * @return the width of this GraphicsContext
+     * @return the width of this GraphicsContext2D
      */
     public int getWidth(Canvas canvas);
 

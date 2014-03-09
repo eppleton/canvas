@@ -9,7 +9,7 @@ package net.java.html.canvas.spi;
 import net.java.html.canvas.GraphicsContext2D;
 
 /**
- * A Factory to get or create a GraphicsContext with a certain id. If a 
+ * A Factory to get or create a GraphicsContext2D with a certain id. If a 
  * Canvas with this ID already exists, implementors should make sure it is reused.
  * @author antonepple
  */
