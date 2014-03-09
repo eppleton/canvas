@@ -5,6 +5,7 @@
  */
 package de.eppleton.canvas.html;
 
+import net.java.html.canvas.spi.GraphicsFactory;
 import net.java.html.canvas.GraphicsContext2D;
 import net.java.html.canvas.spi.GraphicsUtils;
 
@@ -12,7 +13,7 @@ import net.java.html.canvas.spi.GraphicsUtils;
  *
  * @author antonepple
  */
-public class HTML5Graphics {
+public class HTML5Graphics implements GraphicsFactory{
 
     public GraphicsContext2D getOrCreate(String canvasId) {
         return GraphicsUtils.getOrCreate(new HTML5GraphicsEnvironment(), canvasId);

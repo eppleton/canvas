@@ -46,7 +46,7 @@
         <dependency>
             <groupId>org.apidesign.canvas</groupId>
             <artifactId>canvas-api</artifactId>
-            <version>0.8-SNAPSHOT</version>
+            <version>0.5-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <dependency>
