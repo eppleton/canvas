@@ -12,7 +12,7 @@ import net.java.html.canvas.GraphicsContext2D;
  *
  * @author antonepple
  */
-interface GraphicsFactory {
+public interface GraphicsFactory {
 
     GraphicsContext2D getOrCreate(String canvasId);
     

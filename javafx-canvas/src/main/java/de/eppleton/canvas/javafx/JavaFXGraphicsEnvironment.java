@@ -55,7 +55,7 @@ import net.java.html.canvas.spi.GraphicsEnvironment;
 //@ServiceProviders( value = {
 //    @ServiceProvider(service = GraphicsEnvironment.class),
 //    @ServiceProvider(service = CanvasProvider.class)})
-public class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
+class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
 
     @Override
     public void arc(Canvas canvas, double centerX, double centerY, double startAngle, double radius, double endAngle, boolean ccw) {
