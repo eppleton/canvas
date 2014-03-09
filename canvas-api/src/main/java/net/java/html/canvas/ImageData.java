@@ -23,6 +23,7 @@ package net.java.html.canvas;
  * individual pixels and render it using paintPixelMap on GraphicsContext
  *
  * @author antonepple
+ * @param <Image> The native Image Type
  */
 public interface ImageData <Image> {
 
@@ -43,8 +44,8 @@ public interface ImageData <Image> {
     /**
      * get the red value at a specified coordinate
      *
-     * @param x
-     * @param y
+     * @param x x coordinate
+     * @param y y coordinate
      * @return the red value as an int (0 -255)
      */
     public int getR(int x, int y);
@@ -52,8 +53,8 @@ public interface ImageData <Image> {
     /**
      * get the green value at a specified coordinate
      *
-     * @param x
-     * @param y
+     * @param x x coordinate
+     * @param y y coordinate
      * @return the green value as an int (0 -255)
      */
     public int getG(int x, int y);
@@ -61,8 +62,8 @@ public interface ImageData <Image> {
     /**
      * get the blue value at a specified coordinate
      *
-     * @param x
-     * @param y
+     * @param x x coordinate
+     * @param y y coordinate
      * @return the blue value as an int (0 -255)
      */
     public int getB(int x, int y);
@@ -70,8 +71,8 @@ public interface ImageData <Image> {
     /**
      * get the alpha (transparency) value at a specified coordinate
      *
-     * @param x
-     * @param y
+     * @param x x coordinate
+     * @param y y coordinate
      * @return the alpha value as an int (0 - 255)
      */
     public int getA(int x, int y);
@@ -79,8 +80,8 @@ public interface ImageData <Image> {
      /**
      * set the red value at a specified coordinate
      *
-     * @param x
-     * @param y
+     * @param x x coordinate 
+     * @param y y coordinate
      * @param value the red value as an int (0 - 255)
      */
     public void setR(int x, int y, int value);
@@ -88,8 +89,8 @@ public interface ImageData <Image> {
      /**
      * set the green value at a specified coordinate
      *
-     * @param x
-     * @param y
+     * @param x x coordinate
+     * @param y y coordinate
      * @param value the green value as an int (0 - 255)
      */
     public void setG(int x, int y, int value);
@@ -97,8 +98,8 @@ public interface ImageData <Image> {
      /**
      * set the blue value at a specified coordinate
      *
-     * @param x
-     * @param y
+     * @param x x coordinate
+     * @param y y coordinate
      * @param value the blue value as an int (0 - 255)
      */
     public void setB(int x, int y, int value);
@@ -106,8 +107,8 @@ public interface ImageData <Image> {
     /**
      * set the alpha (transparency) value at a specified coordinate
      *
-     * @param x
-     * @param y
+     * @param x x coordinate
+     * @param y  y coordinate
      * @param value the alpha value as an int (0 - 255)
      */
     public void setA(int x, int y, int value);

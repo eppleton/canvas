@@ -34,21 +34,21 @@ import net.java.html.canvas.Style;
  * @see GraphicsContext2D
  * 
  * @author antonepple
- * @param <Canvas>
+ * @param <Canvas> The native Canvas
  */
 public interface GraphicsEnvironment <Canvas>{
 
    /**
     * Get the Canvas with this ID or create it.
-    * @param id
-    * @return 
+    * @param id the Canvas id
+    * @return the Canvas
     */
     public Canvas getOrCreateCanvas(String id); 
     
     /**
      * Adds path elements to the current path to make an arc.
      *
-     * @param canvas
+     * @param canvas the native Canvas 
      * @param centerX the center x position of the arc.
      * @param centerY the center y position of the arc.
      * @param startAngle the startAngle of the arc
@@ -67,7 +67,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Adds segments to the current path to make an arc.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param x1 the X coordinate of the first point of the arc.
      * @param y1 the Y coordinate of the first point of the arc.
      * @param x2 the X coordinate of the second point of the arc.
@@ -84,7 +84,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Returns true if the the given x,y point is inside the path.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param x the X coordinate to use for the check.
      * @param y the Y coordinate to use for the check.
      * @return true if the point given is inside the path, false otherwise.
@@ -94,38 +94,38 @@ public interface GraphicsEnvironment <Canvas>{
 
     /**
      * Fills the path with the current fill paint.
-     * @param canvas
+     * @param canvas the native Canvas
      */
     public void fill(Canvas canvas);
 
     /**
      * Strokes the path with the current stroke paint.
-     * @param canvas
+     * @param canvas the native Canvas
      */
     public void stroke(Canvas canvas);
 
     /**
      * Starts a Path
-     * @param canvas
+     * @param canvas the native Canvas
      */
     public void beginPath(Canvas canvas);
 
     /**
      * Closes the path.
-     * @param canvas
+     * @param canvas the native Canvas
      */
     public void closePath(Canvas canvas);
 
     /**
      * Clips using the current path
-     * @param canvas
+     * @param canvas the native Canvas
      */
     public void clip(Canvas canvas);
 
     /**
      * Issues a move command for the current path to the given x,y coordinate.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param x the X position for the move to command.
      * @param y the Y position for the move to command.
      */
@@ -135,7 +135,7 @@ public interface GraphicsEnvironment <Canvas>{
      * Adds segments to the current path to make a line at the given x,y
      * coordinate.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param x the X coordinate of the ending point of the line.
      * @param y the Y coordinate of the ending point of the line.
      */
@@ -144,7 +144,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Adds segments to the current path to make a quadratic curve.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param cpx the X coordinate of the control point
      * @param cpy the Y coordinate of the control point
      * @param x the X coordinate of the end point
@@ -155,7 +155,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Adds segments to the current path to make a cubic bezier curve.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param cp1x the X coordinate of first bezier control point.
      * @param cp1y the Y coordinate of the first bezier control point.
      * @param cp2x the X coordinate of the second bezier control point.
@@ -168,7 +168,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Fills a rectangle using the current fill paint.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param x the X position of the upper left corner of the rectangle.
      * @param y the Y position of the upper left corner of the rectangle.
      * @param width the width of the rectangle.
@@ -179,7 +179,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Strokes a rectangle using the current stroke paint.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param x the X position of the upper left corner of the rectangle.
      * @param y the Y position of the upper left corner of the rectangle.
      * @param width the width of the rectangle.
@@ -190,7 +190,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Clears a portion of the canvas with a transparent color value.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param x X position of the upper left corner of the rectangle.
      * @param y Y position of the upper left corner of the rectangle.
      * @param width width of the rectangle.
@@ -201,7 +201,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Clears a portion of the canvas with a transparent color value.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param x X position of the upper left corner of the rectangle.
      * @param y Y position of the upper left corner of the rectangle.
      * @param width width of the rectangle.
@@ -230,7 +230,7 @@ public interface GraphicsEnvironment <Canvas>{
      * </ul>
      * This method does NOT alter the current state in any way. Also, not that
      * the current path is not saved.
-     * @param canvas
+     * @param canvas the native Canvas
      */
     public void save(Canvas canvas);
 
@@ -256,14 +256,14 @@ public interface GraphicsEnvironment <Canvas>{
      * <li>Effect</li>
      * <li>Fill Rule</li>
      * </ul>
-     * @param canvas
+     * @param canvas the native Canvas
      */
     public void restore(Canvas canvas);
 
     /**
      * Rotates the current transform in degrees.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param angle value in degrees to rotate the current transform.
      */
     public void rotate(Canvas canvas, double angle);
@@ -271,7 +271,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Concatenates the input with the current transform.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param a - the X coordinate scaling element of the 3x4 matrix
      * @param b - the Y coordinate shearing element of the 3x4 matrix
      * @param c - the X coordinate shearing element of the 3x4 matrix
@@ -284,7 +284,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Concatenates the input with the current transform.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param a - the X coordinate scaling element of the 3x4 matrix
      * @param b - the Y coordinate shearing element of the 3x4 matrix
      * @param c - the X coordinate shearing element of the 3x4 matrix
@@ -297,7 +297,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Translates the current transform by x, y.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param x value to translate along the x axis.
      * @param y value to translate along the y axis.
      */
@@ -306,7 +306,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Scales the current transform by x, y.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param x value to scale in the x axis.
      * @param y value to scale in the y axis.
      */
@@ -316,12 +316,13 @@ public interface GraphicsEnvironment <Canvas>{
      * Draws an image at the given x, y position using the width and height of
      * the given image.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param image the image to be drawn.
      * @param x the X coordinate on the destination for the upper left of the
      * image.
      * @param y the Y coordinate on the destination for the upper left of the
      * image.
+     * @param nativeImage the native Image or null
      * @return the native Image for caching.
      */
     public Object drawImage(Canvas canvas, Image image, double x, double y, Object nativeImage);
@@ -330,7 +331,7 @@ public interface GraphicsEnvironment <Canvas>{
      * Draws an image into the given destination rectangle of the canvas. The
      * Image is scaled to fit into the destination rectagnle.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param image the image to be drawn.
      * @param x the X coordinate on the destination for the upper left of the
      * image.
@@ -338,6 +339,7 @@ public interface GraphicsEnvironment <Canvas>{
      * image.
      * @param width the width of the destination rectangle.
      * @param height the height of the destination rectangle.
+     * @param nativeImage the native image, or null
      * @return the native Image for caching.
      *
      */
@@ -347,7 +349,7 @@ public interface GraphicsEnvironment <Canvas>{
      * Draws the current source rectangle of the given image to the given
      * destination rectangle of the Canvas.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param image the image to be drawn.
      * @param sx the source rectangle's X coordinate position.
      * @param sy the source rectangle's Y coordinate position.
@@ -357,6 +359,7 @@ public interface GraphicsEnvironment <Canvas>{
      * @param y the destination rectangle's Y coordinate position.
      * @param width the destination rectangle's width.
      * @param height the destination rectangle's height.
+     * @param nativeImage the native Image, or null
      * @return the native Image for caching.
      */
     public Object drawImage(Canvas canvas, Image image, double sx, double sy, double sWidth, double sHeight, double x, double y, double width, double height, Object nativeImage);
@@ -364,7 +367,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Get the width of this Image
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param image the image to measure
      * @param nativeImage the cached native Image or null
      * @return the width of the image
@@ -374,7 +377,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Get the height of this Image
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param image the image to measure
      * @param nativeImage the cached native Image or null
      * @return the height of the image
@@ -387,7 +390,7 @@ public interface GraphicsEnvironment <Canvas>{
      * the cache hasn't been invalidated, the Object you returned will be passed
      * as a parameter.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param style The style object you should use to create your native style
      * @param nativeStyle your native object if cached, null otherwise
      * @return return native Object for caching
@@ -401,7 +404,7 @@ public interface GraphicsEnvironment <Canvas>{
      * the cache hasn't been invalidated, the Object you returned will be passed
      * as a parameter.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param style The style object you should use to create your native style
      * @param nativeStyle your native object if cached, null otherwise
      * @return return native Object for caching
@@ -427,7 +430,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Gets the current stroke line cap.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @return {@code StrokeLineCap} with a value of Butt, Round, or Square.
      */
     public String getLineCap(Canvas canvas);
@@ -435,7 +438,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Sets the current stroke line cap.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param style a value of Butt, Round, or Square.
      */
     public void setLineCap(Canvas canvas, String style);
@@ -443,7 +446,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Gets the current stroke line join.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @return a value of Miter, Bevel, or Round.
      */
     public String getLineJoin(Canvas canvas);
@@ -451,7 +454,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Sets the current stroke line join.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param style with a value of Miter, Bevel, or Round.
      */
     public void setLineJoin(Canvas canvas, String style);
@@ -459,7 +462,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Gets the current line width.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @return value between 0 and infinity.
      */
     public double getLineWidth(Canvas canvas);
@@ -467,7 +470,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Sets the current line width.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param width value in the range {0-positive infinity}, with any other
      * value being ignored and leaving the value unchanged.
      */
@@ -476,7 +479,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Gets the current miter limit. v
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @return the miter limit value in the range {@code 0.0-positive infinity}
      */
     public double getMiterLimit(Canvas canvas);
@@ -484,7 +487,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Sets the current miter limit.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param limit miter limit value between 0 and positive infinity with any
      * other value being ignored and leaving the value unchanged.
      */
@@ -493,7 +496,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Gets the current Font.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @return the Font
      */
     public String getFont(Canvas canvas);
@@ -501,15 +504,15 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Sets the current Font.
      *
-     * @param canvas
-     * @param font
+     * @param canvas the native Canvas
+     * @param font The font to use
      */
     public void setFont(Canvas canvas, String font);
 
     /**
      * Gets the current {@code TextAlignment}.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @return TextAlignment with values of Left, Center, Right, or Justify.
      */
     public String getTextAlign(Canvas canvas);
@@ -517,7 +520,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Defines horizontal text alignment, relative to the text origin.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param textAlign with values of Left, Center, Right.
      */
     public void setTextAlign(Canvas canvas, String textAlign);
@@ -525,7 +528,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Sets the current Text Baseline.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @return baseline with values of Top, Center, Baseline, or Bottom
      */
     public String getTextBaseline(Canvas canvas);
@@ -533,6 +536,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Sets the current Text Baseline.
      *
+     * @param canvas the native Canvas
      * @param baseline with values of Top, Center, Baseline, or Bottom
      */
     public void setTextBaseline(Canvas canvas, String baseline);
@@ -541,7 +545,7 @@ public interface GraphicsEnvironment <Canvas>{
      * Fills the given string of text at position x, y (0,0 at top left) with
      * the current fill paint attribute.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param text the string of text.
      * @param x position on the x axis.
      * @param y position on the y axis.
@@ -554,7 +558,7 @@ public interface GraphicsEnvironment <Canvas>{
      * If the width of the text extends past max width, then it will be sized to
      * fit.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param text the string of text.
      * @param x position on the x axis.
      * @param y position on the y axis.
@@ -565,8 +569,8 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * The Dimension of this text using the current Font settings
      *
-     * @param canvas
-     * @param text
+     * @param canvas the native Canvas
+     * @param text The text to measure
      * @return the Dimension of this text using the current Font settings
      */
     public Dimension measureText(Canvas canvas, String text);
@@ -575,7 +579,7 @@ public interface GraphicsEnvironment <Canvas>{
      * draws the given string of text at position x, y (0,0 at top left) with
      * the current stroke paint attribute.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param text the string of text.
      * @param x position on the x axis.
      * @param y position on the y axis.
@@ -588,7 +592,7 @@ public interface GraphicsEnvironment <Canvas>{
      * If the width of the text extends past max width, then it will be sized to
      * fit.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param text the string of text.
      * @param x position on the x axis.
      * @param y position on the y axis.
@@ -598,7 +602,7 @@ public interface GraphicsEnvironment <Canvas>{
 
     /**
      * Get a pixel array that you can manipulate, e.g. apply effects / transparency
-     * @param canvas
+     * @param canvas the native Canvas
      * @param x width
      * @param y height
      * @return a PixelMap
@@ -608,26 +612,26 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Create a new ImageData object with the same dimensions as the 
      * object specified by imageData (this does not copy the image data)
-     * @param canvas
-     * @param imageData
-     * @return 
+     * @param canvas the native Canvas
+     * @param imageData an ImageData Object to copy the dimensions from
+     * @return The ImageData Object with the pixel map
      */
     public ImageData createPixelMap(Canvas canvas, ImageData imageData);
 
     /**
      * Get the pixels for a region of your GraphicsContext
-     * @param canvas
+     * @param canvas the native Canvas
      * @param x start x coordinate
      * @param y start y coordinate
      * @param width width
      * @param height height
-     * @return 
+     * @return The ImageData Object with the PixelMap for the specified region
      */
     public ImageData getPixelMap(Canvas canvas, double x, double y, double width, double height);
 
     /**
      * Render an ImageData Object at the specified position
-     * @param canvas
+     * @param canvas the native Canvas
      * @param imageData the Pixel array
       * @param x start x coordinate
      * @param y start y coordinate
@@ -636,7 +640,7 @@ public interface GraphicsEnvironment <Canvas>{
 
     /*
      * Render an ImageData Object at the specified position
-     * @param canvas
+     * @param canvas the native Canvas
      * @param imageData the Pixel array to draw
      * @param x start x coordinate
      * @param y start y coordinate
@@ -649,7 +653,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Sets the global alpha of the current state.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param alpha value in the range {@code 0.0-1.0}. The value is clamped if
      * it is out of range.
      */
@@ -658,7 +662,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Get the global alpha of the current state.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @return alpha value in the range {@code 0.0-1.0}.
      */
     public double getGlobalAlpha(Canvas canvas);
@@ -666,7 +670,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Sets the global blend mode.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param operation the BlendMode that will be set.
      */
     public void setGlobalCompositeOperation(Canvas canvas, String operation);
@@ -674,7 +678,7 @@ public interface GraphicsEnvironment <Canvas>{
     /**
      * Gets the global blend mode.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @return the global BlendMode of the current state.
      */
     public String getGlobalCompositeOperation(Canvas canvas);
@@ -683,7 +687,7 @@ public interface GraphicsEnvironment <Canvas>{
      * Get the height of this GraphicsContext (which should be the same as the
      * enclosing canvas height)
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @return the height of this GraphicsContext
      */
     public int getHeight(Canvas canvas);
@@ -692,34 +696,34 @@ public interface GraphicsEnvironment <Canvas>{
      * Get the width of this GraphicsContext (which should be the same as the
      * enclosing canvas height)
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @return the width of this GraphicsContext
      */
     public int getWidth(Canvas canvas);
 
     /**
      * set the width of this Canvas
-     * @param canvas
-     * @param height 
+     * @param canvas the native Canvas
+     * @param height the target height of the Canvas
      */
     public void setHeight(Canvas canvas, int height);
 
     /**
      * set the height of this Canvas
-     * @param canvas
-     * @param width 
+     * @param canvas the native Canvas
+     * @param width  the target width of the Canvas
      */
     public void setWidth(Canvas canvas, int width);
      /**
      * Merges two images drawing one on top of the other and returning the
      * result.
      *
-     * @param canvas
+     * @param canvas the native Canvas
      * @param a the lower Image
      * @param b the upper Image
      * @param cachedA the native cached Image, if available, or null.
      * @param cachedB the native cached Image, if available, or null.
-     * @return
+     * @return the merged native image
      */  
     public Object mergeImages(Canvas canvas, Image a, Image b, Object cachedA, Object cachedB);
 }

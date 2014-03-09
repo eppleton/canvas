@@ -31,8 +31,8 @@ public final class Dimension {
 
     /**
      * Constructor 
-     * @param width
-     * @param height 
+     * @param width the width
+     * @param height the height
      */
     public Dimension(double width, double height) {
         this.width = width;

@@ -16,9 +16,6 @@
  */
 package net.java.html.canvas.spi;
 
-import java.util.ServiceLoader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.java.html.canvas.GraphicsContext2D;
 import org.apidesign.html.canvas.impl.CnvsAccssr;
 
@@ -37,6 +34,7 @@ public class GraphicsUtils {
      * your Canvas. 
      * In the HTML5 implementation, the {@link net.java.html.canvas.spi.GraphicsEnvironment} 
      * will look for a Canvas with that ID in your HTML (or add a new one to the page).
+     * @param env the GraphicsEnvironment
      * @param id used by the {@link GraphicsEnvironment to identify the Canvas}
      * @return A GraphicsContext
      */

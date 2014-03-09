@@ -347,7 +347,7 @@ public abstract class GraphicsContext2D {
      *
      * @param a the lower Image
      * @param b the upper Image
-     * @return
+     * @return the merged Image
      */
     public abstract Image merge(Image a, Image b);
 
@@ -448,7 +448,7 @@ public abstract class GraphicsContext2D {
      * Sets the fill style. Will be used when rendering something, e.g. calling
      * one of the fillText Methods.
      *
-     * @param style
+     * @param style the desired fill style
      */
     public abstract void setFillStyle(Style style);
 
@@ -463,14 +463,14 @@ public abstract class GraphicsContext2D {
      * Set the Font. Will be used when rendering Text, e.g. by calling one of
      * the fillText Methods.
      *
-     * @param font
+     * @param font the desired font as a String
      */
     public abstract void setFont(String font);
 
     /**
      * sets the Style of the Stroke.
      *
-     * @param style
+     * @param style the style to use
      */
     public abstract void setStrokeStyle(Style style);
 
@@ -569,9 +569,9 @@ public abstract class GraphicsContext2D {
      * Get a pixel array that you can manipulate, e.g. apply effects /
      * transparency
      *
-     * @param x width
+     * @param x width 
      * @param y height
-     * @return a PixelMap
+     * @return a PixelMap a new ImageData Objesct with the specified Dimensions
      */
     public abstract ImageData createPixelMap(double x, double y);
 
@@ -579,8 +579,8 @@ public abstract class GraphicsContext2D {
      * Create a new ImageData object with the same dimensions as the object
      * specified by imageData (this does not copy the image data)
      *
-     * @param pixelMap
-     * @return
+     * @param pixelMap the ImageData to copy the Dimensions from
+     * @return a new ImageData Objesct with the specified Dimensions
      */
     public abstract ImageData createPixelMap(ImageData pixelMap);
 
@@ -591,7 +591,7 @@ public abstract class GraphicsContext2D {
      * @param y start y coordinate
      * @param width width
      * @param height height
-     * @return
+     * @return An ImageData Object containing a snapshot of the specified Region.
      */
     public abstract ImageData getSnapshot(double x, double y, double width, double height);
 
@@ -651,6 +651,7 @@ public abstract class GraphicsContext2D {
      * @param y0 y coordinate of start point
      * @param x1 x coordinate of end point
      * @param y1 y coordinate of end point
+     * @param stops The Stop(s) definig this Gradient
      * @return the gradient
      */
     public abstract LinearGradient createLinearGradient(double x0, double y0, double x1, double y1, Map<Double, String> stops);
@@ -674,6 +675,7 @@ public abstract class GraphicsContext2D {
      * @param x1 x coordinate of ending circle
      * @param y1 y coordinate of ending circle
      * @param r1 radius of ending circle
+     * @param stops the Stops defining this Gradient
      * @return the Gradient
      */
     public abstract RadialGradient createRadialGradient(double x0, double y0, double r0, double x1, double y1, double r1, Map<Double, String> stops);
@@ -681,7 +683,7 @@ public abstract class GraphicsContext2D {
     /**
      * Convert this String Representation of a Color to a Color Object.
      *
-     * @param webColor
+     * @param webColor the String describing the color, e.g. #ff0000 for red. 
      * @return The Color represented by the input
      */
     public abstract Color getWebColor(String webColor);
@@ -713,9 +715,9 @@ public abstract class GraphicsContext2D {
      * Fill a circle with a center position of centerX, centerY and the
      * specified radius.
      *
-     * @param centerX
-     * @param centerY
-     * @param radius
+     * @param centerX center x coordinate
+     * @param centerY center y coordinate
+     * @param radius the radius
      */
     public abstract void fillCircle(float centerX, float centerY, float radius);
 
@@ -733,20 +735,20 @@ public abstract class GraphicsContext2D {
     /**
      * Get the Dimension of an Image
      *
-     * @param img
+     * @param img the Image to measure
      * @return the Dimension of this Image
      */
     public abstract Dimension getDimension(Image img);
 
     /**
      * Set the width of this GraphicsContext2D
-     * @param width 
+     * @param width target width for this GraphicsContext2D
      */
     public abstract void setWidth(int width);
 
     /**
      * set the height of this GraphicsContext2D
-     * @param height 
+     * @param height target height for this GraphicsContext2D
      */
     public abstract void setHeight(int height);
 
