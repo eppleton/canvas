@@ -30,12 +30,12 @@ import org.apidesign.html.canvas.impl.CnvsAccssr;
  * For HTML 5 :
  * <pre>
  * {@code
- * GraphicsContext2D gc = HTML5Graphics.create("canvas");
+ * GraphicsContext2D gc = HTML5Graphics.getOrCreate("canvas");
  * }
  * </pre> For JavaFX:
  * <pre>
  * {@code
- * GraphicsContext gc = JavaFXGraphics.create("canvas");
+ * GraphicsContext gc = JavaFXGraphics.getOrCreate("canvas");
  *  }
  * </pre>
  *
