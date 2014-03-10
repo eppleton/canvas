@@ -4,12 +4,12 @@
 
   <groupId>org.apidesign.canvas</groupId>
   <artifactId>canvas-archetype</artifactId>
-  <version>0.5.2</version>
+  <version>0.6-SNAPSHOT</version>
   <packaging>maven-archetype</packaging>
   <parent>
       <artifactId>canvas</artifactId>
       <groupId>org.apidesign.canvas</groupId>
-      <version>0.5.2</version>
+      <version>0.6-SNAPSHOT</version>
   </parent>
 
   <name>canvas-archetype</name>
