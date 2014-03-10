@@ -4,7 +4,7 @@
 
   <groupId>org.apidesign.canvas</groupId>
   <artifactId>canvas-archetype</artifactId>
-  <version>0.5.1</version>
+  <version>0.6-SNAPSHOT</version>
   <packaging>maven-archetype</packaging>
 
   <name>canvas-archetype</name>
