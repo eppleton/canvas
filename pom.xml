@@ -17,9 +17,9 @@
         <url>http://eppleton.de</url>
     </organization>
     <scm>
-        <connection>scm:git:git@github.com:eppleton/canvas.git</connection>
-        <url>scm:git:git@github.com:eppleton/canvas.git</url>
-        <developerConnection>scm:git:git@github.com:eppleton/canvas.git</developerConnection>
+        <connection>scm:git:https://github.com/eppleton/canvas.git</connection>
+        <url>scm:git:https://github.com/eppleton/canvas.git</url>
+        <developerConnection>scm:git:https://github.com/eppleton/canvas.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
     <name>canvas</name>
