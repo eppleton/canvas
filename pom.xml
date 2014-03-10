@@ -5,6 +5,11 @@
     <artifactId>canvas</artifactId>
     <version>0.6-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <parent> 
+        <groupId>net.java</groupId>
+        <artifactId>jvnet-parent</artifactId>
+        <version>3</version>
+    </parent>  
     <licenses>
         <license>
             <name>GPL-2.0</name>
