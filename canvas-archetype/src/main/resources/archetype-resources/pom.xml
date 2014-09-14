@@ -35,7 +35,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <net.java.html.version>0.7.5</net.java.html.version>
+    <net.java.html.version>1.0</net.java.html.version>
     <netbeans.compile.on.save>none</netbeans.compile.on.save>
   </properties>
   <build>
@@ -124,12 +124,12 @@
     <dependency>
         <groupId>org.apidesign.canvas</groupId>
         <artifactId>canvas-api</artifactId>
-        <version>0.5</version>
+        <version>1.0-SNAPSHOT</version>
     </dependency>
         <dependency>
         <groupId>org.apidesign.canvas</groupId>
         <artifactId>html5-canvas</artifactId>
-        <version>0.5</version>
+        <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
         <groupId>org.netbeans.html</groupId>
