@@ -472,7 +472,7 @@ class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
     private static WeakHashMap<Canvas, String> canvasList = new WeakHashMap<Canvas, String>();
 
     /**
-     * get the Canvas with this ID. My return null, if the Canvas doesn't exist.
+     * get the Canvas with this ID. May return null, if the Canvas doesn't exist.
      *
      * @param id
      * @return the Canvas
@@ -485,7 +485,6 @@ class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
             for (Map.Entry<Canvas, String> entry : entrySet) {
                 if (entry.getValue().equals(id)) {
                     return entry.getKey();
-
                 }
             }
         }

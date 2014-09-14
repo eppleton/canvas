@@ -5,6 +5,7 @@
  */
 package de.eppleton.canvas.javafx;
 
+import javafx.scene.canvas.Canvas;
 import net.java.html.canvas.GraphicsContext2D;
 import net.java.html.canvas.spi.GraphicsUtils;
 
@@ -19,7 +20,9 @@ public class JavaFXGraphics  {
      * @param canvasId The canvasId to look for.
      * @return a Canvas with the specified canvasId. 
      */
-    public GraphicsContext2D getOrCreate(String canvasId) {
-        return GraphicsUtils.getOrCreate(new JavaFXGraphicsEnvironment(), canvasId);
+
+    
+        public static Canvas getOrCreateCanvas(String canvasId) {
+        return new JavaFXGraphicsEnvironment().getOrCreateCanvas(canvasId);
     }
 }
