@@ -183,13 +183,33 @@ import net.java.html.js.JavaScriptBody;
         return drawImageImpl(canvas, nativeImage, sx, sy, sWidth, sHeight, x, y, width, height);
     }
 
-    @JavaScriptBody(args = {"ctx", "img", "x", "y", "width", "height"}, body = "img.onload=function(){ctx.getContext('2d')drawImage(img,x,y,width,height);};ctx.getContext('2d')drawImage(img,x,y,width,height); return img;")
+    @JavaScriptBody(args = {"ctx", "img", "x", "y", "width", "height"}, body = 
+        "img.onload=function(){\n"
+      + "  ctx.getContext('2d').drawImage(img,x,y,width,height);\n"
+      + "};\n"
+      + "ctx.getContext('2d').drawImage(img,x,y,width,height);\n"
+      + "return img;"
+    )
     private native static Object drawImageImpl(Object ctx, Object img, double x, double y, double width, double height);
 
-    @JavaScriptBody(args = {"ctx", "img", "sx", "sy", "swidth", "sheight", "x", "y", "width", "height"}, body = "img.onload=function(){ctx.getContext('2d')drawImage(img,sx,sy,swidth,sheight,x,y,width,height);}; ctx.getContext('2d')drawImage(img,sx,sy,swidth,sheight,x,y,width,height); return img;")
+    @JavaScriptBody(args = {
+        "ctx", "img", "sx", "sy", "swidth", "sheight", "x", "y", "width", "height"
+    }, body = 
+        "img.onload=function(){\n"
+      + "  ctx.getContext('2d').drawImage(img,sx,sy,swidth,sheight,x,y,width,height);\n"
+      + "};\n"
+      + "ctx.getContext('2d').drawImage(img,sx,sy,swidth,sheight,x,y,width,height);\n"
+      + "return img;"
+    )
     private native static Object drawImageImpl(Object ctx, Object img, double sx, double sy, double sWidth, double sHeight, double x, double y, double width, double height);
 
-    @JavaScriptBody(args = {"ctx", "img", "x", "y"}, body = "img.onload=function(){ctx.getContext('2d')drawImage(img,x,y);}; ctx.getContext('2d')drawImage(img,x,y); return img;")
+    @JavaScriptBody(args = {"ctx", "img", "x", "y"}, body = 
+        "img.onload=function(){\n"
+      + "  ctx.getContext('2d').drawImage(img,x,y);\n"
+      + "};\n"
+      + "ctx.getContext('2d').drawImage(img,x,y);\n"
+      + "return img;"
+    )
     private native static Object drawImageImpl(Object ctx, Object img, double x, double y);
 
     @Override
