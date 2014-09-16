@@ -135,7 +135,7 @@ public class Style {
             this.y0 = y0;
             this.x1 = x1;
             this.y1 = y1;
-            this.stops = new HashMap<>(stops);
+            this.stops = new HashMap<Double,String>(stops);
         }
 
         /**
@@ -196,7 +196,7 @@ public class Style {
          * @return the stops of this gradient
          */
         public Map<Double, String> getStops() {
-            return new HashMap<>(stops);
+            return new HashMap<Double,String>(stops);
         }
 
         @Override
