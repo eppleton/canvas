@@ -13,6 +13,9 @@ import net.java.html.canvas.spi.GraphicsUtils;
  * @author antonepple
  */
 public class HTML5Graphics{
+    private HTML5Graphics() {
+    }
+    
     /**
      * Looks for the Canvas with the specified canvasID. If there is one, it will be 
      * returned. If there is none a new one will be created. 
