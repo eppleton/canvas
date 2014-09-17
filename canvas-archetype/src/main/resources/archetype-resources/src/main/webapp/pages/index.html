@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    </head>
+    <body>
+        <h1>Canvas Demo</h1>
+        <canvas id="canvas" width="600" height="600" > </canvas>
+
+
+        #if ($bck2brwsr == "true")
+        <!-- boot bck2brwsr -->
+        <script type="text/javascript" src="bck2brwsr.js"></script>
+        <script>
+            var vm = bck2brwsr('${artifactId}.js');
+            var c = vm.loadClass('${package}.Main');
+            c.invoke('onPageLoad');
+        </script>
+        #end
+    </body>
+</html>

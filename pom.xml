@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     
-      <parent>
-    <groupId>org.netbeans.html</groupId>
-    <artifactId>pom</artifactId>
-    <version>1.0</version>
-  </parent>
+    <parent>
+        <groupId>org.netbeans.html</groupId>
+        <artifactId>pom</artifactId>
+        <version>1.0</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apidesign.canvas</groupId>
     <artifactId>canvas</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
- 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <net.java.html.version>1.0</net.java.html.version>
+        <org.apidesign.canvas.version>1.0-SNAPSHOT</org.apidesign.canvas.version>
+        <nb.html.version>1.0</nb.html.version>
+        <brwsr.html.version>1.0</brwsr.html.version>
+        <bck2brwsr.version>0.10</bck2brwsr.version>
+        <jersey.version>2.12</jersey.version>
+        <license>COPYING</license>
+    </properties>
     <licenses>
         <license>
             <name>GPL-2.0</name>
@@ -41,8 +50,8 @@
         <module>canvas-api</module>
         <module>javafx-canvas</module>
         <module>html5-canvas</module>
-    <module>canvas-archetype</module>
-  </modules>
+        <module>canvas-archetype</module>
+    </modules>
     <build>
         <plugins>
             <plugin>
