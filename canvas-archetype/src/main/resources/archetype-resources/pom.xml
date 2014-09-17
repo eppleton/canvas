@@ -300,7 +300,6 @@
                                 <forceLinkClasses>
                                     <pattern>java.util.logging.ConsoleHandler</pattern>
                                     <pattern>java.util.logging.SimpleFormatter</pattern>
-                                    <pattern>org.netbeans.html.ko4j.KO4J</pattern>
                                     <pattern>org.netbeans.html.sound.impl.BrowserAudioEnv</pattern>
                                     <pattern>org.apidesign.brwsr.IBrwsrPrsntr</pattern>
                                 </forceLinkClasses>
@@ -343,22 +342,6 @@
                     <artifactId>dlvkbrwsr</artifactId>
                     <version>${brwsr.html.version}</version>
                     <type>jar</type>
-                </dependency>
-                <dependency>
-                    <groupId>org.netbeans.html</groupId>
-                    <artifactId>ko4j</artifactId>
-                    <version>\${net.java.html.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.netbeans.html</groupId>
-                    <artifactId>ko-ws-tyrus</artifactId>
-                    <version>\${net.java.html.version}</version>
-                    <exclusions>
-                        <exclusion>
-                            <artifactId>org.json-osgi</artifactId>
-                            <groupId>de.twentyeleven.skysail</groupId>
-                        </exclusion>
-                    </exclusions>
                 </dependency>
             </dependencies>
             <build>

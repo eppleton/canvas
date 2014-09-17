@@ -223,33 +223,33 @@ import net.java.html.js.JavaScriptBody;
 
     private Object createNativeStyle(Object canvas, Style style) {
         if (style instanceof RadialGradient) {
-//            RadialGradientWrapper gradient = createRadialGradientWrapper(canvas,
-//                    ((RadialGradient) style).getX0(),
-//                    ((RadialGradient) style).getY0(),
-//                    ((RadialGradient) style).getR0(),
-//                    ((RadialGradient) style).getX1(),
-//                    ((RadialGradient) style).getY1(),
-//                    ((RadialGradient) style).getR1());
-//            Map<Double, String> stops = ((LinearGradient) style).getStops();
-//            Set<Double> keySet = stops.keySet();
-//            for (Double double1 : keySet) {
-//                addColorStopImpl(style, double1, stops.get(double1));
-//            }
-//            return gradient;
+            RadialGradientWrapper gradient = createRadialGradientWrapper(canvas,
+                    ((RadialGradient) style).getX0(),
+                    ((RadialGradient) style).getY0(),
+                    ((RadialGradient) style).getR0(),
+                    ((RadialGradient) style).getX1(),
+                    ((RadialGradient) style).getY1(),
+                    ((RadialGradient) style).getR1());
+            Map<Double, String> stops = ((LinearGradient) style).getStops();
+            Set<Double> keySet = stops.keySet();
+            for (Double double1 : keySet) {
+                addColorStopImpl(style, double1, stops.get(double1));
+            }
+            return gradient;
 
         } else if (style instanceof LinearGradient) {
-//            LinearGradientWrapper gradient = createLinearGradientWrapper(
-//                    canvas,
-//                    ((LinearGradient) style).getX0(),
-//                    ((LinearGradient) style).getY0(),
-//                    ((LinearGradient) style).getX1(),
-//                    ((LinearGradient) style).getY1());
-//            Map<Double, String> stops = ((LinearGradient) style).getStops();
-//            Set<Double> keySet = stops.keySet();
-//            for (Double double1 : keySet) {
-//                addColorStopImpl(style, double1, stops.get(double1));
-//            }
-//            return gradient;
+            LinearGradientWrapper gradient = createLinearGradientWrapper(
+                    canvas,
+                    ((LinearGradient) style).getX0(),
+                    ((LinearGradient) style).getY0(),
+                    ((LinearGradient) style).getX1(),
+                    ((LinearGradient) style).getY1());
+            Map<Double, String> stops = ((LinearGradient) style).getStops();
+            Set<Double> keySet = stops.keySet();
+            for (Double double1 : keySet) {
+                addColorStopImpl(style, double1, stops.get(double1));
+            }
+            return gradient;
         } else if (style instanceof Pattern) {
             return createPatternWrapper(canvas,((Pattern) style).getImageResource(), ((Pattern) style).getRepeat());
         } else if (style instanceof Color) {
