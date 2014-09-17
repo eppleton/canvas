@@ -430,8 +430,8 @@ public class VerifyArchetypeIT {
         sysProp.put("groupId", "org.someuser.test");
         sysProp.put("artifactId", "o-a-test");
         sysProp.put("package", "org.someuser.test.oat");
-        sysProp.put("archetypeGroupId", "org.apidesign.html");
-        sysProp.put("archetypeArtifactId", "knockout4j-archetype");
+        sysProp.put("archetypeGroupId", "org.apidesign.canvas");
+        sysProp.put("archetypeArtifactId", "canvas-archetype");
         sysProp.put("archetypeVersion", findCurrentVersion());
         
         for (String p : params) {
@@ -444,7 +444,7 @@ public class VerifyArchetypeIT {
     
     static String findCurrentVersion() throws XPathExpressionException, IOException, ParserConfigurationException, SAXException, XPathFactoryConfigurationException {
         final ClassLoader l = VerifyArchetypeIT.class.getClassLoader();
-        URL u = l.getResource("META-INF/maven/org.apidesign.html/knockout4j-archetype/pom.xml");
+        URL u = l.getResource("META-INF/maven/org.apidesign.canvas/canvas-archetype/pom.xml");
         assertNotNull(u, "Own pom found: " + System.getProperty("java.class.path"));
 
         final XPathFactory fact = XPathFactory.newInstance();
