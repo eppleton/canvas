@@ -51,6 +51,7 @@
         <module>javafx-canvas</module>
         <module>html5-canvas</module>
         <module>canvas-archetype</module>
+        <module>canvas-archetype-test</module>
     </modules>
     <build>
         <plugins>
