@@ -52,7 +52,7 @@ import net.java.html.js.JavaScriptBody;
             + "var body = document.getElementsByTagName('body')[0];body.appendChild(canvas); return canvas;")
     private static native Object createImpl(String id);
 
-    @JavaScriptBody(args = {"canvas", "centerx", "centery", "radius", "startangle", "endangle", "ccw"},
+    @JavaScriptBody(args = {"canvas","centerx", "centery", "radius", "startangle", "endangle", "ccw"},
             body = "canvas.getContext('2d').arc(centerx,centery, radius, startangle, endangle,ccw);")
     @Override
     public native void arc(Object canvas,
