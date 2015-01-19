@@ -45,17 +45,14 @@ import net.java.html.canvas.Image;
 import net.java.html.canvas.ImageData;
 import net.java.html.canvas.Style;
 import net.java.html.canvas.spi.GraphicsEnvironment;
-//import org.openide.util.lookup.ServiceProviders;
-//import org.openide.util.lookup.ServiceProvider;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author antonepple
  */
-//@ServiceProviders( value = {
-//    @ServiceProvider(service = GraphicsEnvironment.class),
-//    @ServiceProvider(service = CanvasProvider.class)})
-class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
+@ServiceProvider(service = GraphicsEnvironment.class)
+public class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
 
     @Override
     public void arc(Canvas canvas, double centerX, double centerY, double startAngle, double radius, double endAngle, boolean ccw) {
@@ -395,13 +392,12 @@ class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
     }
 
     public void putPixelMap(Canvas canvas, ImageData imageData, double x, double y) {
-        canvas.getGraphicsContext2D().drawImage((javafx.scene.image.Image)imageData.getImage(), x, y);
+        canvas.getGraphicsContext2D().drawImage((javafx.scene.image.Image) imageData.getImage(), x, y);
     }
 
 //    public void putPixelMap(Canvas canvas, ImageData imageData, double x, double y, double dirtyx, double dirtyy, double dirtywidth, double dirtyheight) {
 //        canvas.getGraphicsContext2D().drawImage((javafx.scene.image.Image)imageData.getImage(), x, y,y, y, y, y, y, y);
 //    }
-
     public int getHeight(Canvas canvas) {
         return (int) canvas.getHeight();
     }
@@ -472,7 +468,8 @@ class JavaFXGraphicsEnvironment implements GraphicsEnvironment<Canvas> {
     private static WeakHashMap<Canvas, String> canvasList = new WeakHashMap<Canvas, String>();
 
     /**
-     * get the Canvas with this ID. May return null, if the Canvas doesn't exist.
+     * get the Canvas with this ID. May return null, if the Canvas doesn't
+     * exist.
      *
      * @param id
      * @return the Canvas

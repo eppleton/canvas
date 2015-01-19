@@ -29,12 +29,16 @@ import net.java.html.canvas.Style.RadialGradient;
 import net.java.html.canvas.spi.GraphicsEnvironment;
 
 import net.java.html.js.JavaScriptBody;
+import net.java.html.js.JavaScriptResource;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Anton Epple toni.epple@eppleton.de
  */
- class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
+
+@ServiceProvider(service = GraphicsEnvironment.class)
+ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
 
     @Override
     public Object getOrCreateCanvas(String id) {
@@ -52,8 +56,8 @@ import net.java.html.js.JavaScriptBody;
             + "var body = document.getElementsByTagName('body')[0];body.appendChild(canvas); return canvas;")
     private static native Object createImpl(String id);
 
-    @JavaScriptBody(args = {"canvas","centerx", "centery", "radius", "startangle", "endangle", "ccw"},
-            body = "canvas.getContext('2d').arc(centerx,centery, radius, startangle, endangle,ccw);")
+    @JavaScriptBody(args = { "canvas", "centerX", "centerY", "startAngle", "radius", "endAngle", "ccw" },
+            body = "var context = canvas.getContext('2d');context.beginPath();context.arc(centerx,centery, radius, startangle, endangle,ccw);context.fill();")
     @Override
     public native void arc(Object canvas,
             double centerX,
@@ -72,6 +76,8 @@ import net.java.html.js.JavaScriptBody;
             double x2,
             double y2,
             double r);
+    
+    
 
     @JavaScriptBody(args = {"canvas", "x", "y"},
             body = "return canvas.getContext('2d').isPointInPath(x,y);")
@@ -196,7 +202,7 @@ import net.java.html.js.JavaScriptBody;
         "ctx", "img", "sx", "sy", "swidth", "sheight", "x", "y", "width", "height"
     }, body = 
         "img.onload=function(){\n"
-      + "  ctx.getContext('2d').drawImage(img,sx,sy,swidth,sheight,x,y,width,height);\n"
+      + "  ctx.getContext('2d').drawImage(img,sx,sy,swidth,sheight,x,y,width,height);"
       + "};\n"
       + "ctx.getContext('2d').drawImage(img,sx,sy,swidth,sheight,x,y,width,height);\n"
       + "return img;"
@@ -504,7 +510,8 @@ import net.java.html.js.JavaScriptBody;
     }
 
 //    @JavaScriptBody(args = {"src"}, body = "var image = new Image();console.log('image complete '+image.complete);image.src = './'+ src; return image;")
-    @JavaScriptBody(args = {"src"}, body = "console.log ('looking up image by id '+src);return document.getElementById(src);")
+    @JavaScriptBody(args = {"src"}, body = "var image = new Image();image.src = src; return image;")
+//    @JavaScriptBody(args = {"src"}, body = "return document.getElementById(src);")
     private static native Object createImage(String src);
 
     @Override
@@ -514,7 +521,7 @@ import net.java.html.js.JavaScriptBody;
             nativeImage = createImage(image.getSrc());
 
         }
-        return getWidth(nativeImage);
+        return getWidth(canvas, nativeImage);
     }
 
     @JavaScriptBody(args = {"canvas","nativeImage"}, body = "return nativeImage.naturalWidth;")
@@ -525,7 +532,7 @@ import net.java.html.js.JavaScriptBody;
         if (nativeImage == null) {
             nativeImage = createImage(image.getSrc());
         }
-        return getHeight(nativeImage);
+        return getHeight(canvas, nativeImage);
     }
 
     @JavaScriptBody(args = {"canvas","nativeImage"}, body = "return nativeImage.naturalHeight;")
@@ -552,16 +559,16 @@ import net.java.html.js.JavaScriptBody;
 
 //    @JavaScriptBody(args = {"canvas"}, body = "return canvas.getContext('2d');")
 //    private static native Object getContext(Object canvas);
-    @JavaScriptBody(args = {"canvas"}, body = "return canvas.width;")
+    @JavaScriptBody(args = {"canvas"}, body = "return canvas.height;")
     private native int getHeightImpl(Object canvas);
 
-    @JavaScriptBody(args = {"canvas"}, body = "return canvas.height;")
+    @JavaScriptBody(args = {"canvas"}, body = "return canvas.width;")
     private native int getWidthImpl(Object canvas);
 
     @JavaScriptBody(args = {"canvas", "width"}, body = "canvas.width = width;")
-    private native void setHeightImpl(Object canvas, int width);
+    private native void setWidthImpl(Object canvas, int width);
 
     @JavaScriptBody(args = {"canvas", "height"}, body = "canvas.height = height;")
-    private native void setWidthImpl(Object canvas, int width);
+    private native void setHeightImpl(Object canvas, int width);
 
 }

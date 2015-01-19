@@ -17,7 +17,7 @@
         <org.apidesign.canvas.version>1.0-SNAPSHOT</org.apidesign.canvas.version>
         <nb.html.version>1.0</nb.html.version>
         <brwsr.html.version>1.0</brwsr.html.version>
-        <bck2brwsr.version>0.10</bck2brwsr.version>
+        <bck2brwsr.version>0.12</bck2brwsr.version>
         <jersey.version>2.12</jersey.version>
         <license>COPYING</license>
     </properties>
@@ -36,7 +36,7 @@
         <connection>scm:git:https://github.com/eppleton/canvas.git</connection>
         <url>scm:git:https://github.com/eppleton/canvas.git</url>
         <developerConnection>scm:git:https://github.com/eppleton/canvas.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>release-${releaseVersion}</tag>
     </scm>
     <name>canvas</name>
     <repositories>
