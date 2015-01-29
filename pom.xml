@@ -1,44 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    
-    <parent>
-        <groupId>org.netbeans.html</groupId>
-        <artifactId>pom</artifactId>
-        <version>1.0</version>
-    </parent>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">  
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.apidesign.canvas</groupId>
+    
+    <name>DukeScript Canvas API</name>
+    <groupId>com.dukescript.canvas</groupId>
     <artifactId>canvas</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.7-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <url>http://dukescript.com</url>
+    <description>A Java API for painting to a canvas</description>
+    
+    <developers>
+        <developer>
+            <id>eppleton</id>
+            <name>Anton Epple</name>
+            <email>dukescript@eppleton.de</email>
+            <organization>Eppleton IT Consulting</organization>
+            <organizationUrl>http://www.eppleton.de</organizationUrl>
+            <roles>
+                <role>Project-Administrator</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+    
+    <licenses>
+        <license>
+            <name>gpl_v3</name>
+            <url>http://www.gnu.org/licenses/gpl-3.0.html</url>
+            <comments>
+                Visit http://dukescript.com for support and commercial license.
+            </comments>
+        </license>
+    </licenses>
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <net.java.html.version>1.0</net.java.html.version>
-        <org.apidesign.canvas.version>1.0-SNAPSHOT</org.apidesign.canvas.version>
-        <nb.html.version>1.0</nb.html.version>
+        <com.dukescript.canvas.version>0.7-SNAPSHOT</com.dukescript.canvas.version>
+        <nb.html.version>1.1</nb.html.version>
         <brwsr.html.version>1.0</brwsr.html.version>
-        <bck2brwsr.version>0.12</bck2brwsr.version>
+        <bck2brwsr.version>0.13</bck2brwsr.version>
         <jersey.version>2.12</jersey.version>
         <license>COPYING</license>
     </properties>
-    <licenses>
-        <license>
-            <name>GPL-2.0</name>
-            <url>http://opensource.org/licenses/GPL-2.0</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-    <organization>
-        <name>Eppleton IT Consulting</name>
-        <url>http://eppleton.de</url>
-    </organization>
+   
     <scm>
         <connection>scm:git:https://github.com/eppleton/canvas.git</connection>
         <url>scm:git:https://github.com/eppleton/canvas.git</url>
         <developerConnection>scm:git:https://github.com/eppleton/canvas.git</developerConnection>
         <tag>release-${releaseVersion}</tag>
     </scm>
-    <name>canvas</name>
+    
     <repositories>
         <repository>
             <id>netbeans</id>
@@ -46,23 +60,33 @@
             <url>http://bits.netbeans.org/maven2/</url>
         </repository>
     </repositories>
+    
     <modules>
         <module>canvas-api</module>
-        <module>javafx-canvas</module>
+        <!--<module>javafx-canvas</module>-->
         <module>html5-canvas</module>
-        <module>canvas-archetype</module>
-        <module>canvas-archetype-test</module>
+<!--        <module>canvas-archetype</module>
+        <module>canvas-archetype-test</module>-->
     </modules>
+    
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+    
     <build>
         <plugins>
             <plugin>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.4</version>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.3</version>
+                <extensions>true</extensions>
                 <configuration>
-                    <mavenExecutorId>forked-path</mavenExecutorId>
-                    <useReleaseProfile>false</useReleaseProfile>
-                    <arguments>-Pjvnet-release -Pgpg</arguments>
-                    <tag>release-${releaseVersion}</tag>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
             <plugin>
@@ -92,4 +116,63 @@
             </plugin>        
         </plugins>
     </build>
+    <profiles> 
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.5</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>license</id>
+            <activation>
+                <property>
+                    <name>!skipLicenses</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>license-maven-plugin</artifactId>
+                        <version>1.7</version>
+                        <configuration>
+                            <inceptionYear>2015</inceptionYear>
+                            <organizationName>Eppleton IT Consulting</organizationName>
+                            <licenseName>gpl_v3</licenseName>
+                            <failOnMissingHeader>true</failOnMissingHeader>
+                            <descriptionTemplate>src/license/header.txt</descriptionTemplate>
+                            <roots>
+                                <root>src</root>
+                            </roots>  
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>check-file-header</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    
 </project>

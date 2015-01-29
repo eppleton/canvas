@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>canvas</artifactId>
-        <groupId>org.apidesign.canvas</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <groupId>com.dukescript.canvas</groupId>
+        <version>0.7-SNAPSHOT</version>
     </parent>
     <artifactId>canvas-api</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.7-SNAPSHOT</version>
     <packaging>bundle</packaging>
     <name>canvas-api</name>
     <url>http://maven.apache.org</url>
@@ -20,6 +20,8 @@
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
+                <version>2.5.3</version>
+                <extensions>true</extensions>
                 <configuration>
                     <instructions>
                         <Eclipse-BuddyPolicy>dependent</Eclipse-BuddyPolicy>

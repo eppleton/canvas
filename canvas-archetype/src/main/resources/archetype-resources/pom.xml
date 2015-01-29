@@ -41,7 +41,7 @@
         <net.java.html.version>${net.java.html.version}</net.java.html.version>
         <netbeans.compile.on.save>none</netbeans.compile.on.save>
         <project.mainclass>\${package}.Main</project.mainclass>
-        <org.apidesign.canvas.version>${org.apidesign.canvas.version}</org.apidesign.canvas.version>
+        <com.dukescript.canvas.version>${com.dukescript.canvas.version}</com.dukescript.canvas.version>
         #if ($bck2brwsr == "true")
         <bck2brwsr.version>${bck2brwsr.version}</bck2brwsr.version>
         <bck2brwsr.obfuscationlevel>FULL</bck2brwsr.obfuscationlevel>
@@ -178,14 +178,14 @@
             <version>\${net.java.html.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apidesign.canvas</groupId>
+            <groupId>com.dukescript.canvas</groupId>
             <artifactId>canvas-api</artifactId>
-            <version>\${org.apidesign.canvas.version}</version>
+            <version>\${com.dukescript.canvas.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apidesign.canvas</groupId>
+            <groupId>com.dukescript.canvas</groupId>
             <artifactId>html5-canvas</artifactId>
-            <version>\${org.apidesign.canvas.version}</version>
+            <version>\${com.dukescript.canvas.version}</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
